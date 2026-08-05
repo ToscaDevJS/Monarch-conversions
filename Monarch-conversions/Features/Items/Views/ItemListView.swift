@@ -1,14 +1,7 @@
-//
-//  ContentView.swift
-//  Monarch-conversions
-//
-//  Created by Orlando Jesus Abril Tosca on 05/08/2026.
-//
-
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct ItemListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
 
@@ -27,9 +20,7 @@ struct ContentView: View {
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
             .toolbar {
                 ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+                    Button("Add Item", systemImage: "plus", action: addItem)
                 }
             }
         } detail: {
@@ -54,6 +45,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ItemListView()
         .modelContainer(for: Item.self, inMemory: true)
 }

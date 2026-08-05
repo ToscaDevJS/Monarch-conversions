@@ -1,10 +1,3 @@
-//
-//  Monarch_conversionsApp.swift
-//  Monarch-conversions
-//
-//  Created by Orlando Jesus Abril Tosca on 05/08/2026.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -19,13 +12,19 @@ struct Monarch_conversionsApp: App {
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            print("Failed to initialize persistent ModelContainer: \(error). Falling back to in-memory container.")
+            do {
+                let inMemoryConfig = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+                return try ModelContainer(for: schema, configurations: [inMemoryConfig])
+            } catch {
+                fatalError("Could not create ModelContainer: \(error)")
+            }
         }
     }()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
         .modelContainer(sharedModelContainer)
     }
