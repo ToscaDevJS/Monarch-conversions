@@ -19,6 +19,8 @@ Heurístico (regex, sin compilador): confirmar los hallazgos leyendo el código.
 Código de salida 1 si hay violaciones — apto para CI.
 """
 
+from __future__ import annotations
+
 import re
 import sys
 from collections import defaultdict
