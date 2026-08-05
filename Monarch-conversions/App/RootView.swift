@@ -3,11 +3,11 @@ import SwiftData
 
 struct RootView: View {
     var body: some View {
-        ItemsScene()
+        DashboardScene()
     }
 }
 
 #Preview {
     RootView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: ConversionRecord.self, inMemory: true)
 }

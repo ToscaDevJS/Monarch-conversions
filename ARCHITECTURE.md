@@ -16,22 +16,29 @@ Guía de la organización del código y el modelo de crecimiento del proyecto.
 Monarch-conversions/
 ├── App/                                APP SHELL — composición raíz
 │   ├── Monarch_conversionsApp.swift    @main, WindowGroup, ModelContainer
-│   └── RootView.swift                  Contenedor raíz y routing de scenes
+│   └── RootView.swift                  Contenedor raíz y montaje de DashboardScene
 │
 ├── Scenes/                             PANTALLAS DE NIVEL SUPERIOR
-│   └── Items/
-│       └── ItemsScene.swift            Scene principal de gestión de items
+│   └── Dashboard/
+│       └── DashboardScene.swift        Dashboard principal de Monarch image tools
 │
 ├── Features/                           BLOQUES DE PRODUCTO CON DOMINIO PROPIO
-│   └── Items/
+│   └── Conversions/
 │       ├── Models/
-│       │   └── Item.swift              @Model SwiftData
+│       │   └── ConversionRecord.swift  @Model SwiftData para historial de conversiones
+│       ├── Services/
+│       │   └── ConversionSeedService.swift  Servicio de datos iniciales
 │       └── Views/
-│           └── ItemListView.swift      Vista de listado y acciones de items
+│           ├── TopNavHeaderView.swift        Barra de navegación principal
+│           ├── GlobalSearchBarView.swift     Buscador global con shortcut ⌘K
+│           ├── MetricsHeaderView.swift       Barra de métricas y sparkline
+│           ├── ConversionsTableView.swift    Tabla interactiva de conversiones
+│           ├── TelemetryFooterView.swift     Barra de telemetría y métricas de nodo
+│           └── StatusFooterView.swift        Barra de estado de archivo e indicadores
 │
 ├── Core/                               CROSS-CUTTING — imported POR features
 │   └── Theme/
-│       └── MonarchUI.swift             Design tokens (espaciados, radios)
+│       └── MonarchUI.swift             Design tokens del sistema de diseño Paper
 │
 └── Assets.xcassets/                    AccentColor, AppIcon
 ```
@@ -47,45 +54,10 @@ App  →  Scenes  →  Features  →  Core
 - **Features** son autocontenidas. Una feature no importa a otra feature — nunca.
 - **Core** no importa nada hacia arriba. Solo `SwiftUI`, `Foundation` y cosas de plataforma.
 
-Si una flecha va en dirección contraria, es un *code smell* — refactor.
-
-## Comunicación entre features [INVARIANTE]
-
-Hay exactamente **dos mecanismos bendecidos**:
-
-1. **Cableado en la Scene — para eventos y acciones efímeras.**
-La scene inyecta closures o un `@Observable` de coordinación.
-
-2. **Datos compartidos vía SwiftData — para estado que persiste.**
-Se promociona el `@Model` a `Core/Models/` y ambas features lo consumen desde ahí.
-
-## Qué va en cada carpeta [INVARIANTE]
-
-### `App/`
-Composición raíz, `@main`, `ModelContainer` compartido y vista raíz.
-
-### `Scenes/`
-Pantallas completas desde la perspectiva del usuario.
-
-### `Features/`
-Bloques de producto con dominio propio.
-
-### `Core/`
-Código transversal sin dueño (tokens UI, modelos compartidos, networking).
+If a direction points backward, it's a code smell — refactor.
 
 ## Reglas para dependencias externas (SDKs) [INVARIANTE]
 
 1. **Añadir vía Swift Package Manager**.
 2. **`import` confinado a una sola capa** (`Services/` en Features o wrapper en `Core/`).
 3. **Nunca en Views, Models ni ViewModels**.
-
-## Disparadores de evolución [INVARIANTE]
-
-| Carpeta / archivo | Detonante |
-|---|---|
-| `App/AppDependencies.swift` | 1er servicio con protocolo + impl real |
-| `App/PersistenceStack.swift` | Schema de SwiftData con >3 `@Model` |
-| `Features/*/Services/` | 1ª llamada a API externa en la feature |
-| `Features/*/ViewModels/` | View pasa de ~100 LOC o lógica no trivial |
-| `Scenes/*/XRouter.swift` | Scene con >1 sub-vista navegable |
-| `Core/Models/` | 2ª feature necesita leer/escribir el mismo `@Model` |
