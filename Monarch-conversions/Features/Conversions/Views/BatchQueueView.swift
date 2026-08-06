@@ -35,16 +35,8 @@ struct BatchQueueView: View {
             VStack(spacing: 8) {
                 ForEach(items) { item in
                     BatchQueueItemRow(
-                        item: BatchQueueItem(
-                            name: item.name,
-                            format: item.format,
-                            dimensions: item.dimensions,
-                            originalSize: item.originalSize,
-                            targetFormat: item.targetFormat,
-                            targetSize: item.targetSize,
-                            reductionPercentage: item.reductionPercentage,
-                            isSelected: selectedId == item.id
-                        )
+                        item: item,
+                        isSelected: selectedId == item.id
                     ) {
                         selectedId = item.id
                     }

@@ -4,10 +4,10 @@ struct ConvertScene: View {
     var onSelectTab: ((AppTab) -> Void)? = nil
     
     @State private var items: [BatchQueueItem] = [
-        BatchQueueItem(name: "hero-banner.png", format: "PNG", dimensions: "4096 × 2731", originalSize: "2.8 MB", targetFormat: "WebP", targetSize: "420 KB", reductionPercentage: "-85%"),
-        BatchQueueItem(name: "product-shot.jpg", format: "JPG", dimensions: "2400 × 1600", originalSize: "4.1 MB", targetFormat: "AVIF", targetSize: "780 KB", reductionPercentage: "-81%"),
-        BatchQueueItem(name: "product-detail.png", format: "PNG", dimensions: "1800 × 2400", originalSize: "1.5 MB", targetFormat: "WebP", targetSize: "210 KB", reductionPercentage: "-86%"),
-        BatchQueueItem(name: "brand-mark.svg", format: "SVG", dimensions: "1200 × 1200", originalSize: "450 KB", targetFormat: "SVG", targetSize: "85 KB", reductionPercentage: "-81%")
+        BatchQueueItem(name: "hero-banner.png", format: .png, dimensions: PixelDimensions(width: 4096, height: 2731), originalSizeBytes: 2_800_000, targetFormat: .webp, targetSizeBytes: 420_000),
+        BatchQueueItem(name: "product-shot.jpg", format: .jpg, dimensions: PixelDimensions(width: 2400, height: 1600), originalSizeBytes: 4_100_000, targetFormat: .avif, targetSizeBytes: 780_000),
+        BatchQueueItem(name: "product-detail.png", format: .png, dimensions: PixelDimensions(width: 1800, height: 2400), originalSizeBytes: 1_500_000, targetFormat: .webp, targetSizeBytes: 210_000),
+        BatchQueueItem(name: "brand-mark.svg", format: .svg, dimensions: PixelDimensions(width: 1200, height: 1200), originalSizeBytes: 450_000, targetFormat: .svg, targetSizeBytes: 85_000)
     ]
     
     @State private var selectedId: UUID? = nil
@@ -17,6 +17,28 @@ struct ConvertScene: View {
             return items.first(where: { $0.id == selectedId })
         }
         return items.first
+    }
+
+    private var originalSizeText: String {
+        guard let item = selectedItem else { return "ORIGINAL: 2.8 MB" }
+        return "ORIGINAL: \(ConversionFormatting.byteSize(item.originalSizeBytes))"
+    }
+
+    private var targetFormatText: String {
+        guard let item = selectedItem else { return "WEBP OPTIMIZED" }
+        return "\(item.targetFormat.rawValue.uppercased()) OPTIMIZED"
+    }
+
+    private var targetSizeText: String {
+        guard let item = selectedItem,
+              let targetBytes = item.targetSizeBytes,
+              let pct = item.reductionPercent else {
+            return "WEBP: 420 KB (-85%)"
+        }
+        let formatStr = item.targetFormat.rawValue.uppercased()
+        let sizeStr = ConversionFormatting.byteSize(targetBytes)
+        let pctStr = ConversionFormatting.reduction(percent: pct)
+        return "\(formatStr): \(sizeStr) (\(pctStr))"
     }
     
     var body: some View {
@@ -45,9 +67,9 @@ struct ConvertScene: View {
                     VStack(alignment: .leading, spacing: 20) {
                         SquooshInspectorView(
                             fileName: selectedItem?.name ?? "hero-banner.png",
-                            originalSizeText: "ORIGINAL: \(selectedItem?.originalSize ?? "2.8 MB")",
-                            targetFormatText: "\(selectedItem?.targetFormat.uppercased() ?? "WEBP") OPTIMIZED",
-                            targetSizeText: "\(selectedItem?.targetFormat.uppercased() ?? "WEBP"): \(selectedItem?.targetSize ?? "420 KB") (\(selectedItem?.reductionPercentage ?? "-85%"))"
+                            originalSizeText: originalSizeText,
+                            targetFormatText: targetFormatText,
+                            targetSizeText: targetSizeText
                         )
                         
                         OutputSettingsView()

@@ -12,15 +12,31 @@ struct Monarch_conversionsApp: App {
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
-            print("Failed to initialize persistent ModelContainer: \(error). Falling back to in-memory container.")
+            print("Failed to initialize persistent ModelContainer: \(error). Destroying old store files and retrying...")
+            removeDefaultStoreFiles()
             do {
-                let inMemoryConfig = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-                return try ModelContainer(for: schema, configurations: [inMemoryConfig])
+                return try ModelContainer(for: schema, configurations: [modelConfiguration])
             } catch {
-                fatalError("Could not create ModelContainer: \(error)")
+                print("Failed persistent retry: \(error). Falling back to in-memory container.")
+                do {
+                    let inMemoryConfig = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+                    return try ModelContainer(for: schema, configurations: [inMemoryConfig])
+                } catch {
+                    fatalError("Could not create ModelContainer: \(error)")
+                }
             }
         }
     }()
+
+    private static func removeDefaultStoreFiles() {
+        let fileManager = FileManager.default
+        guard let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return }
+        let storeFiles = ["default.store", "default.store-shm", "default.store-wal"]
+        for fileName in storeFiles {
+            let fileURL = appSupport.appendingPathComponent(fileName)
+            try? fileManager.removeItem(at: fileURL)
+        }
+    }
 
     var body: some Scene {
         WindowGroup {

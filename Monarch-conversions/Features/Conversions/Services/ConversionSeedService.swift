@@ -12,10 +12,10 @@ struct ConversionSeedService {
             ConversionRecord(
                 fileId: "0417",
                 fileName: "hero-banner.png",
-                inputFormat: "PNG",
-                dimensions: "4096 × 2731",
-                outputFormat: "WebP",
-                outputSize: "684 KB",
+                inputFormat: .png,
+                dimensions: PixelDimensions(width: 4096, height: 2731),
+                outputFormat: .webp,
+                outputSizeBytes: 684_000,
                 project: "Marketing",
                 status: .working,
                 timestamp: Date()
@@ -23,10 +23,10 @@ struct ConversionSeedService {
             ConversionRecord(
                 fileId: "0416",
                 fileName: "product-shot.jpg",
-                inputFormat: "JPG",
-                dimensions: "2400 × 1600",
-                outputFormat: "AVIF",
-                outputSize: "412 KB",
+                inputFormat: .jpg,
+                dimensions: PixelDimensions(width: 2400, height: 1600),
+                outputFormat: .avif,
+                outputSizeBytes: 412_000,
                 project: "Storefront",
                 status: .working,
                 timestamp: Date().addingTimeInterval(-60)
@@ -34,10 +34,10 @@ struct ConversionSeedService {
             ConversionRecord(
                 fileId: "0415",
                 fileName: "brand-mark.svg",
-                inputFormat: "SVG",
-                dimensions: "1200 × 1200",
-                outputFormat: "PNG",
-                outputSize: "96 KB",
+                inputFormat: .svg,
+                dimensions: PixelDimensions(width: 1200, height: 1200),
+                outputFormat: .png,
+                outputSizeBytes: 96_000,
                 project: "Brand",
                 status: .working,
                 timestamp: Date().addingTimeInterval(-120)
@@ -45,10 +45,10 @@ struct ConversionSeedService {
             ConversionRecord(
                 fileId: "0414",
                 fileName: "event-poster.tiff",
-                inputFormat: "TIF",
-                dimensions: "3000 × 4500",
-                outputFormat: "JPG",
-                outputSize: "1.2 MB",
+                inputFormat: .tif,
+                dimensions: PixelDimensions(width: 3000, height: 4500),
+                outputFormat: .jpg,
+                outputSizeBytes: 1_200_000,
                 project: "Events",
                 status: .done,
                 timestamp: Date().addingTimeInterval(-180)
@@ -56,10 +56,10 @@ struct ConversionSeedService {
             ConversionRecord(
                 fileId: "0413",
                 fileName: "launch-grid.jpg",
-                inputFormat: "JPG",
-                dimensions: "2048 × 1365",
-                outputFormat: "WebP",
-                outputSize: "328 KB",
+                inputFormat: .jpg,
+                dimensions: PixelDimensions(width: 2048, height: 1365),
+                outputFormat: .webp,
+                outputSizeBytes: 328_000,
                 project: "Campaign",
                 status: .working,
                 timestamp: Date().addingTimeInterval(-240)
@@ -67,10 +67,10 @@ struct ConversionSeedService {
             ConversionRecord(
                 fileId: "0412",
                 fileName: "product-detail.png",
-                inputFormat: "PNG",
-                dimensions: "1800 × 2400",
-                outputFormat: "AVIF",
-                outputSize: "221 KB",
+                inputFormat: .png,
+                dimensions: PixelDimensions(width: 1800, height: 2400),
+                outputFormat: .avif,
+                outputSizeBytes: 221_000,
                 project: "Storefront",
                 status: .working,
                 timestamp: Date().addingTimeInterval(-240)
