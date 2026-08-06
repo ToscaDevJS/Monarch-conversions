@@ -38,9 +38,6 @@ struct TopNavHeaderView: View {
                 NavItem(title: "COMPRESS", isActive: activeTab == .compress, hasDropdown: true) {
                     onSelectTab?(.compress)
                 }
-                NavItem(title: "HISTORY", isActive: activeTab == .history, hasDropdown: true) {
-                    onSelectTab?(.history)
-                }
                 NavItem(title: "SETTINGS", isActive: activeTab == .settings) {
                     onSelectTab?(.settings)
                 }
