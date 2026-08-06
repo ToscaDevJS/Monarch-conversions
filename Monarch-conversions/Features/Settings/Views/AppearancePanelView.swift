@@ -47,11 +47,11 @@ struct AppearancePanelView: View {
                 .padding(16)
                 .frame(width: 160, height: 104, alignment: .topLeading)
                 .background(
-                    RoundedRectangle(cornerRadius: 8)
+                    Rectangle()
                         .fill(settings.appearance == .system ? MonarchUI.Color.surface : MonarchUI.Color.background)
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: 8)
+                    Rectangle()
                         .stroke(settings.appearance == .system ? MonarchUI.Color.accentViolet : MonarchUI.Color.divider, lineWidth: 1)
                 )
                 .onTapGesture {
@@ -61,11 +61,11 @@ struct AppearancePanelView: View {
         }
         .padding(20)
         .background(
-            RoundedRectangle(cornerRadius: 8)
+            Rectangle()
                 .fill(MonarchUI.Color.surface)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 8)
+            Rectangle()
                 .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
     }
@@ -95,7 +95,6 @@ private struct AppearanceCard: View {
                 }
                 .frame(width: 152, height: 42)
                 .background(isDarkPreview ? SwiftUI.Color(hex: "#090909") : SwiftUI.Color(hex: "#FFFFFF"))
-                .clipShape(RoundedRectangle(cornerRadius: 4))
                 
                 HStack {
                     Text(title)
@@ -111,18 +110,21 @@ private struct AppearanceCard: View {
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(MonarchUI.Color.accentVioletBg)
-                            .clipShape(Capsule())
+                            .overlay(
+                                Rectangle()
+                                    .stroke(MonarchUI.Color.accentVioletBorder, lineWidth: 1)
+                            )
                     }
                 }
             }
             .padding(14)
             .frame(width: 180, height: 104)
             .background(
-                RoundedRectangle(cornerRadius: 8)
+                Rectangle()
                     .fill(isSelected ? MonarchUI.Color.background : MonarchUI.Color.surface)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 8)
+                Rectangle()
                     .stroke(isSelected ? MonarchUI.Color.accentViolet : MonarchUI.Color.divider, lineWidth: isSelected ? 1.5 : 1)
             )
         }

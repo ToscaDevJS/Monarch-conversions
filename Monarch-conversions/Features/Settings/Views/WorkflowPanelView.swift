@@ -34,11 +34,11 @@ struct WorkflowPanelView: View {
         }
         .padding(20)
         .background(
-            RoundedRectangle(cornerRadius: 8)
+            Rectangle()
                 .fill(MonarchUI.Color.surface)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 8)
+            Rectangle()
                 .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
     }

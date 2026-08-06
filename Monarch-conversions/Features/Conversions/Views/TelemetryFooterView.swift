@@ -62,11 +62,11 @@ struct TelemetryFooterView: View {
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(
-                        RoundedRectangle(cornerRadius: 4)
+                        Rectangle()
                             .fill(SwiftUI.Color(hex: "#252525"))
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 4)
+                        Rectangle()
                             .stroke(SwiftUI.Color(hex: "#333333"), lineWidth: 1)
                     )
                 }
