@@ -14,12 +14,13 @@ struct SettingsSidebarView: View {
     @Binding var selectedSection: SettingsSection
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 22) {
             // General Group
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text("GENERAL")
-                    .font(MonarchUI.Font.sans(size: 11, weight: .bold))
-                    .foregroundStyle(MonarchUI.Color.textSecondary)
+                    .font(MonarchUI.Font.mono(size: 11, weight: .regular))
+                    .foregroundStyle(MonarchUI.Color.textDim)
+                    .tracking(0.8)
                     .padding(.bottom, 6)
                 
                 SidebarItem(title: "Appearance", isSelected: selectedSection == .appearance) {
@@ -34,10 +35,12 @@ struct SettingsSidebarView: View {
             }
             
             // Workspace Group
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text("WORKSPACE")
-                    .font(MonarchUI.Font.sans(size: 11, weight: .bold))
-                    .foregroundStyle(MonarchUI.Color.textSecondary)
+                    .font(MonarchUI.Font.mono(size: 11, weight: .regular))
+                    .foregroundStyle(MonarchUI.Color.textDim)
+                    .tracking(0.8)
+                    .padding(.top, 14)
                     .padding(.bottom, 6)
                 
                 SidebarItem(title: "Conversion defaults", isSelected: selectedSection == .conversionDefaults) {
@@ -50,7 +53,14 @@ struct SettingsSidebarView: View {
             
             Spacer()
         }
-        .frame(width: 201)
+        .padding(.trailing, 28)
+        .frame(width: 230, alignment: .leading)
+        .overlay(
+            Rectangle()
+                .fill(MonarchUI.Color.divider)
+                .frame(width: 1),
+            alignment: .trailing
+        )
     }
 }
 
@@ -63,19 +73,21 @@ private struct SidebarItem: View {
         Button(action: action) {
             HStack {
                 Text(title)
-                    .font(MonarchUI.Font.sans(size: 13, weight: isSelected ? .semibold : .regular))
+                    .font(MonarchUI.Font.sans(size: 14, weight: isSelected ? .medium : .regular))
                     .foregroundStyle(isSelected ? MonarchUI.Color.textPrimary : MonarchUI.Color.textSecondary)
                 Spacer()
             }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .frame(height: 38)
             .background(
                 Rectangle()
-                    .fill(isSelected ? MonarchUI.Color.surface : SwiftUI.Color.clear)
+                    .fill(isSelected ? MonarchUI.Color.sidebarActiveBg : SwiftUI.Color.clear)
             )
             .overlay(
                 Rectangle()
-                    .stroke(isSelected ? MonarchUI.Color.surfaceBorder : SwiftUI.Color.clear, lineWidth: 1)
+                    .fill(isSelected ? MonarchUI.Color.accentViolet : SwiftUI.Color.clear)
+                    .frame(width: 2),
+                alignment: .leading
             )
         }
         .buttonStyle(.plain)

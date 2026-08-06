@@ -86,10 +86,10 @@ private struct NavItem: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 5) {
-                if isActive {
-                    Image(systemName: "sun.max.fill")
+                if title == "STUDIO" {
+                    Image(systemName: "sun.max")
                         .font(.system(size: 10))
-                        .foregroundStyle(MonarchUI.Color.accentViolet)
+                        .foregroundStyle(MonarchUI.Color.textMuted)
                 }
                 
                 Text(title)
@@ -99,10 +99,10 @@ private struct NavItem: View {
                 if hasDropdown {
                     Image(systemName: "chevron.down")
                         .font(.system(size: 8, weight: .bold))
-                        .foregroundStyle(isActive ? MonarchUI.Color.accentViolet : MonarchUI.Color.textMuted)
+                        .foregroundStyle(MonarchUI.Color.textMuted)
                 }
             }
-            .padding(.bottom, isActive ? 2 : 0)
+            .frame(height: 32)
             .overlay(
                 Rectangle()
                     .fill(isActive ? MonarchUI.Color.accentViolet : SwiftUI.Color.clear)

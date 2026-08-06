@@ -8,13 +8,23 @@ enum MonarchUI {
         static let divider = SwiftUI.Color(hex: "#292929")
         
         static let textPrimary = SwiftUI.Color(hex: "#F4F4F2")
-        static let textSecondary = SwiftUI.Color(hex: "#9C9C9C")
-        static let textMuted = SwiftUI.Color(hex: "#8F8F8F")
+        static let textSecondary = SwiftUI.Color(hex: "#A0A0A0")
+        static let textSubtle = SwiftUI.Color(hex: "#9B9B9B")
+        static let textMuted = SwiftUI.Color(hex: "#888888")
         static let textDim = SwiftUI.Color(hex: "#777777")
         
         static let accentViolet = SwiftUI.Color(hex: "#A78BFA")
         static let accentVioletBg = SwiftUI.Color(hex: "#17121F")
         static let accentVioletBorder = SwiftUI.Color(hex: "#3F305C")
+        
+        static let sidebarActiveBg = SwiftUI.Color(hex: "#1B1821")
+        static let cardDarkBg = SwiftUI.Color(hex: "#17131D")
+        static let cardLightBg = SwiftUI.Color(hex: "#111111")
+        static let cardDarkMockupBg = SwiftUI.Color(hex: "#0B0B0B")
+        static let cardDarkMockupBorder = SwiftUI.Color(hex: "#36313D")
+        static let cardLightMockupBg = SwiftUI.Color(hex: "#F4F4F2")
+        static let cardLightMockupBorder = SwiftUI.Color(hex: "#D8D8D5")
+        static let fieldBorder = SwiftUI.Color(hex: "#3B3B3B")
         
         static let statusGreen = SwiftUI.Color(hex: "#78C86B")
         static let statusGreenGlow = SwiftUI.Color(hex: "#163414")

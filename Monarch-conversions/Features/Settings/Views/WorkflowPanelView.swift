@@ -4,43 +4,47 @@ struct WorkflowPanelView: View {
     @Bindable var settings: UserSettings
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text("Workflow")
-                    .font(MonarchUI.Font.sans(size: 16, weight: .semibold))
+                    .font(MonarchUI.Font.sans(size: 18, weight: .medium))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
                 Text("Fine-tune small details that speed up everyday conversion work.")
                     .font(MonarchUI.Font.sans(size: 13))
-                    .foregroundStyle(MonarchUI.Color.textSecondary)
+                    .foregroundStyle(MonarchUI.Color.textSubtle)
             }
             
             HStack {
-                VStack(alignment: .leading, spacing: 3) {
+                VStack(alignment: .leading, spacing: 2) {
                     Text("Notify when a conversion finishes")
-                        .font(MonarchUI.Font.sans(size: 13, weight: .medium))
+                        .font(MonarchUI.Font.sans(size: 14))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
-                    Text("Browser/OS notifications for completed files")
+                    Text("Browser notifications for completed files")
                         .font(MonarchUI.Font.sans(size: 12))
-                        .foregroundStyle(MonarchUI.Color.textSecondary)
+                        .foregroundStyle(MonarchUI.Color.textMuted)
                 }
                 
                 Spacer()
                 
-                Toggle("", isOn: $settings.notifyOnFinish)
-                    .labelsHidden()
-                    .toggleStyle(SwitchToggleStyle(tint: MonarchUI.Color.accentViolet))
+                Button {
+                    settings.notifyOnFinish.toggle()
+                } label: {
+                    HStack {
+                        if !settings.notifyOnFinish { Spacer() }
+                        Rectangle()
+                            .fill(settings.notifyOnFinish ? MonarchUI.Color.accentVioletBg : MonarchUI.Color.textMuted)
+                            .frame(width: 16, height: 16)
+                        if settings.notifyOnFinish { Spacer() }
+                    }
+                    .padding(2)
+                    .frame(width: 36, height: 20)
+                    .background(settings.notifyOnFinish ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#292929"))
+                }
+                .buttonStyle(.plain)
             }
-            .padding(.top, 4)
+            .frame(height: 36)
         }
-        .padding(20)
-        .background(
-            Rectangle()
-                .fill(MonarchUI.Color.surface)
-        )
-        .overlay(
-            Rectangle()
-                .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
-        )
+        .padding(.top, 24)
     }
 }
 

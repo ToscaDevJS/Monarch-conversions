@@ -12,19 +12,20 @@ struct SettingsScene: View {
                 
                 SettingsHeadingView()
                 
-                HStack(alignment: .top, spacing: 40) {
+                HStack(alignment: .top, spacing: 0) {
                     SettingsSidebarView(selectedSection: $selectedSection)
                     
                     ScrollView {
-                        VStack(spacing: 24) {
+                        VStack(alignment: .leading, spacing: 0) {
                             AppearancePanelView(settings: userSettings)
                             LanguagePanelView(settings: userSettings)
                             WorkflowPanelView(settings: userSettings)
                         }
+                        .padding(.leading, 42)
+                        .frame(maxWidth: 770, alignment: .leading)
                     }
-                    .frame(maxWidth: 770)
                 }
-                .padding(.top, 32)
+                .padding(.top, 30)
             }
             .padding(28)
             .background(MonarchUI.Color.background)

@@ -5,127 +5,153 @@ struct AppearancePanelView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text("Appearance")
-                    .font(MonarchUI.Font.sans(size: 16, weight: .semibold))
+                    .font(MonarchUI.Font.sans(size: 18, weight: .medium))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
                 Text("Choose the color scheme for your workspace.")
                     .font(MonarchUI.Font.sans(size: 13))
-                    .foregroundStyle(MonarchUI.Color.textSecondary)
+                    .foregroundStyle(MonarchUI.Color.textSubtle)
             }
             
-            HStack(spacing: 16) {
+            HStack(spacing: 12) {
                 // Dark Option Card
-                AppearanceCard(
-                    title: "Dark",
-                    badge: settings.appearance == .dark ? "ACTIVE" : nil,
-                    isSelected: settings.appearance == .dark,
-                    isDarkPreview: true
-                ) {
+                DarkAppearanceCard(isSelected: settings.appearance == .dark) {
                     settings.appearance = .dark
                 }
                 
                 // Light Option Card
-                AppearanceCard(
-                    title: "Light",
-                    badge: settings.appearance == .light ? "ACTIVE" : nil,
-                    isSelected: settings.appearance == .light,
-                    isDarkPreview: false
-                ) {
+                LightAppearanceCard(isSelected: settings.appearance == .light) {
                     settings.appearance = .light
                 }
                 
-                // System Option Card
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("SYSTEM SETTING")
-                        .font(MonarchUI.Font.sans(size: 11, weight: .bold))
-                        .foregroundStyle(MonarchUI.Color.textSecondary)
-                    Text("Use device preference")
-                        .font(MonarchUI.Font.sans(size: 13))
-                        .foregroundStyle(MonarchUI.Color.textPrimary)
-                }
-                .padding(16)
-                .frame(width: 160, height: 104, alignment: .topLeading)
-                .background(
-                    Rectangle()
-                        .fill(settings.appearance == .system ? MonarchUI.Color.surface : MonarchUI.Color.background)
-                )
-                .overlay(
-                    Rectangle()
-                        .stroke(settings.appearance == .system ? MonarchUI.Color.accentViolet : MonarchUI.Color.divider, lineWidth: 1)
-                )
-                .onTapGesture {
+                // System Setting Option (Inline Text)
+                Button {
                     settings.appearance = .system
+                } label: {
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("SYSTEM SETTING")
+                            .font(MonarchUI.Font.mono(size: 11, weight: .regular))
+                            .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#838383"))
+                            .tracking(0.8)
+                        Text("Use device preference")
+                            .font(MonarchUI.Font.sans(size: 13))
+                            .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.textPrimary : SwiftUI.Color(hex: "#C0C0C0"))
+                    }
+                    .padding(.leading, 8)
+                    .frame(height: 104, alignment: .center)
                 }
+                .buttonStyle(.plain)
             }
         }
-        .padding(20)
-        .background(
-            Rectangle()
-                .fill(MonarchUI.Color.surface)
-        )
+        .padding(.bottom, 26)
         .overlay(
             Rectangle()
-                .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
+                .fill(MonarchUI.Color.divider)
+                .frame(height: 1),
+            alignment: .bottom
         )
     }
 }
 
-private struct AppearanceCard: View {
-    let title: String
-    let badge: String?
+private struct DarkAppearanceCard: View {
     let isSelected: Bool
-    let isDarkPreview: Bool
     let action: () -> Void
     
     var body: some View {
         Button(action: action) {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 9) {
                 // Visual Mockup Preview Box
                 HStack(spacing: 4) {
                     Rectangle()
-                        .fill(isDarkPreview ? SwiftUI.Color(hex: "#1A1A1A") : SwiftUI.Color(hex: "#E5E5E5"))
-                        .frame(width: 24, height: 26)
+                        .fill(MonarchUI.Color.accentViolet)
+                        .frame(width: 24)
                     Rectangle()
-                        .fill(isDarkPreview ? SwiftUI.Color(hex: "#262626") : SwiftUI.Color(hex: "#D4D4D4"))
-                        .frame(width: 46, height: 26)
+                        .fill(SwiftUI.Color(hex: "#292929"))
+                        .frame(width: 46)
                     Rectangle()
-                        .fill(isDarkPreview ? SwiftUI.Color(hex: "#333333") : SwiftUI.Color(hex: "#C0C0C0"))
-                        .frame(width: 66, height: 26)
+                        .fill(SwiftUI.Color(hex: "#171717"))
                 }
-                .frame(width: 152, height: 42)
-                .background(isDarkPreview ? SwiftUI.Color(hex: "#090909") : SwiftUI.Color(hex: "#FFFFFF"))
+                .padding(7)
+                .frame(width: 162, height: 42)
+                .background(MonarchUI.Color.cardDarkMockupBg)
+                .overlay(
+                    Rectangle()
+                        .stroke(MonarchUI.Color.cardDarkMockupBorder, lineWidth: 1)
+                )
                 
                 HStack {
-                    Text(title)
+                    Text("Dark")
                         .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
                     
                     Spacer()
                     
-                    if let badge = badge {
-                        Text(badge)
-                            .font(MonarchUI.Font.sans(size: 10, weight: .bold))
+                    if isSelected {
+                        Text("ACTIVE")
+                            .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.accentViolet)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(MonarchUI.Color.accentVioletBg)
-                            .overlay(
-                                Rectangle()
-                                    .stroke(MonarchUI.Color.accentVioletBorder, lineWidth: 1)
-                            )
                     }
                 }
             }
-            .padding(14)
-            .frame(width: 180, height: 104)
-            .background(
-                Rectangle()
-                    .fill(isSelected ? MonarchUI.Color.background : MonarchUI.Color.surface)
-            )
+            .padding(11)
+            .frame(width: 184, height: 104)
+            .background(isSelected ? MonarchUI.Color.cardDarkBg : SwiftUI.Color(hex: "#111111"))
             .overlay(
                 Rectangle()
-                    .stroke(isSelected ? MonarchUI.Color.accentViolet : MonarchUI.Color.divider, lineWidth: isSelected ? 1.5 : 1)
+                    .stroke(isSelected ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#3B3B3B"), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+private struct LightAppearanceCard: View {
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 9) {
+                // Visual Mockup Preview Box
+                HStack(spacing: 4) {
+                    Rectangle()
+                        .fill(SwiftUI.Color(hex: "#635B72"))
+                        .frame(width: 24)
+                    Rectangle()
+                        .fill(SwiftUI.Color(hex: "#D8D8D5"))
+                        .frame(width: 46)
+                    Rectangle()
+                        .fill(SwiftUI.Color.white)
+                }
+                .padding(7)
+                .frame(width: 162, height: 42)
+                .background(MonarchUI.Color.cardLightMockupBg)
+                .overlay(
+                    Rectangle()
+                        .stroke(MonarchUI.Color.cardLightMockupBorder, lineWidth: 1)
+                )
+                
+                HStack {
+                    Text("Light")
+                        .font(MonarchUI.Font.sans(size: 13, weight: .medium))
+                        .foregroundStyle(SwiftUI.Color(hex: "#D6D6D6"))
+                    
+                    Spacer()
+                    
+                    if isSelected {
+                        Text("ACTIVE")
+                            .font(MonarchUI.Font.mono(size: 11, weight: .regular))
+                            .foregroundStyle(MonarchUI.Color.accentViolet)
+                    }
+                }
+            }
+            .padding(11)
+            .frame(width: 184, height: 104)
+            .background(SwiftUI.Color(hex: "#111111"))
+            .overlay(
+                Rectangle()
+                    .stroke(isSelected ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#3B3B3B"), lineWidth: 1)
             )
         }
         .buttonStyle(.plain)
