@@ -1,0 +1,323 @@
+import SwiftUI
+
+struct ConversionDetailModalView: View {
+    let record: ConversionRecord
+    let onClose: () -> Void
+    
+    var body: some View {
+        ZStack {
+            // Semi-transparent Backdrop
+            SwiftUI.Color.black.opacity(0.68)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    onClose()
+                }
+            
+            // Modal Card Box
+            VStack(spacing: 0) {
+                // Header Bar
+                HStack {
+                    HStack(spacing: 11) {
+                        if record.status == .working {
+                            HStack(spacing: 4) {
+                                Text("↻ Working")
+                                    .font(MonarchUI.Font.sans(size: 12, weight: .semibold))
+                                    .foregroundStyle(MonarchUI.Color.accentVioletBg)
+                            }
+                            .padding(.horizontal, 10)
+                            .frame(height: 25)
+                            .background(MonarchUI.Color.accentViolet)
+                            .clipShape(Capsule())
+                        } else {
+                            HStack(spacing: 4) {
+                                Text("✓ Done")
+                                    .font(MonarchUI.Font.sans(size: 11, weight: .medium))
+                                    .foregroundStyle(MonarchUI.Color.pillDoneText)
+                            }
+                            .padding(.horizontal, 10)
+                            .frame(height: 25)
+                            .background(MonarchUI.Color.pillDoneBg)
+                            .clipShape(Capsule())
+                        }
+                        
+                        Text("Batch \(record.fileId)")
+                            .font(MonarchUI.Font.mono(size: 14))
+                            .foregroundStyle(MonarchUI.Color.textSecondary)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: onClose) {
+                        Text("×")
+                            .font(MonarchUI.Font.sans(size: 17))
+                            .foregroundStyle(SwiftUI.Color(hex: "#B8B8B8"))
+                            .frame(width: 28, height: 28)
+                            .overlay(
+                                Rectangle()
+                                    .stroke(SwiftUI.Color(hex: "#3A3A3A"), lineWidth: 1)
+                            )
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.horizontal, 24)
+                .frame(height: 74)
+                .overlay(
+                    Rectangle()
+                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .frame(height: 1),
+                    alignment: .bottom
+                )
+                
+                // Title Block
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(alignment: .firstTextBaseline, spacing: 12) {
+                        Text("Conversion details")
+                            .font(MonarchUI.Font.sans(size: 20, weight: .medium))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                            .tracking(-0.3)
+                        
+                        Text("Queued just now")
+                            .font(MonarchUI.Font.sans(size: 12))
+                            .foregroundStyle(MonarchUI.Color.textMuted)
+                    }
+                    
+                    HStack(spacing: 9) {
+                        Text("Original file")
+                            .font(MonarchUI.Font.sans(size: 12))
+                            .foregroundStyle(MonarchUI.Color.textSecondary)
+                        
+                        Text(record.fileName)
+                            .font(MonarchUI.Font.mono(size: 12))
+                            .foregroundStyle(SwiftUI.Color(hex: "#E8E8E6"))
+                        
+                        Button {} label: {
+                            Text("Copy name")
+                                .font(MonarchUI.Font.sans(size: 12))
+                                .foregroundStyle(MonarchUI.Color.accentViolet)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 24)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: 112)
+                .overlay(
+                    Rectangle()
+                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .frame(height: 1),
+                    alignment: .bottom
+                )
+                
+                // Input -> Output Row
+                HStack(spacing: 0) {
+                    // Input Column
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("INPUT")
+                            .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
+                            .foregroundStyle(SwiftUI.Color(hex: "#B8B8B8"))
+                            .tracking(0.6)
+                        
+                        HStack(spacing: 9) {
+                            Text(record.inputFormat.uppercased())
+                                .font(MonarchUI.Font.sans(size: 10, weight: .semibold))
+                                .foregroundStyle(.white)
+                                .frame(width: 28, height: 28)
+                                .background(SwiftUI.Color(hex: "#393939"))
+                            
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text("\(record.inputFormat.uppercased()) image")
+                                    .font(MonarchUI.Font.sans(size: 14))
+                                    .foregroundStyle(MonarchUI.Color.textPrimary)
+                                Text("\(record.dimensions) px")
+                                    .font(MonarchUI.Font.mono(size: 11))
+                                    .foregroundStyle(MonarchUI.Color.textSubtle)
+                            }
+                        }
+                    }
+                    .frame(width: 220, alignment: .leading)
+                    
+                    // Arrow Indicator
+                    Spacer()
+                    Text("────→")
+                        .font(MonarchUI.Font.mono(size: 18))
+                        .foregroundStyle(MonarchUI.Color.accentViolet)
+                    Spacer()
+                    
+                    // Output Column
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("OUTPUT")
+                            .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
+                            .foregroundStyle(SwiftUI.Color(hex: "#B8B8B8"))
+                            .tracking(0.6)
+                        
+                        HStack(spacing: 9) {
+                            Text(String(record.outputFormat.prefix(1).uppercased()))
+                                .font(MonarchUI.Font.sans(size: 15))
+                                .foregroundStyle(.white)
+                                .frame(width: 28, height: 28)
+                                .background(SwiftUI.Color(hex: "#393939"))
+                            
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text("\(record.outputFormat) image")
+                                    .font(MonarchUI.Font.sans(size: 14))
+                                    .foregroundStyle(MonarchUI.Color.textPrimary)
+                                Text("Quality 82 · \(record.outputSize)")
+                                    .font(MonarchUI.Font.mono(size: 11))
+                                    .foregroundStyle(MonarchUI.Color.textSubtle)
+                            }
+                        }
+                    }
+                    .frame(width: 220, alignment: .leading)
+                }
+                .padding(.horizontal, 24)
+                .frame(height: 126)
+                .overlay(
+                    Rectangle()
+                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .frame(height: 1),
+                    alignment: .bottom
+                )
+                
+                // Conversion Progress Block
+                VStack(alignment: .leading, spacing: 14) {
+                    HStack {
+                        Text("Conversion progress")
+                            .font(MonarchUI.Font.sans(size: 13, weight: .medium))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                        Spacer()
+                        Text(record.status == .working ? "42% complete" : "100% complete")
+                            .font(MonarchUI.Font.mono(size: 12))
+                            .foregroundStyle(MonarchUI.Color.accentViolet)
+                    }
+                    
+                    // Progress Bar track
+                    GeometryReader { pGeo in
+                        ZStack(alignment: .leading) {
+                            Rectangle()
+                                .fill(SwiftUI.Color(hex: "#2A2A2A"))
+                            Rectangle()
+                                .fill(MonarchUI.Color.accentViolet)
+                                .frame(width: record.status == .working ? pGeo.size.width * 0.42 : pGeo.size.width)
+                        }
+                    }
+                    .frame(height: 6)
+                    
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Upload verified")
+                                .font(MonarchUI.Font.sans(size: 11))
+                                .foregroundStyle(MonarchUI.Color.textSecondary)
+                            Text("Complete")
+                                .font(MonarchUI.Font.sans(size: 12))
+                                .foregroundStyle(SwiftUI.Color(hex: "#E6E6E4"))
+                        }
+                        .frame(width: 220, alignment: .leading)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Encoding")
+                                .font(MonarchUI.Font.sans(size: 11))
+                                .foregroundStyle(MonarchUI.Color.textSecondary)
+                            Text(record.status == .working ? "In progress" : "Complete")
+                                .font(MonarchUI.Font.sans(size: 12))
+                                .foregroundStyle(SwiftUI.Color(hex: "#E6E6E4"))
+                        }
+                        .frame(width: 220, alignment: .leading)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Optimize & save")
+                                .font(MonarchUI.Font.sans(size: 11))
+                                .foregroundStyle(MonarchUI.Color.textSecondary)
+                            Text(record.status == .working ? "Waiting" : "Complete")
+                                .font(MonarchUI.Font.sans(size: 12))
+                                .foregroundStyle(record.status == .working ? SwiftUI.Color(hex: "#7F7F7F") : SwiftUI.Color(hex: "#E6E6E4"))
+                        }
+                        Spacer()
+                    }
+                }
+                .padding(.horizontal, 24)
+                .frame(height: 145)
+                .overlay(
+                    Rectangle()
+                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .frame(height: 1),
+                    alignment: .bottom
+                )
+                
+                // Conversion Settings Box
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text("Conversion settings")
+                            .font(MonarchUI.Font.sans(size: 13, weight: .medium))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                        Spacer()
+                        Text("\(record.outputFormat) · Quality 82")
+                            .font(MonarchUI.Font.mono(size: 11))
+                            .foregroundStyle(MonarchUI.Color.textSecondary)
+                    }
+                    
+                    HStack {
+                        Text("Keep original size · Strip metadata · \(record.outputFormat) output")
+                            .font(MonarchUI.Font.mono(size: 11))
+                            .foregroundStyle(SwiftUI.Color(hex: "#B9B9B9"))
+                    }
+                    .padding(.horizontal, 10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(height: 34)
+                    .background(SwiftUI.Color(hex: "#181818"))
+                    .overlay(
+                        Rectangle()
+                            .stroke(SwiftUI.Color(hex: "#2A2A2A"), lineWidth: 1)
+                    )
+                }
+                .padding(.horizontal, 24)
+                .frame(height: 105)
+                .overlay(
+                    Rectangle()
+                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .frame(height: 1),
+                    alignment: .bottom
+                )
+                
+                // Action Buttons Bar
+                HStack(spacing: 12) {
+                    Button {} label: {
+                        Text("Open original")
+                            .font(MonarchUI.Font.sans(size: 13, weight: .medium))
+                            .foregroundStyle(SwiftUI.Color(hex: "#E8E8E6"))
+                            .frame(width: 138, height: 36)
+                            .overlay(
+                                Rectangle()
+                                    .stroke(SwiftUI.Color(hex: "#494949"), lineWidth: 1)
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    
+                    Button(action: onClose) {
+                        Text("Close")
+                            .font(MonarchUI.Font.sans(size: 13, weight: .semibold))
+                            .foregroundStyle(MonarchUI.Color.accentVioletBg)
+                            .frame(width: 84, height: 36)
+                            .background(MonarchUI.Color.accentViolet)
+                    }
+                    .buttonStyle(.plain)
+                    
+                    Spacer()
+                    
+                    Text("Press ESC to close")
+                        .font(MonarchUI.Font.mono(size: 11))
+                        .foregroundStyle(SwiftUI.Color(hex: "#858585"))
+                }
+                .padding(.horizontal, 24)
+                .frame(height: 74)
+            }
+            .frame(width: 760)
+            .background(SwiftUI.Color(hex: "#111111"))
+            .clipShape(RoundedRectangle(cornerRadius: 2))
+            .overlay(
+                RoundedRectangle(cornerRadius: 2)
+                    .stroke(SwiftUI.Color(hex: "#3A3A3A"), lineWidth: 1)
+            )
+            .shadow(color: SwiftUI.Color.black.opacity(0.65), radius: 40, y: 24)
+        }
+    }
+}

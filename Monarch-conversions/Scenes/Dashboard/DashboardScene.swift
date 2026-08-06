@@ -4,34 +4,47 @@ import SwiftData
 struct DashboardScene: View {
     @Environment(\.modelContext) private var modelContext
     @State private var searchText: String = ""
+    @State private var selectedRecord: ConversionRecord? = nil
     var onSelectTab: ((AppTab) -> Void)? = nil
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Main Content Area
+        ZStack {
             VStack(spacing: 0) {
-                TopNavHeaderView(activeTab: .studio, onSelectTab: onSelectTab)
+                // Main Content Area
+                VStack(spacing: 0) {
+                    TopNavHeaderView(activeTab: .studio, onSelectTab: onSelectTab)
+                    
+                    GlobalSearchBarView(searchText: $searchText)
+                        .padding(.top, 43)
+                    
+                    MetricsHeaderView()
+                    
+                    ConversionsTableView { record in
+                        selectedRecord = record
+                    }
+                }
+                .padding(28)
+                .background(MonarchUI.Color.background)
                 
-                GlobalSearchBarView(searchText: $searchText)
-                    .padding(.top, 43)
+                Spacer(minLength: 0)
                 
-                MetricsHeaderView()
-                
-                ConversionsTableView()
+                // Bottom Bars
+                VStack(spacing: 0) {
+                    TelemetryFooterView()
+                    StatusFooterView()
+                }
             }
-            .padding(28)
             .background(MonarchUI.Color.background)
+            .ignoresSafeArea(.all, edges: .bottom)
             
-            Spacer(minLength: 0)
-            
-            // Bottom Bars
-            VStack(spacing: 0) {
-                TelemetryFooterView()
-                StatusFooterView()
+            if let record = selectedRecord {
+                ConversionDetailModalView(record: record) {
+                    selectedRecord = nil
+                }
+                .transition(.opacity)
             }
         }
-        .background(MonarchUI.Color.background)
-        .ignoresSafeArea(.all, edges: .bottom)
+        .animation(.easeInOut(duration: 0.15), value: selectedRecord != nil)
         .onAppear {
             ConversionSeedService.seedInitialDataIfNeeded(modelContext: modelContext)
         }
