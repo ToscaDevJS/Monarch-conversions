@@ -59,28 +59,47 @@ struct LanguagePanelView: View {
                 .accessibilityHint("Double tap to change display language")
                 
                 // Date Format Field Box
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("DATE FORMAT")
-                        .font(MonarchUI.Font.mono(size: 10, weight: .regular))
-                        .foregroundStyle(MonarchUI.Color.textMuted)
-                        .tracking(0.7)
-                    
-                    HStack {
-                        Text(settings.dateFormat)
-                            .font(MonarchUI.Font.sans(size: 14))
-                            .foregroundStyle(MonarchUI.Color.textPrimary)
-                        Spacer()
-                        Image(systemName: "chevron.down")
-                            .font(.system(size: 10, weight: .bold))
-                            .foregroundStyle(MonarchUI.Color.textMuted)
+                Menu {
+                    ForEach(["Jul 31, 2026", "31/07/2026", "2026-07-31"], id: \.self) { format in
+                        Button {
+                            settings.dateFormat = format
+                        } label: {
+                            HStack {
+                                Text(format)
+                                if settings.dateFormat == format {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        }
                     }
+                } label: {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("DATE FORMAT")
+                            .font(MonarchUI.Font.mono(size: 10, weight: .regular))
+                            .foregroundStyle(MonarchUI.Color.textMuted)
+                            .tracking(0.7)
+                        
+                        HStack {
+                            Text(settings.dateFormat)
+                                .font(MonarchUI.Font.sans(size: 14))
+                                .foregroundStyle(MonarchUI.Color.textPrimary)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(MonarchUI.Color.textMuted)
+                        }
+                    }
+                    .padding(.horizontal, 13)
+                    .frame(width: 212, height: 56)
+                    .overlay(
+                        Rectangle()
+                            .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
+                    )
                 }
-                .padding(.horizontal, 13)
-                .frame(width: 212, height: 56)
-                .overlay(
-                    Rectangle()
-                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
-                )
+                .buttonStyle(.plain)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Date Format, currently \(settings.dateFormat)")
+                .accessibilityHint("Double tap to change date format")
             }
         }
         .padding(.vertical, 24)

@@ -32,11 +32,11 @@ struct AppearancePanelView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         Text("SYSTEM SETTING")
                             .font(MonarchUI.Font.mono(size: 11, weight: .regular))
-                            .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#838383"))
+                            .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.accentViolet : MonarchUI.Color.textMuted)
                             .tracking(0.8)
                         Text("Use device preference")
                             .font(MonarchUI.Font.sans(size: 13))
-                            .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.textPrimary : SwiftUI.Color(hex: "#C0C0C0"))
+                            .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.textPrimary : MonarchUI.Color.textSecondary)
                     }
                     .padding(.leading, 8)
                     .frame(height: 104, alignment: .center)
@@ -71,10 +71,10 @@ private struct DarkAppearanceCard: View {
                         .fill(MonarchUI.Color.accentViolet)
                         .frame(width: 24)
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#292929"))
+                        .fill(MonarchUI.Color.divider)
                         .frame(width: 46)
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#171717"))
+                        .fill(MonarchUI.Color.surface)
                 }
                 .padding(7)
                 .frame(width: 162, height: 42)
@@ -100,10 +100,10 @@ private struct DarkAppearanceCard: View {
             }
             .padding(11)
             .frame(width: 184, height: 104)
-            .background(isSelected ? MonarchUI.Color.cardDarkBg : SwiftUI.Color(hex: "#111111"))
+            .background(isSelected ? MonarchUI.Color.cardDarkBg : MonarchUI.Color.cardLightBg)
             .overlay(
                 Rectangle()
-                    .stroke(isSelected ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#3B3B3B"), lineWidth: 1)
+                    .stroke(isSelected ? MonarchUI.Color.accentViolet : MonarchUI.Color.fieldBorder, lineWidth: 1)
             )
         }
         .buttonStyle(.plain)
@@ -123,10 +123,10 @@ private struct LightAppearanceCard: View {
                 // Visual Mockup Preview Box
                 HStack(spacing: 4) {
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#635B72"))
+                        .fill(MonarchUI.Color.accentVioletBorder)
                         .frame(width: 24)
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#D8D8D5"))
+                        .fill(MonarchUI.Color.cardLightMockupBorder)
                         .frame(width: 46)
                     Rectangle()
                         .fill(SwiftUI.Color.white)
@@ -142,7 +142,7 @@ private struct LightAppearanceCard: View {
                 HStack {
                     Text("Light")
                         .font(MonarchUI.Font.sans(size: 13, weight: .medium))
-                        .foregroundStyle(SwiftUI.Color(hex: "#D6D6D6"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                     
                     Spacer()
                     
@@ -155,10 +155,10 @@ private struct LightAppearanceCard: View {
             }
             .padding(11)
             .frame(width: 184, height: 104)
-            .background(SwiftUI.Color(hex: "#111111"))
+            .background(MonarchUI.Color.cardLightBg)
             .overlay(
                 Rectangle()
-                    .stroke(isSelected ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#3B3B3B"), lineWidth: 1)
+                    .stroke(isSelected ? MonarchUI.Color.accentViolet : MonarchUI.Color.fieldBorder, lineWidth: 1)
             )
         }
         .buttonStyle(.plain)
