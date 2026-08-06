@@ -11,6 +11,10 @@ struct RootView: View {
                 SettingsScene { newTab in
                     router.navigateTo(newTab)
                 }
+            case .convert:
+                ConvertScene { newTab in
+                    router.navigateTo(newTab)
+                }
             default:
                 DashboardScene { newTab in
                     router.navigateTo(newTab)
