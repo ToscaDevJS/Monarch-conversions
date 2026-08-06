@@ -19,28 +19,17 @@ struct WorkflowPanelView: View {
                     Text("Notify when a conversion finishes")
                         .font(MonarchUI.Font.sans(size: 14))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
-                    Text("Browser notifications for completed files")
+                    Text("System notifications for completed files")
                         .font(MonarchUI.Font.sans(size: 12))
                         .foregroundStyle(MonarchUI.Color.textMuted)
                 }
                 
                 Spacer()
                 
-                Button {
-                    settings.notifyOnFinish.toggle()
-                } label: {
-                    HStack {
-                        if !settings.notifyOnFinish { Spacer() }
-                        Rectangle()
-                            .fill(settings.notifyOnFinish ? MonarchUI.Color.accentVioletBg : MonarchUI.Color.textMuted)
-                            .frame(width: 16, height: 16)
-                        if settings.notifyOnFinish { Spacer() }
-                    }
-                    .padding(2)
-                    .frame(width: 36, height: 20)
-                    .background(settings.notifyOnFinish ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#292929"))
-                }
-                .buttonStyle(.plain)
+                Toggle("Notify when a conversion finishes", isOn: $settings.notifyOnFinish)
+                    .labelsHidden()
+                    .toggleStyle(.switch)
+                    .tint(MonarchUI.Color.accentViolet)
             }
             .frame(height: 36)
         }
