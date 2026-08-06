@@ -23,6 +23,7 @@ struct RootView: View {
             }
         }
         .preferredColorScheme(userSettings.preferredColorScheme)
+        .environment(\.locale, userSettings.language.locale)
     }
 }
 

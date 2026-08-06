@@ -34,4 +34,32 @@ struct UserSettingsTests {
         #expect(AppearanceOption.light.colorScheme == .light)
         #expect(AppearanceOption.system.colorScheme == nil)
     }
+
+    @Test func defaultLanguageIsEnglish() async throws {
+        let languageKey = "monarch.userSettings.language"
+        UserDefaults.standard.removeObject(forKey: languageKey)
+        
+        let settings = UserSettings()
+        #expect(settings.language == .english)
+        #expect(settings.language.locale.identifier == "en")
+    }
+
+    @Test func languagePersistence() async throws {
+        let languageKey = "monarch.userSettings.language"
+        UserDefaults.standard.removeObject(forKey: languageKey)
+        
+        let settings = UserSettings()
+        settings.language = .spanish
+        
+        #expect(UserDefaults.standard.string(forKey: languageKey) == "es")
+        #expect(settings.language == .spanish)
+        #expect(settings.language.locale.identifier == "es")
+    }
+
+    @Test func languageLocaleMapping() async throws {
+        #expect(AppLanguage.english.locale.identifier == "en")
+        #expect(AppLanguage.spanish.locale.identifier == "es")
+        #expect(AppLanguage.english.displayName == "English (United States)")
+        #expect(AppLanguage.spanish.displayName == "Español")
+    }
 }
