@@ -24,8 +24,12 @@ struct GlobalSearchBarView: View {
             .padding(.horizontal, 6)
             .padding(.vertical, 3)
             .background(
-                RoundedRectangle(cornerRadius: 5)
+                Rectangle()
                     .fill(MonarchUI.Color.shortcutBg)
+            )
+            .overlay(
+                Rectangle()
+                    .stroke(SwiftUI.Color(hex: "#3F3F3F"), lineWidth: 1)
             )
         }
         .padding(.horizontal, 12)

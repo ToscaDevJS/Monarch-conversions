@@ -33,11 +33,11 @@ struct LanguagePanelView: View {
                     .padding(.horizontal, 12)
                     .frame(height: 36)
                     .background(
-                        RoundedRectangle(cornerRadius: 6)
+                        Rectangle()
                             .fill(MonarchUI.Color.background)
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 6)
+                        Rectangle()
                             .stroke(MonarchUI.Color.divider, lineWidth: 1)
                     )
                 }
@@ -61,11 +61,11 @@ struct LanguagePanelView: View {
                     .padding(.horizontal, 12)
                     .frame(height: 36)
                     .background(
-                        RoundedRectangle(cornerRadius: 6)
+                        Rectangle()
                             .fill(MonarchUI.Color.background)
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 6)
+                        Rectangle()
                             .stroke(MonarchUI.Color.divider, lineWidth: 1)
                     )
                 }
@@ -74,11 +74,11 @@ struct LanguagePanelView: View {
         }
         .padding(20)
         .background(
-            RoundedRectangle(cornerRadius: 8)
+            Rectangle()
                 .fill(MonarchUI.Color.surface)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 8)
+            Rectangle()
                 .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
     }

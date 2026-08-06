@@ -70,8 +70,12 @@ private struct SidebarItem: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
             .background(
-                RoundedRectangle(cornerRadius: 6)
+                Rectangle()
                     .fill(isSelected ? MonarchUI.Color.surface : SwiftUI.Color.clear)
+            )
+            .overlay(
+                Rectangle()
+                    .stroke(isSelected ? MonarchUI.Color.surfaceBorder : SwiftUI.Color.clear, lineWidth: 1)
             )
         }
         .buttonStyle(.plain)

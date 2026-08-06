@@ -13,11 +13,11 @@ struct StatusFooterView: View {
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(
-                            RoundedRectangle(cornerRadius: 4)
+                            Rectangle()
                                 .fill(SwiftUI.Color(hex: "#252525"))
                         )
                         .overlay(
-                            RoundedRectangle(cornerRadius: 4)
+                            Rectangle()
                                 .stroke(SwiftUI.Color(hex: "#333333"), lineWidth: 1)
                         )
                     
