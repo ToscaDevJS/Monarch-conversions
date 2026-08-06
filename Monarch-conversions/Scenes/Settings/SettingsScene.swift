@@ -25,6 +25,7 @@ struct SettingsScene: View {
                         .frame(maxWidth: 770, alignment: .leading)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 30)
             }
             .padding(28)
