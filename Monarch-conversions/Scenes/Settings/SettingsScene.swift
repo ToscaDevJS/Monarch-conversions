@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SettingsScene: View {
-    @State private var userSettings = UserSettings()
+    @Bindable var userSettings: UserSettings = UserSettings()
     @State private var selectedSection: SettingsSection = .appearance
     var onSelectTab: ((AppTab) -> Void)? = nil
     

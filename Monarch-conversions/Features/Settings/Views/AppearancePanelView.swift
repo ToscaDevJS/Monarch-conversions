@@ -42,6 +42,10 @@ struct AppearancePanelView: View {
                     .frame(height: 104, alignment: .center)
                 }
                 .buttonStyle(.plain)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("System Setting appearance")
+                .accessibilityHint("Use device system preference")
+                .accessibilityAddTraits(settings.appearance == .system ? [.isButton, .isSelected] : [.isButton])
             }
         }
         .padding(.bottom, 26)
@@ -103,6 +107,9 @@ private struct DarkAppearanceCard: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Dark appearance")
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : [.isButton])
     }
 }
 
@@ -155,6 +162,9 @@ private struct LightAppearanceCard: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Light appearance")
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : [.isButton])
     }
 }
 

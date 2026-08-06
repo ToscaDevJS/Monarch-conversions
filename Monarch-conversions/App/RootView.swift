@@ -3,12 +3,13 @@ import SwiftData
 
 struct RootView: View {
     @State private var router = AppRouter()
+    @State private var userSettings = UserSettings()
     
     var body: some View {
         Group {
             switch router.activeTab {
             case .settings:
-                SettingsScene { newTab in
+                SettingsScene(userSettings: userSettings) { newTab in
                     router.navigateTo(newTab)
                 }
             case .convert:
@@ -21,6 +22,7 @@ struct RootView: View {
                 }
             }
         }
+        .preferredColorScheme(userSettings.preferredColorScheme)
     }
 }
 
