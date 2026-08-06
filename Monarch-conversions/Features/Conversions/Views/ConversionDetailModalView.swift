@@ -118,17 +118,17 @@ struct ConversionDetailModalView: View {
                             .tracking(0.6)
                         
                         HStack(spacing: 9) {
-                            Text(record.inputFormat.uppercased())
+                            Text(record.inputFormat.rawValue.uppercased())
                                 .font(MonarchUI.Font.sans(size: 10, weight: .semibold))
                                 .foregroundStyle(.white)
                                 .frame(width: 28, height: 28)
                                 .background(SwiftUI.Color(hex: "#393939"))
                             
                             VStack(alignment: .leading, spacing: 1) {
-                                Text("\(record.inputFormat.uppercased()) image")
+                                Text("\(record.inputFormat.rawValue.uppercased()) image")
                                     .font(MonarchUI.Font.sans(size: 14))
                                     .foregroundStyle(MonarchUI.Color.textPrimary)
-                                Text("\(record.dimensions) px")
+                                Text("\(ConversionFormatting.dimensions(record.dimensions)) px")
                                     .font(MonarchUI.Font.mono(size: 11))
                                     .foregroundStyle(MonarchUI.Color.textSubtle)
                             }
@@ -151,17 +151,17 @@ struct ConversionDetailModalView: View {
                             .tracking(0.6)
                         
                         HStack(spacing: 9) {
-                            Text(String(record.outputFormat.prefix(1).uppercased()))
+                            Text(String(record.outputFormat.rawValue.prefix(1).uppercased()))
                                 .font(MonarchUI.Font.sans(size: 15))
                                 .foregroundStyle(.white)
                                 .frame(width: 28, height: 28)
                                 .background(SwiftUI.Color(hex: "#393939"))
                             
                             VStack(alignment: .leading, spacing: 1) {
-                                Text("\(record.outputFormat) image")
+                                Text("\(record.outputFormat.rawValue) image")
                                     .font(MonarchUI.Font.sans(size: 14))
                                     .foregroundStyle(MonarchUI.Color.textPrimary)
-                                Text("Quality 82 · \(record.outputSize)")
+                                Text("Quality 82 · \(ConversionFormatting.byteSize(record.outputSizeBytes))")
                                     .font(MonarchUI.Font.mono(size: 11))
                                     .foregroundStyle(MonarchUI.Color.textSubtle)
                             }
@@ -250,13 +250,13 @@ struct ConversionDetailModalView: View {
                             .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                         Spacer()
-                        Text("\(record.outputFormat) · Quality 82")
+                        Text("\(record.outputFormat.rawValue) · Quality 82")
                             .font(MonarchUI.Font.mono(size: 11))
                             .foregroundStyle(MonarchUI.Color.textSecondary)
                     }
                     
                     HStack {
-                        Text("Keep original size · Strip metadata · \(record.outputFormat) output")
+                        Text("Keep original size · Strip metadata · \(record.outputFormat.rawValue) output")
                             .font(MonarchUI.Font.mono(size: 11))
                             .foregroundStyle(SwiftUI.Color(hex: "#B9B9B9"))
                     }

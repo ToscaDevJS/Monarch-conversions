@@ -151,7 +151,7 @@ private struct TableRowView: View {
                 
                 // File name
                 HStack(spacing: 9) {
-                    Text(record.inputFormat.uppercased())
+                    Text(record.inputFormat.rawValue.uppercased())
                         .font(MonarchUI.Font.sans(size: 8, weight: .semibold))
                         .foregroundStyle(.white)
                         .frame(width: 20, height: 20)
@@ -164,20 +164,20 @@ private struct TableRowView: View {
                 .frame(width: 274, alignment: .leading)
                 
                 // Dimensions
-                Text(record.dimensions)
+                Text(ConversionFormatting.dimensions(record.dimensions))
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
                     .frame(width: 235, alignment: .leading)
                 
                 // Output
                 HStack(spacing: 9) {
-                    Text(String(record.outputFormat.prefix(1)).uppercased())
+                    Text(String(record.outputFormat.rawValue.prefix(1)).uppercased())
                         .font(MonarchUI.Font.sans(size: 12))
                         .foregroundStyle(.white)
                         .frame(width: 20, height: 20)
                         .background(SwiftUI.Color(hex: "#474747"))
                     
-                    Text("\(record.outputFormat) · \(record.outputSize)")
+                    Text("\(record.outputFormat.rawValue) · \(ConversionFormatting.byteSize(record.outputSizeBytes))")
                         .font(MonarchUI.Font.sans(size: 13))
                         .foregroundStyle(MonarchUI.Color.textMuted)
                 }
