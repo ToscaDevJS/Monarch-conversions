@@ -2,13 +2,24 @@ import SwiftUI
 
 struct BatchQueueItemRow: View {
     let item: BatchQueueItem
+    let isSelected: Bool
     let onSelect: () -> Void
     
+    private var trailingText: String {
+        if let targetBytes = item.targetSizeBytes, let pct = item.reductionPercent {
+            let sizeStr = ConversionFormatting.byteSize(targetBytes)
+            let pctStr = ConversionFormatting.reduction(percent: pct)
+            return "\(item.targetFormat.rawValue) · \(sizeStr) (\(pctStr))"
+        } else {
+            return item.targetFormat.rawValue
+        }
+    }
+
     var body: some View {
         Button(action: onSelect) {
             HStack {
                 HStack(spacing: 10) {
-                    Text(item.format)
+                    Text(item.format.rawValue.uppercased())
                         .font(MonarchUI.Font.sans(size: 8, weight: .bold))
                         .foregroundStyle(SwiftUI.Color.white)
                         .frame(width: 26, height: 26)
@@ -19,7 +30,7 @@ struct BatchQueueItemRow: View {
                         Text(item.name)
                             .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                             .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
-                        Text("\(item.dimensions) · \(item.originalSize)")
+                        Text("\(ConversionFormatting.dimensions(item.dimensions)) · \(ConversionFormatting.byteSize(item.originalSizeBytes))")
                             .font(MonarchUI.Font.mono(size: 11))
                             .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
                     }
@@ -27,8 +38,8 @@ struct BatchQueueItemRow: View {
                 
                 Spacer()
                 
-                if item.isSelected {
-                    Text("\(item.targetFormat) · \(item.targetSize) (\(item.reductionPercentage))")
+                if isSelected {
+                    Text(trailingText)
                         .font(MonarchUI.Font.sans(size: 11, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.accentVioletBg)
                         .padding(.horizontal, 8)
@@ -36,17 +47,17 @@ struct BatchQueueItemRow: View {
                         .background(MonarchUI.Color.accentViolet)
                         .clipShape(Capsule())
                 } else {
-                    Text("\(item.targetFormat) · \(item.targetSize) (\(item.reductionPercentage))")
+                    Text(trailingText)
                         .font(MonarchUI.Font.mono(size: 11))
                         .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
                 }
             }
             .padding(12)
-            .background(item.isSelected ? SwiftUI.Color(hex: "#1A1720") : SwiftUI.Color(hex: "#101010"))
+            .background(isSelected ? SwiftUI.Color(hex: "#1A1720") : SwiftUI.Color(hex: "#101010"))
             .clipShape(RoundedRectangle(cornerRadius: 2))
             .overlay(
                 RoundedRectangle(cornerRadius: 2)
-                    .stroke(item.isSelected ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#292929"), lineWidth: 1)
+                    .stroke(isSelected ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#292929"), lineWidth: 1)
             )
         }
         .buttonStyle(.plain)

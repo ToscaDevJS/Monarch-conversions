@@ -1,0 +1,52 @@
+schema: spec-driven
+
+context: |
+  Tech stack: macOS SwiftUI app (Xcode project Monarch-conversions.xcodeproj), SwiftData, @Observable
+  Architecture: Vertical slicing -- App -> Scenes -> Features -> Core (see ARCHITECTURE.md)
+  Testing: xcodebuild test, XCTest (unit + UI targets), Strict TDD enabled
+  Style: Spanish architecture docs, English code/SDD artifacts
+
+strict_tdd: true
+
+testing:
+  test_command: >-
+    xcodebuild test -project "Monarch-conversions.xcodeproj"
+    -scheme "Monarch-conversions" -destination "platform=macOS"
+  framework: XCTest
+  unit_target: Monarch-conversionsTests
+  ui_target: Monarch-conversionsUITests
+  coverage_command: ""
+  coverage_threshold: 0
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Respect App -> Scenes -> Features -> Core dependency direction (never backward)
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    guidelines:
+      - Follow existing code patterns (vertical slicing, feature self-containment)
+      - A feature never imports another feature
+      - Core imports nothing upward (only SwiftUI/Foundation/platform)
+    tdd: true
+    test_command: >-
+      xcodebuild test -project "Monarch-conversions.xcodeproj"
+      -scheme "Monarch-conversions" -destination "platform=macOS"
+  verify:
+    test_command: >-
+      xcodebuild test -project "Monarch-conversions.xcodeproj"
+      -scheme "Monarch-conversions" -destination "platform=macOS"
+    build_command: >-
+      xcodebuild build -project "Monarch-conversions.xcodeproj"
+      -scheme "Monarch-conversions" -destination "platform=macOS"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
