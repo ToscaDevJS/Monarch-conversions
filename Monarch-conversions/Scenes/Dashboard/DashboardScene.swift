@@ -4,12 +4,13 @@ import SwiftData
 struct DashboardScene: View {
     @Environment(\.modelContext) private var modelContext
     @State private var searchText: String = ""
+    var onSelectTab: ((AppTab) -> Void)? = nil
     
     var body: some View {
         VStack(spacing: 0) {
             // Main Content Area
             VStack(spacing: 0) {
-                TopNavHeaderView()
+                TopNavHeaderView(activeTab: .studio, onSelectTab: onSelectTab)
                 
                 GlobalSearchBarView(searchText: $searchText)
                     .padding(.top, 43)

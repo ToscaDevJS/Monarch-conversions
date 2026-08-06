@@ -1,56 +1,61 @@
 import SwiftUI
 
 struct TopNavHeaderView: View {
-    @State private var activeTab: String = "STUDIO"
+    var activeTab: AppTab = .studio
+    var onSelectTab: ((AppTab) -> Void)? = nil
     
     var body: some View {
         HStack(spacing: 0) {
             // Logo section
-            HStack(spacing: 9) {
-                // Grid Icon
-                GridIcon()
-                    .frame(width: 27, height: 27)
-                
-                VStack(alignment: .leading, spacing: 1) {
-                    Text("Monarch")
-                        .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
-                        .foregroundStyle(MonarchUI.Color.textPrimary)
-                    Text("image tools")
-                        .font(MonarchUI.Font.mono(size: 10))
-                        .foregroundStyle(MonarchUI.Color.textMuted)
+            Button {
+                onSelectTab?(.studio)
+            } label: {
+                HStack(spacing: 9) {
+                    GridIcon()
+                        .frame(width: 27, height: 27)
+                    
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text("Monarch")
+                            .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                        Text("image tools")
+                            .font(MonarchUI.Font.mono(size: 10))
+                            .foregroundStyle(MonarchUI.Color.textMuted)
+                    }
                 }
             }
+            .buttonStyle(.plain)
             .frame(width: 162, alignment: .leading)
             
             // Nav Links
             HStack(spacing: 28) {
-                NavItem(title: "STUDIO", isActive: activeTab == "STUDIO", hasDropdown: true) {
-                    activeTab = "STUDIO"
+                NavItem(title: "STUDIO", isActive: activeTab == .studio, hasDropdown: true) {
+                    onSelectTab?(.studio)
                 }
-                NavItem(title: "CONVERT", isActive: activeTab == "CONVERT") {
-                    activeTab = "CONVERT"
+                NavItem(title: "CONVERT", isActive: activeTab == .convert) {
+                    onSelectTab?(.convert)
                 }
-                NavItem(title: "COMPRESS", isActive: activeTab == "COMPRESS", hasDropdown: true) {
-                    activeTab = "COMPRESS"
+                NavItem(title: "COMPRESS", isActive: activeTab == .compress, hasDropdown: true) {
+                    onSelectTab?(.compress)
                 }
-                NavItem(title: "HISTORY", isActive: activeTab == "HISTORY", hasDropdown: true) {
-                    activeTab = "HISTORY"
+                NavItem(title: "HISTORY", isActive: activeTab == .history, hasDropdown: true) {
+                    onSelectTab?(.history)
                 }
-                NavItem(title: "SETTINGS", isActive: activeTab == "SETTINGS") {
-                    activeTab = "SETTINGS"
+                NavItem(title: "SETTINGS", isActive: activeTab == .settings) {
+                    onSelectTab?(.settings)
                 }
             }
             .frame(height: 32)
             
             Spacer()
             
-            // Conversions status badge
+            // Status badge
             HStack(spacing: 8) {
                 Rectangle()
                     .fill(MonarchUI.Color.accentViolet)
                     .frame(width: 6, height: 6)
                 
-                Text("CONVERSIONS")
+                Text(activeTab == .settings ? "SETTINGS" : "CONVERSIONS")
                     .font(MonarchUI.Font.mono(size: 11, weight: .semibold))
                     .foregroundStyle(MonarchUI.Color.accentViolet)
             }
@@ -130,7 +135,7 @@ private struct GridIcon: View {
 }
 
 #Preview {
-    TopNavHeaderView()
+    TopNavHeaderView(activeTab: .studio)
         .padding()
         .background(MonarchUI.Color.background)
 }
