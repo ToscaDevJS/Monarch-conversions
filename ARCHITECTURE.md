@@ -16,29 +16,55 @@ Guía de la organización del código y el modelo de crecimiento del proyecto.
 Monarch-conversions/
 ├── App/                                APP SHELL — composición raíz
 │   ├── Monarch_conversionsApp.swift    @main, WindowGroup, ModelContainer
-│   └── RootView.swift                  Contenedor raíz y montaje de DashboardScene
+│   ├── RootView.swift                  Contenedor raíz y switch de escenas
+│   └── Routing/
+│       └── AppRouter.swift             Gestor de navegación activa (AppTab)
 │
 ├── Scenes/                             PANTALLAS DE NIVEL SUPERIOR
-│   └── Dashboard/
-│       └── DashboardScene.swift        Dashboard principal de Monarch image tools
+│   ├── Dashboard/
+│   │   └── DashboardScene.swift        Dashboard principal de Monarch (STUDIO)
+│   ├── Convert/
+│   │   └── ConvertScene.swift          Vista de nueva conversión batch y Squoosh inspector (CONVERT)
+│   └── Settings/
+│       └── SettingsScene.swift         Pantalla de preferencias del workspace (SETTINGS)
 │
 ├── Features/                           BLOQUES DE PRODUCTO CON DOMINIO PROPIO
-│   └── Conversions/
+│   ├── Conversions/
+│   │   ├── Models/
+│   │   │   ├── ConversionRecord.swift  @Model SwiftData para historial de conversiones
+│   │   │   └── BatchQueueItem.swift    Modelo de items para la cola de conversión batch
+│   │   ├── Services/
+│   │   │   └── ConversionSeedService.swift  Servicio de datos iniciales
+│   │   └── Views/
+│   │       ├── TopNavHeaderView.swift        Barra de navegación superior (STUDIO, CONVERT, SETTINGS)
+│   │       ├── GlobalSearchBarView.swift     Buscador global con shortcut ⌘K
+│   │       ├── MetricsHeaderView.swift       Barra de métricas y sparkline
+│   │       ├── ConversionsTableView.swift    Tabla interactiva de conversiones con selección
+│   │       ├── ConversionDetailModalView.swift Modal detallado de conversión (Paper 4S-0)
+│   │       ├── ConvertHeadingView.swift      Encabezado de la página de nueva conversión
+│   │       ├── BatchDropzoneView.swift       Zona de arrastre e importación de archivos
+│   │       ├── BatchQueueView.swift          Lista de la cola de archivos batch
+│   │       ├── BatchQueueItemRow.swift       Fila individual de item en la cola
+│   │       ├── SquooshInspectorView.swift    Inspector visual de calidad 1:1 con split slider
+│   │       ├── OutputSettingsView.swift      Panel de ajustes de salida y estimado de ahorro
+│   │       ├── TelemetryFooterView.swift     Barra de telemetría y métricas de nodo
+│   │       └── StatusFooterView.swift        Barra de estado e indicadores de sistema
+│   │
+│   └── Settings/
 │       ├── Models/
-│       │   └── ConversionRecord.swift  @Model SwiftData para historial de conversiones
-│       ├── Services/
-│       │   └── ConversionSeedService.swift  Servicio de datos iniciales
+│       │   └── UserSettings.swift        @Observable para estado de preferencias del usuario
 │       └── Views/
-│           ├── TopNavHeaderView.swift        Barra de navegación principal
-│           ├── GlobalSearchBarView.swift     Buscador global con shortcut ⌘K
-│           ├── MetricsHeaderView.swift       Barra de métricas y sparkline
-│           ├── ConversionsTableView.swift    Tabla interactiva de conversiones
-│           ├── TelemetryFooterView.swift     Barra de telemetría y métricas de nodo
-│           └── StatusFooterView.swift        Barra de estado de archivo e indicadores
+│           ├── SettingsHeadingView.swift     Encabezado de ajustes del workspace
+│           ├── SettingsSidebarView.swift     Navegación lateral de secciones (GENERAL / WORKSPACE)
+│           ├── AppearancePanelView.swift     Panel de esquemas de color y previsualizaciones
+│           ├── LanguagePanelView.swift       Panel de idioma de interfaz y formato de fecha
+│           └── WorkflowPanelView.swift       Panel de ajuste fino de notificaciones y flujo
 │
 ├── Core/                               CROSS-CUTTING — imported POR features
+│   ├── Navigation/
+│   │   └── AppTab.swift                Enum de navegación principal (STUDIO, CONVERT, SETTINGS)
 │   └── Theme/
-│       └── MonarchUI.swift             Design tokens del sistema de diseño Paper
+│       └── MonarchUI.swift             Tokens de color y tipografía del sistema de diseño Paper
 │
 └── Assets.xcassets/                    AccentColor, AppIcon
 ```
