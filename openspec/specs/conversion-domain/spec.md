@@ -4,11 +4,11 @@
 
 ### Requirement: Image Format Enumeration
 
-The Conversions domain MUST define `ImageFormat` as a raw-value-backed enumeration covering every format present in seed and mock data: PNG, JPG, WebP, AVIF, SVG, TIF. Construction from an unrecognized raw value MUST yield a well-defined, non-crashing result (the mechanism is a design decision).
+The Conversions domain MUST define `ImageFormat` as a raw-value-backed enumeration covering PNG, JPG, WebP, AVIF, SVG, TIF, HEIC, JPEG 2000, and JPEG XL. Construction from an unrecognized raw value MUST yield a well-defined, non-crashing result. WebP and JPEG XL MUST be import-only and MUST NOT be offered as conversion output (target) formats.
 
 #### Scenario: Known format round-trip
 
-- **GIVEN** each supported raw value (PNG, JPG, WebP, AVIF, SVG, TIF)
+- **GIVEN** each supported raw value (PNG, JPG, WebP, AVIF, SVG, TIF, HEIC, JP2, JXL)
 - **WHEN** an `ImageFormat` is constructed from it
 - **THEN** the resulting format's raw value equals the input
 
@@ -17,6 +17,12 @@ The Conversions domain MUST define `ImageFormat` as a raw-value-backed enumerati
 - **GIVEN** a raw value outside the supported set (e.g. "BMP")
 - **WHEN** construction is attempted
 - **THEN** the outcome is deterministic and does not crash
+
+#### Scenario: Decode-only formats excluded from output
+
+- **GIVEN** the set of eligible conversion target formats
+- **WHEN** WebP or JPEG XL is checked against that set
+- **THEN** neither appears in it
 
 ### Requirement: Numeric Pixel Dimensions
 
@@ -40,13 +46,19 @@ Image dimensions MUST be represented as integer pixel width and height, never as
 
 ### Requirement: Typed Batch Queue Item Without Selection State
 
-`BatchQueueItem` MUST carry typed fields (format, target format, numeric dimensions, original and target byte counts) and MUST NOT store selection state or a reduction value.
+`BatchQueueItem` MUST carry typed fields (format, optional target format, numeric dimensions, original and target byte counts) and MUST NOT store selection state or a reduction value. `targetFormat` MUST be optional; an item with no chosen target MUST display a "no target yet" placeholder, with no target size or reduction shown.
 
 #### Scenario: Selection lives in the scene
 
 - **GIVEN** a batch queue item rendered in `ConvertScene`
 - **WHEN** the user toggles its selection
 - **THEN** scene-level selection state changes and the item's domain value is unchanged
+
+#### Scenario: No target chosen yet
+
+- **GIVEN** a newly imported `BatchQueueItem` with `targetFormat == nil`
+- **WHEN** its row is rendered
+- **THEN** it displays a "no target yet" placeholder, with no target size or reduction shown
 
 ### Requirement: Computed Reduction
 
