@@ -18,4 +18,20 @@ public enum ConversionFormatting {
     public static func reduction(percent: Int) -> String {
         return "\(percent)%"
     }
+
+    public static func rejectionMessage(_ reason: ImportRejection.Reason) -> String {
+        switch reason {
+        case .unsupportedType(let ext):
+            return "Unsupported format (.\(ext))"
+        case .fileTooLarge(let sizeBytes, let limitBytes):
+            let limitFormatted = byteSize(limitBytes)
+            let sizeFormatted = byteSize(sizeBytes)
+            return "File exceeds \(limitFormatted) limit (\(sizeFormatted))"
+        case .batchLimitExceeded(let limit):
+            return "Batch limit of \(limit) files reached"
+        case .unreadable:
+            return "File could not be read or decoded"
+        }
+    }
 }
+

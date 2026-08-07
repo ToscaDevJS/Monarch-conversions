@@ -54,4 +54,48 @@ import Foundation
         )
         #expect(itemMockBanner.reductionPercent == -85)
     }
+
+    @Test func targetFormatDefaultsToNilWhenOmitted() {
+        let item = BatchQueueItem(
+            name: "imported.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 400, height: 300),
+            originalSizeBytes: 1000
+        )
+        #expect(item.targetFormat == nil)
+        #expect(item.targetSizeBytes == nil)
+    }
+
+    @Test func equatableComparesAllFields() {
+        let id = UUID()
+        let a = BatchQueueItem(
+            id: id,
+            name: "a.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1000,
+            targetFormat: .webp,
+            targetSizeBytes: 150
+        )
+        let b = BatchQueueItem(
+            id: id,
+            name: "a.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1000,
+            targetFormat: .webp,
+            targetSizeBytes: 150
+        )
+        let differentTarget = BatchQueueItem(
+            id: id,
+            name: "a.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1000,
+            targetFormat: .avif,
+            targetSizeBytes: 150
+        )
+        #expect(a == b)
+        #expect(a != differentTarget)
+    }
 }

@@ -6,12 +6,15 @@ struct BatchQueueItemRow: View {
     let onSelect: () -> Void
     
     private var trailingText: String {
+        guard let targetFormat = item.targetFormat else {
+            return "No target"
+        }
         if let targetBytes = item.targetSizeBytes, let pct = item.reductionPercent {
             let sizeStr = ConversionFormatting.byteSize(targetBytes)
             let pctStr = ConversionFormatting.reduction(percent: pct)
-            return "\(item.targetFormat.rawValue) · \(sizeStr) (\(pctStr))"
+            return "\(targetFormat.rawValue) · \(sizeStr) (\(pctStr))"
         } else {
-            return item.targetFormat.rawValue
+            return targetFormat.rawValue
         }
     }
 

@@ -21,4 +21,19 @@ import Testing
         #expect(ConversionFormatting.reduction(percent: -85) == "-85%")
         #expect(ConversionFormatting.reduction(percent: 0) == "0%")
     }
+
+    @Test func rejectionMessageFormatting() {
+        let unsupported = ImportRejection.Reason.unsupportedType(fileExtension: "svg")
+        #expect(ConversionFormatting.rejectionMessage(unsupported) == "Unsupported format (.svg)")
+
+        let tooLarge = ImportRejection.Reason.fileTooLarge(sizeBytes: 150_000_000, limitBytes: 100_000_000)
+        #expect(ConversionFormatting.rejectionMessage(tooLarge) == "File exceeds 100.0 MB limit (150.0 MB)")
+
+        let batchLimit = ImportRejection.Reason.batchLimitExceeded(limit: 50)
+        #expect(ConversionFormatting.rejectionMessage(batchLimit) == "Batch limit of 50 files reached")
+
+        let unreadable = ImportRejection.Reason.unreadable
+        #expect(ConversionFormatting.rejectionMessage(unreadable) == "File could not be read or decoded")
+    }
 }
+
