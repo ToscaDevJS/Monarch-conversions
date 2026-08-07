@@ -1,12 +1,12 @@
 import Foundation
 
-public struct BatchQueueItem: Identifiable, Sendable {
+public struct BatchQueueItem: Identifiable, Equatable, Sendable {
     public let id: UUID
     public let name: String
     public let format: ImageFormat
     public let dimensions: PixelDimensions
     public let originalSizeBytes: Int64
-    public let targetFormat: ImageFormat
+    public let targetFormat: ImageFormat?
     public let targetSizeBytes: Int64?
 
     public var reductionPercent: Int? {
@@ -23,8 +23,8 @@ public struct BatchQueueItem: Identifiable, Sendable {
         format: ImageFormat,
         dimensions: PixelDimensions,
         originalSizeBytes: Int64,
-        targetFormat: ImageFormat,
-        targetSizeBytes: Int64?
+        targetFormat: ImageFormat? = nil,
+        targetSizeBytes: Int64? = nil
     ) {
         self.id = id
         self.name = name
