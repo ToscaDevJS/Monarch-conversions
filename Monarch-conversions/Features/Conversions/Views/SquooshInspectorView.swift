@@ -16,19 +16,19 @@ struct SquooshInspectorView: View {
                         .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
                     
-                    Text("Squoosh Comparison 1:1")
-                        .font(MonarchUI.Font.mono(size: 11))
-                        .foregroundStyle(MonarchUI.Color.accentViolet)
+                    Text("inspector.comparison", tableName: "Conversions")
+                        .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
                 
                 Spacer()
                 
-                HStack(spacing: 16) {
-                    Text("Mode: Split Slider")
-                        .font(MonarchUI.Font.mono(size: 11))
-                        .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
+                HStack(spacing: 12) {
+                    Text("inspector.mode", tableName: "Conversions")
+                        .font(MonarchUI.Font.sans(size: 12))
+                        .foregroundStyle(MonarchUI.Color.textMuted)
                     
-                    Text("Zoom: 100%")
+                    Text("inspector.zoom", tableName: "Conversions")
                         .font(MonarchUI.Font.mono(size: 11))
                         .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
                 }

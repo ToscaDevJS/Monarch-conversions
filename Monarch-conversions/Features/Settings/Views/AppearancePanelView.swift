@@ -6,10 +6,10 @@ struct AppearancePanelView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Appearance")
+                Text("settings.section_appearance", tableName: "Settings")
                     .font(MonarchUI.Font.sans(size: 18, weight: .medium))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
-                Text("Choose the color scheme for your workspace.")
+                Text("appearance.subtitle", tableName: "Settings")
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(MonarchUI.Color.textSubtle)
             }
@@ -30,11 +30,11 @@ struct AppearancePanelView: View {
                     settings.appearance = .system
                 } label: {
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("SYSTEM SETTING")
+                        Text("appearance.system_setting", tableName: "Settings")
                             .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                             .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.accentViolet : MonarchUI.Color.textMuted)
                             .tracking(0.8)
-                        Text("Use device preference")
+                        Text("appearance.device_preference", tableName: "Settings")
                             .font(MonarchUI.Font.sans(size: 13))
                             .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.textPrimary : MonarchUI.Color.textSecondary)
                     }
@@ -85,14 +85,14 @@ private struct DarkAppearanceCard: View {
                 )
                 
                 HStack {
-                    Text("Dark")
+                    Text("appearance.dark", tableName: "Settings")
                         .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
                     
                     Spacer()
                     
                     if isSelected {
-                        Text("ACTIVE")
+                        Text("appearance.active", tableName: "Settings")
                             .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.accentViolet)
                     }
@@ -140,14 +140,14 @@ private struct LightAppearanceCard: View {
                 )
                 
                 HStack {
-                    Text("Light")
+                    Text("appearance.light", tableName: "Settings")
                         .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
                     
                     Spacer()
                     
                     if isSelected {
-                        Text("ACTIVE")
+                        Text("appearance.active", tableName: "Settings")
                             .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.accentViolet)
                     }

@@ -8,12 +8,12 @@ struct SettingsHeadingView: View {
                 .foregroundStyle(MonarchUI.Color.accentViolet)
                 .tracking(0.8)
             
-            Text("Personal preferences")
+            Text("settings.personal_preferences", tableName: "Settings")
                 .font(MonarchUI.Font.sans(size: 32, weight: .medium))
                 .foregroundStyle(MonarchUI.Color.textPrimary)
                 .tracking(-0.5)
             
-            Text("Control how Monarch looks, feels, and communicates with you.")
+            Text("settings.heading_subtitle", tableName: "Settings")
                 .font(MonarchUI.Font.sans(size: 14))
                 .foregroundStyle(MonarchUI.Color.textSecondary)
         }

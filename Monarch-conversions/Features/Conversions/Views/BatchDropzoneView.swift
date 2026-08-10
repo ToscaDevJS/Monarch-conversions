@@ -12,18 +12,18 @@ struct BatchDropzoneView: View {
                 .font(.system(size: 28))
                 .foregroundStyle(MonarchUI.Color.accentViolet)
 
-            Text("Drop images here for batch conversion")
-                .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+            Text("dropzone.title", tableName: "Conversions")
+                .font(MonarchUI.Font.sans(size: 20, weight: .medium))
                 .foregroundStyle(MonarchUI.Color.textPrimary)
 
-            Text("or choose files from your computer")
-                .font(MonarchUI.Font.sans(size: 12))
-                .foregroundStyle(MonarchUI.Color.textSecondary)
+            Text("dropzone.subtitle", tableName: "Conversions")
+                .font(MonarchUI.Font.sans(size: 13))
+                .foregroundStyle(MonarchUI.Color.textSubtle)
 
             Button {
                 onBrowse?()
             } label: {
-                Text("Browse files")
+                Text("action.browse", tableName: "Common")
                     .font(MonarchUI.Font.sans(size: 12, weight: .medium))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
                     .padding(.horizontal, 14)
@@ -35,8 +35,8 @@ struct BatchDropzoneView: View {
                     )
             }
             .buttonStyle(.plain)
-
-            Text("Batch limit: 50 files · Max 100 MB per file")
+            
+            Text("dropzone.limit", tableName: "Conversions")
                 .font(MonarchUI.Font.mono(size: 10))
                 .foregroundStyle(SwiftUI.Color(hex: "#777777"))
                 .padding(.top, 2)

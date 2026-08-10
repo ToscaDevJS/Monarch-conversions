@@ -10,13 +10,13 @@ struct OutputSettingsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("Output settings")
+                Text("output.title", tableName: "Conversions")
                     .font(MonarchUI.Font.sans(size: 14, weight: .medium))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
                 
                 Spacer()
                 
-                Text("Workspace preset: WebP High")
+                Text("output.preset", tableName: "Conversions")
                     .font(MonarchUI.Font.mono(size: 11))
                     .foregroundStyle(MonarchUI.Color.textSecondary)
             }
@@ -24,7 +24,7 @@ struct OutputSettingsView: View {
             HStack(spacing: 10) {
                 // Format Box (Selected)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("FORMAT")
+                    Text("output.format", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(MonarchUI.Color.accentViolet)
                         .tracking(0.5)
@@ -44,7 +44,7 @@ struct OutputSettingsView: View {
                 
                 // Quality Box
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("QUALITY")
+                    Text("output.quality", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(SwiftUI.Color(hex: "#9A9A9A"))
                         .tracking(0.5)
@@ -62,7 +62,7 @@ struct OutputSettingsView: View {
                 
                 // Dimensions Box
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("DIMENSIONS")
+                    Text("output.dimensions", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(SwiftUI.Color(hex: "#9A9A9A"))
                         .tracking(0.5)
@@ -80,7 +80,7 @@ struct OutputSettingsView: View {
                 
                 // Metadata Box
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("METADATA")
+                    Text("output.metadata", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(SwiftUI.Color(hex: "#9A9A9A"))
                         .tracking(0.5)
@@ -100,7 +100,7 @@ struct OutputSettingsView: View {
             
             HStack {
                 HStack(spacing: 8) {
-                    Text("Total batch estimated savings:")
+                    Text("output.estimated_savings", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 13))
                         .foregroundStyle(MonarchUI.Color.textSecondary)
                     
@@ -114,7 +114,7 @@ struct OutputSettingsView: View {
                 Button {
                     onAddBatch?()
                 } label: {
-                    Text("Add batch to conversion queue")
+                    Text("output.add_batch", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 14, weight: .semibold))
                         .foregroundStyle(MonarchUI.Color.accentVioletBg)
                         .padding(.horizontal, 28)

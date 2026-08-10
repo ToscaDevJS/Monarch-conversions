@@ -17,17 +17,19 @@ public struct ImportRejectionListView: View {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundStyle(SwiftUI.Color(hex: "#FF453A"))
                             .font(.system(size: 11))
-                        Text("REJECTED (\(rejections.count))")
+                        Text("rejection.title \(rejections.count)", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 11, weight: .bold))
                             .foregroundStyle(SwiftUI.Color(hex: "#FF453A"))
                     }
 
                     Spacer()
 
-                    Button("Dismiss", action: onDismiss)
-                        .buttonStyle(.plain)
-                        .font(MonarchUI.Font.sans(size: 11, weight: .medium))
-                        .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
+                    Button(action: onDismiss) {
+                        Text("action.dismiss", tableName: "Common")
+                            .font(MonarchUI.Font.sans(size: 11, weight: .medium))
+                            .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
+                    }
+                    .buttonStyle(.plain)
                 }
 
                 VStack(spacing: 4) {

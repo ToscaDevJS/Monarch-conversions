@@ -6,27 +6,27 @@ struct WorkflowPanelView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Workflow")
+                Text("workflow.title", tableName: "Settings")
                     .font(MonarchUI.Font.sans(size: 18, weight: .medium))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
-                Text("Fine-tune small details that speed up everyday conversion work.")
+                Text("workflow.subtitle", tableName: "Settings")
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(MonarchUI.Color.textSubtle)
             }
             
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Notify when a conversion finishes")
+                    Text("workflow.notify_finish", tableName: "Settings")
                         .font(MonarchUI.Font.sans(size: 14))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
-                    Text("System notifications for completed files")
+                    Text("workflow.notify_finish_subtitle", tableName: "Settings")
                         .font(MonarchUI.Font.sans(size: 12))
                         .foregroundStyle(MonarchUI.Color.textMuted)
                 }
                 
                 Spacer()
                 
-                Toggle("Notify when a conversion finishes", isOn: $settings.notifyOnFinish)
+                Toggle(String(localized: "workflow.notify_finish", table: "Settings"), isOn: $settings.notifyOnFinish)
                     .labelsHidden()
                     .toggleStyle(.switch)
                     .tint(MonarchUI.Color.accentViolet)

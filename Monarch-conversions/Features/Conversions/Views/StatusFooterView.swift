@@ -41,7 +41,7 @@ struct StatusFooterView: View {
                         .font(.system(size: 12))
                         .foregroundStyle(MonarchUI.Color.textMuted)
                     
-                    Text("Calidad 85%")
+                    Text("footer.quality 85%", tableName: "Common")
                         .font(MonarchUI.Font.sans(size: 12))
                         .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
                 }
@@ -70,7 +70,7 @@ struct StatusFooterView: View {
                         .fill(MonarchUI.Color.statusGreen)
                         .frame(width: 7, height: 7)
                     
-                    Text("Sincronizado")
+                    Text("footer.synced", tableName: "Common")
                         .font(MonarchUI.Font.sans(size: 12))
                         .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
                 }

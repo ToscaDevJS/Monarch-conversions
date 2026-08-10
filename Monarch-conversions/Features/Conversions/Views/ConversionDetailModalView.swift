@@ -20,7 +20,7 @@ struct ConversionDetailModalView: View {
                     HStack(spacing: 11) {
                         if record.status == .working {
                             HStack(spacing: 4) {
-                                Text("↻ Working")
+                                Text("status.working", tableName: "Conversions")
                                     .font(MonarchUI.Font.sans(size: 12, weight: .semibold))
                                     .foregroundStyle(MonarchUI.Color.accentVioletBg)
                             }
@@ -30,7 +30,7 @@ struct ConversionDetailModalView: View {
                             .clipShape(Capsule())
                         } else {
                             HStack(spacing: 4) {
-                                Text("✓ Done")
+                                Text("status.done", tableName: "Conversions")
                                     .font(MonarchUI.Font.sans(size: 11, weight: .medium))
                                     .foregroundStyle(MonarchUI.Color.pillDoneText)
                             }
@@ -71,18 +71,18 @@ struct ConversionDetailModalView: View {
                 // Title Block
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(alignment: .firstTextBaseline, spacing: 12) {
-                        Text("Conversion details")
+                        Text("modal.details", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 20, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                             .tracking(-0.3)
                         
-                        Text("Queued just now")
+                        Text("modal.queued_now", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 12))
                             .foregroundStyle(MonarchUI.Color.textMuted)
                     }
                     
                     HStack(spacing: 9) {
-                        Text("Original file")
+                        Text("modal.original_file", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 12))
                             .foregroundStyle(MonarchUI.Color.textSecondary)
                         
@@ -91,7 +91,7 @@ struct ConversionDetailModalView: View {
                             .foregroundStyle(SwiftUI.Color(hex: "#E8E8E6"))
                         
                         Button {} label: {
-                            Text("Copy name")
+                            Text("modal.copy_name", tableName: "Conversions")
                                 .font(MonarchUI.Font.sans(size: 12))
                                 .foregroundStyle(MonarchUI.Color.accentViolet)
                         }
@@ -112,7 +112,7 @@ struct ConversionDetailModalView: View {
                 HStack(spacing: 0) {
                     // Input Column
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("INPUT")
+                        Text("modal.input", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
                             .foregroundStyle(SwiftUI.Color(hex: "#B8B8B8"))
                             .tracking(0.6)
@@ -145,7 +145,7 @@ struct ConversionDetailModalView: View {
                     
                     // Output Column
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("OUTPUT")
+                        Text("modal.output", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
                             .foregroundStyle(SwiftUI.Color(hex: "#B8B8B8"))
                             .tracking(0.6)
@@ -181,7 +181,7 @@ struct ConversionDetailModalView: View {
                 // Conversion Progress Block
                 VStack(alignment: .leading, spacing: 14) {
                     HStack {
-                        Text("Conversion progress")
+                        Text("modal.progress", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                         Spacer()
@@ -204,30 +204,30 @@ struct ConversionDetailModalView: View {
                     
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Upload verified")
+                            Text("modal.upload_verified", tableName: "Conversions")
                                 .font(MonarchUI.Font.sans(size: 11))
                                 .foregroundStyle(MonarchUI.Color.textSecondary)
-                            Text("Complete")
+                            Text("modal.complete", tableName: "Conversions")
                                 .font(MonarchUI.Font.sans(size: 12))
                                 .foregroundStyle(SwiftUI.Color(hex: "#E6E6E4"))
                         }
                         .frame(width: 220, alignment: .leading)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Encoding")
+                            Text("modal.encoding", tableName: "Conversions")
                                 .font(MonarchUI.Font.sans(size: 11))
                                 .foregroundStyle(MonarchUI.Color.textSecondary)
-                            Text(record.status == .working ? "In progress" : "Complete")
+                            Text(record.status == .working ? String(localized: "modal.in_progress", table: "Conversions") : String(localized: "modal.complete", table: "Conversions"))
                                 .font(MonarchUI.Font.sans(size: 12))
                                 .foregroundStyle(SwiftUI.Color(hex: "#E6E6E4"))
                         }
                         .frame(width: 220, alignment: .leading)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Optimize & save")
+                            Text("modal.optimize_save", tableName: "Conversions")
                                 .font(MonarchUI.Font.sans(size: 11))
                                 .foregroundStyle(MonarchUI.Color.textSecondary)
-                            Text(record.status == .working ? "Waiting" : "Complete")
+                            Text(record.status == .working ? String(localized: "modal.waiting", table: "Conversions") : String(localized: "modal.complete", table: "Conversions"))
                                 .font(MonarchUI.Font.sans(size: 12))
                                 .foregroundStyle(record.status == .working ? SwiftUI.Color(hex: "#7F7F7F") : SwiftUI.Color(hex: "#E6E6E4"))
                         }
@@ -246,7 +246,7 @@ struct ConversionDetailModalView: View {
                 // Conversion Settings Box
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
-                        Text("Conversion settings")
+                        Text("modal.settings", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                         Spacer()
@@ -281,7 +281,7 @@ struct ConversionDetailModalView: View {
                 // Action Buttons Bar
                 HStack(spacing: 12) {
                     Button {} label: {
-                        Text("Open original")
+                        Text("modal.open_original", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                             .foregroundStyle(SwiftUI.Color(hex: "#E8E8E6"))
                             .frame(width: 138, height: 36)
@@ -293,7 +293,7 @@ struct ConversionDetailModalView: View {
                     .buttonStyle(.plain)
                     
                     Button(action: onClose) {
-                        Text("Close")
+                        Text("modal.close", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 13, weight: .semibold))
                             .foregroundStyle(MonarchUI.Color.accentVioletBg)
                             .frame(width: 84, height: 36)
@@ -303,7 +303,7 @@ struct ConversionDetailModalView: View {
                     
                     Spacer()
                     
-                    Text("Press ESC to close")
+                    Text("modal.esc_hint", tableName: "Conversions")
                         .font(MonarchUI.Font.mono(size: 11))
                         .foregroundStyle(SwiftUI.Color(hex: "#858585"))
                 }

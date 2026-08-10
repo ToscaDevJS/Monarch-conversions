@@ -8,7 +8,7 @@ struct BatchQueueView: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                Text("BATCH QUEUE (\(items.count) FILES)")
+                Text("queue.title \(items.count)", tableName: "Conversions")
                     .font(MonarchUI.Font.mono(size: 11, weight: .semibold))
                     .foregroundStyle(MonarchUI.Color.accentViolet)
                     .tracking(0.8)
@@ -18,7 +18,7 @@ struct BatchQueueView: View {
                 Button {
                     onClearAll?()
                 } label: {
-                    Text("Clear all")
+                    Text("action.clear_all", tableName: "Common")
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
                 }

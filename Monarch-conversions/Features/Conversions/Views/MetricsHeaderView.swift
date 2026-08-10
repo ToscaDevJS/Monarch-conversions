@@ -5,7 +5,7 @@ struct MetricsHeaderView: View {
         HStack(alignment: .bottom, spacing: 0) {
             // Images processed
             VStack(alignment: .leading, spacing: 5) {
-                Text("Images processed")
+                Text("metrics.processed", tableName: "Conversions")
                     .font(MonarchUI.Font.sans(size: 12))
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
@@ -24,7 +24,7 @@ struct MetricsHeaderView: View {
             
             // In queue (24h)
             VStack(alignment: .leading, spacing: 5) {
-                Text("In queue (24h)")
+                Text("metrics.in_queue", tableName: "Conversions")
                     .font(MonarchUI.Font.sans(size: 12))
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
@@ -49,7 +49,7 @@ struct MetricsHeaderView: View {
             
             // Converted today
             VStack(alignment: .leading, spacing: 5) {
-                Text("Converted today")
+                Text("metrics.converted_today", tableName: "Conversions")
                     .font(MonarchUI.Font.sans(size: 12))
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
@@ -74,7 +74,7 @@ struct MetricsHeaderView: View {
             
             // Storage saved
             VStack(alignment: .leading, spacing: 5) {
-                Text("Storage saved")
+                Text("metrics.storage_saved", tableName: "Conversions")
                     .font(MonarchUI.Font.sans(size: 12))
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
@@ -89,7 +89,7 @@ struct MetricsHeaderView: View {
             
             // Active projects
             VStack(alignment: .leading, spacing: 5) {
-                Text("Active projects")
+                Text("metrics.active_projects", tableName: "Conversions")
                     .font(MonarchUI.Font.sans(size: 12))
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 

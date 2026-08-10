@@ -19,7 +19,7 @@ struct TelemetryFooterView: View {
                 DividerBar()
                 
                 HStack(spacing: 6) {
-                    Text("Throughput:")
+                    Text("footer.throughput", tableName: "Common")
                         .font(MonarchUI.Font.sans(size: 12))
                         .foregroundStyle(MonarchUI.Color.textMuted)
                     Text("14.2 MB/s")
@@ -30,7 +30,7 @@ struct TelemetryFooterView: View {
                 DividerBar()
                 
                 HStack(spacing: 6) {
-                    Text("Avg Latency:")
+                    Text("footer.avg_latency", tableName: "Common")
                         .font(MonarchUI.Font.sans(size: 12))
                         .foregroundStyle(MonarchUI.Color.textMuted)
                     Text("120ms")
@@ -55,7 +55,7 @@ struct TelemetryFooterView: View {
                             .font(.system(size: 11, weight: .medium))
                             .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
                         
-                        Text("Export Telemetry Log")
+                        Text("footer.export_telemetry", tableName: "Common")
                             .font(MonarchUI.Font.sans(size: 11, weight: .medium))
                             .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
                     }

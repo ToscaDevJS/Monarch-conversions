@@ -15,7 +15,7 @@ struct ConversionsTableView: View {
                         .frame(width: 7, height: 7)
                         .shadow(color: MonarchUI.Color.statusGreenGlow, radius: 2)
                     
-                    Text("Active conversions")
+                    Text("table.active_conversions", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 14, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
@@ -23,15 +23,18 @@ struct ConversionsTableView: View {
                 Spacer()
                 
                 HStack(spacing: 24) {
-                    FilterDropdown(title: "Status: All")
-                    FilterDropdown(title: "Input: All")
-                    FilterDropdown(title: "Output: All")
-                    FilterDropdown(title: "Project: All")
+                    FilterDropdown(title: String(localized: "table.filter_status", table: "Conversions"))
+                    FilterDropdown(title: String(localized: "table.filter_input", table: "Conversions"))
+                    FilterDropdown(title: String(localized: "table.filter_output", table: "Conversions"))
+                    FilterDropdown(title: String(localized: "table.filter_project", table: "Conversions"))
                     
-                    Button("Reset") {}
-                        .buttonStyle(.plain)
-                        .font(MonarchUI.Font.sans(size: 13))
-                        .foregroundStyle(MonarchUI.Color.textMuted)
+                    Button {
+                    } label: {
+                        Text("table.reset", tableName: "Conversions")
+                            .font(MonarchUI.Font.sans(size: 13))
+                            .foregroundStyle(MonarchUI.Color.textMuted)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding(.bottom, 8)
@@ -45,19 +48,19 @@ struct ConversionsTableView: View {
             
             // Table Header Columns
             HStack(spacing: 0) {
-                Text("Status")
+                Text("table.col_status", tableName: "Conversions")
                     .frame(width: 137, alignment: .leading)
-                Text("File ID ⓘ")
+                Text("table.col_file_id", tableName: "Conversions")
                     .frame(width: 115, alignment: .leading)
-                Text("File name")
+                Text("table.col_file_name", tableName: "Conversions")
                     .frame(width: 274, alignment: .leading)
-                Text("Dimensions")
+                Text("table.col_dimensions", tableName: "Conversions")
                     .frame(width: 235, alignment: .leading)
-                Text("Output")
+                Text("table.col_output", tableName: "Conversions")
                     .frame(width: 274, alignment: .leading)
-                Text("Project")
+                Text("table.col_project", tableName: "Conversions")
                     .frame(width: 170, alignment: .leading)
-                Text("Added")
+                Text("table.col_added", tableName: "Conversions")
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
@@ -123,7 +126,7 @@ private struct TableRowView: View {
                 HStack {
                     if record.status == .working {
                         HStack(spacing: 4) {
-                            Text("↻ Working")
+                            Text("status.working", tableName: "Conversions")
                                 .font(MonarchUI.Font.sans(size: 12, weight: .medium))
                                 .foregroundStyle(MonarchUI.Color.accentVioletBg)
                         }
@@ -132,7 +135,7 @@ private struct TableRowView: View {
                         .clipShape(Capsule())
                     } else {
                         HStack(spacing: 4) {
-                            Text("✓ Done")
+                            Text("status.done", tableName: "Conversions")
                                 .font(MonarchUI.Font.sans(size: 11, weight: .medium))
                                 .foregroundStyle(MonarchUI.Color.pillDoneText)
                         }

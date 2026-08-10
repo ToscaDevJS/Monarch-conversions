@@ -6,10 +6,10 @@ struct LanguagePanelView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Language & region")
+                Text("settings.section_language", tableName: "Settings")
                     .font(MonarchUI.Font.sans(size: 18, weight: .medium))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
-                Text("Choose the language and units shown across Monarch.")
+                Text("language.subtitle", tableName: "Settings")
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(MonarchUI.Color.textSubtle)
             }
@@ -31,7 +31,7 @@ struct LanguagePanelView: View {
                     }
                 } label: {
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("DISPLAY LANGUAGE")
+                        Text("language.display_language", tableName: "Settings")
                             .font(MonarchUI.Font.mono(size: 10, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.textMuted)
                             .tracking(0.7)
@@ -74,7 +74,7 @@ struct LanguagePanelView: View {
                     }
                 } label: {
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("DATE FORMAT")
+                        Text("language.date_format", tableName: "Settings")
                             .font(MonarchUI.Font.mono(size: 10, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.textMuted)
                             .tracking(0.7)

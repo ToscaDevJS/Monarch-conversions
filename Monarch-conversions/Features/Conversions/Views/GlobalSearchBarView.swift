@@ -9,7 +9,7 @@ struct GlobalSearchBarView: View {
                 .font(.system(size: 15))
                 .foregroundStyle(MonarchUI.Color.textSecondary)
             
-            TextField("Search images, file names, projects or formats", text: $searchText)
+            TextField(String(localized: "search.placeholder", table: "Common"), text: $searchText)
                 .textFieldStyle(.plain)
                 .font(MonarchUI.Font.sans(size: 15))
                 .foregroundStyle(MonarchUI.Color.textPrimary)

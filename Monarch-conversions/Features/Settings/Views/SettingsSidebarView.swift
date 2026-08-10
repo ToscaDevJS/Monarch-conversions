@@ -17,36 +17,36 @@ struct SettingsSidebarView: View {
         VStack(alignment: .leading, spacing: 22) {
             // General Group
             VStack(alignment: .leading, spacing: 5) {
-                Text("GENERAL")
+                Text("settings.group_general", tableName: "Settings")
                     .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                     .foregroundStyle(MonarchUI.Color.textDim)
                     .tracking(0.8)
                     .padding(.bottom, 6)
                 
-                SidebarItem(title: "Appearance", isSelected: selectedSection == .appearance) {
+                SidebarItem(title: String(localized: "settings.section_appearance", table: "Settings"), isSelected: selectedSection == .appearance) {
                     selectedSection = .appearance
                 }
-                SidebarItem(title: "Language & region", isSelected: selectedSection == .language) {
+                SidebarItem(title: String(localized: "settings.section_language", table: "Settings"), isSelected: selectedSection == .language) {
                     selectedSection = .language
                 }
-                SidebarItem(title: "Notifications", isSelected: selectedSection == .notifications) {
+                SidebarItem(title: String(localized: "settings.section_notifications", table: "Settings"), isSelected: selectedSection == .notifications) {
                     selectedSection = .notifications
                 }
             }
             
             // Workspace Group
             VStack(alignment: .leading, spacing: 5) {
-                Text("WORKSPACE")
+                Text("settings.group_workspace", tableName: "Settings")
                     .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                     .foregroundStyle(MonarchUI.Color.textDim)
                     .tracking(0.8)
                     .padding(.top, 14)
                     .padding(.bottom, 6)
                 
-                SidebarItem(title: "Conversion defaults", isSelected: selectedSection == .conversionDefaults) {
+                SidebarItem(title: String(localized: "settings.section_defaults", table: "Settings"), isSelected: selectedSection == .conversionDefaults) {
                     selectedSection = .conversionDefaults
                 }
-                SidebarItem(title: "Storage & privacy", isSelected: selectedSection == .storagePrivacy) {
+                SidebarItem(title: String(localized: "settings.section_storage", table: "Settings"), isSelected: selectedSection == .storagePrivacy) {
                     selectedSection = .storagePrivacy
                 }
             }

@@ -29,13 +29,13 @@ struct TopNavHeaderView: View {
             
             // Nav Links
             HStack(spacing: 28) {
-                NavItem(title: "STUDIO", isActive: activeTab == .studio, hasDropdown: true) {
+                NavItem(title: String(localized: "nav.studio", table: "Common"), isActive: activeTab == .studio, hasDropdown: true) {
                     onSelectTab?(.studio)
                 }
-                NavItem(title: "CONVERT", isActive: activeTab == .convert) {
+                NavItem(title: String(localized: "nav.convert", table: "Common"), isActive: activeTab == .convert) {
                     onSelectTab?(.convert)
                 }
-                NavItem(title: "SETTINGS", isActive: activeTab == .settings) {
+                NavItem(title: String(localized: "nav.settings", table: "Common"), isActive: activeTab == .settings) {
                     onSelectTab?(.settings)
                 }
             }
@@ -49,7 +49,7 @@ struct TopNavHeaderView: View {
                     .fill(MonarchUI.Color.accentViolet)
                     .frame(width: 6, height: 6)
                 
-                Text(activeTab == .settings ? "SETTINGS" : "CONVERSIONS")
+                Text(activeTab == .settings ? String(localized: "badge.settings", table: "Common") : String(localized: "badge.conversions", table: "Common"))
                     .font(MonarchUI.Font.mono(size: 11, weight: .semibold))
                     .foregroundStyle(MonarchUI.Color.accentViolet)
             }
@@ -80,7 +80,7 @@ private struct NavItem: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 5) {
-                if title == "STUDIO" {
+                if title == String(localized: "nav.studio", table: "Common") || title == "STUDIO" {
                     Image(systemName: "sun.max")
                         .font(.system(size: 10))
                         .foregroundStyle(MonarchUI.Color.textMuted)
