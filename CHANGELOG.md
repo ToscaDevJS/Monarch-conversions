@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0
+
+**Highlights**
+
+- **Real Image Inspector Preview:** `SquooshInspectorView` loads and renders actual `NSImage` instances from `BatchQueueItem.fileURL` in the interactive split comparison slider, with fallback badges for unreadable files.
+
 ## 0.7.0
 
 **Highlights**

@@ -157,7 +157,8 @@ struct ConvertScene: View {
                             fileName: selectedItem?.name ?? "No file selected",
                             originalSizeText: originalSizeText,
                             targetFormatText: targetFormatText,
-                            targetSizeText: targetSizeText
+                            targetSizeText: targetSizeText,
+                            imageURL: selectedItem?.fileURL
                         )
 
                         OutputSettingsView(

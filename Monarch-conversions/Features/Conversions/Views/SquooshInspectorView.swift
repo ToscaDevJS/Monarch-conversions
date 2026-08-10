@@ -5,8 +5,14 @@ struct SquooshInspectorView: View {
     let originalSizeText: String
     let targetFormatText: String
     let targetSizeText: String
+    var imageURL: URL? = nil
     @State private var sliderOffset: CGFloat = 0.5
     
+    private var loadedImage: NSImage? {
+        guard let imageURL = imageURL else { return nil }
+        return NSImage(contentsOf: imageURL)
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // Inspector Header
@@ -55,12 +61,20 @@ struct SquooshInspectorView: View {
                         MonarchUI.Color.background
                         
                         VStack {
-                            Text("WEBP OPTIMIZED")
-                                .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
-                                .foregroundStyle(MonarchUI.Color.accentViolet)
-                                .frame(width: 320, height: 170)
-                                .background(MonarchUI.Color.accentVioletBg)
-                                .clipShape(RoundedRectangle(cornerRadius: 3))
+                            if let nsImage = loadedImage {
+                                Image(nsImage: nsImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(maxHeight: 240)
+                                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                            } else {
+                                Text("WEBP OPTIMIZED")
+                                    .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
+                                    .foregroundStyle(MonarchUI.Color.accentViolet)
+                                    .frame(width: 320, height: 170)
+                                    .background(MonarchUI.Color.accentVioletBg)
+                                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                            }
                         }
                         
                         VStack {
@@ -89,12 +103,20 @@ struct SquooshInspectorView: View {
                             MonarchUI.Color.surface
                             
                             VStack {
-                                Text("ORIGINAL (PNG)")
-                                    .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
-                                    .foregroundStyle(MonarchUI.Color.textPrimary)
-                                    .frame(width: 320, height: 170)
-                                    .background(MonarchUI.Color.searchBg)
-                                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                                if let nsImage = loadedImage {
+                                    Image(nsImage: nsImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(maxHeight: 240)
+                                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                                } else {
+                                    Text("ORIGINAL (PNG)")
+                                        .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
+                                        .foregroundStyle(MonarchUI.Color.textPrimary)
+                                        .frame(width: 320, height: 170)
+                                        .background(MonarchUI.Color.searchBg)
+                                        .clipShape(RoundedRectangle(cornerRadius: 3))
+                                }
                             }
                             
                             VStack {
