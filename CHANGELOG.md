@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0
+
+**Highlights**
+
+- **Full Application Localization:** Complete English (en) and Spanish (es) support across all Studio, Conversions, and Settings scenes.
+- **Domain-Partitioned String Catalogs:** Refactored string resources into `Common.xcstrings`, `Conversions.xcstrings`, and `Settings.xcstrings`.
+
+- Added full application localization support for English (en) and Spanish (es) across Studio, Conversions, and Settings views
+- Added reactive locale environment propagation from UserSettings down the SwiftUI view hierarchy
+- Added domain-partitioned String Catalogs (Common.xcstrings, Conversions.xcstrings, Settings.xcstrings), removing monolithic catalog
+- Added AppLocalizationTests suite verifying locale mappings and string resolution across domain catalogs
+
 ## 0.1.0
 
 **Highlights**
@@ -8,10 +20,6 @@
 - **Interactive Batch Queue:** Drag and drop files, inspect rejection details, and view full conversion records.
 - **Monarch Settings:** Customize application appearance, language preferences (English/Spanish), and date formats.
 
-- Added full application localization support for English (en) and Spanish (es) across Studio, Conversions, and Settings views
-- Added reactive locale environment propagation from UserSettings down the SwiftUI view hierarchy
-- Added domain-partitioned String Catalogs (Common.xcstrings, Conversions.xcstrings, Settings.xcstrings), removing monolithic catalog
-- Added AppLocalizationTests suite verifying locale mappings and string resolution across domain catalogs
 - Added image import pipeline with HEIC, JP2, and JXL format support and ImageIO metadata validation
 - Added interactive file dropzone and file browser dialog for batch conversions
 - Added batch queue management, import rejection list, and conversion detail modal
