@@ -129,7 +129,7 @@ private struct LightAppearanceCard: View {
                         .fill(MonarchUI.Color.cardLightMockupBorder)
                         .frame(width: 46)
                     Rectangle()
-                        .fill(SwiftUI.Color.white)
+                        .fill(MonarchUI.Color.surface)
                 }
                 .padding(7)
                 .frame(width: 162, height: 42)

@@ -46,7 +46,7 @@ struct OutputSettingsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("output.quality", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(SwiftUI.Color(hex: "#9A9A9A"))
+                        .foregroundStyle(MonarchUI.Color.textSubtle)
                         .tracking(0.5)
                     Text(quality)
                         .font(MonarchUI.Font.sans(size: 14, weight: .medium))
@@ -54,17 +54,17 @@ struct OutputSettingsView: View {
                 }
                 .padding(.horizontal, 12)
                 .frame(width: 180, height: 70, alignment: .leading)
-                .background(SwiftUI.Color(hex: "#141414"))
+                .background(MonarchUI.Color.surface)
                 .overlay(
                     Rectangle()
-                        .stroke(SwiftUI.Color(hex: "#343434"), lineWidth: 1)
+                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
                 )
                 
                 // Dimensions Box
                 VStack(alignment: .leading, spacing: 4) {
                     Text("output.dimensions", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(SwiftUI.Color(hex: "#9A9A9A"))
+                        .foregroundStyle(MonarchUI.Color.textSubtle)
                         .tracking(0.5)
                     Text(dimensions)
                         .font(MonarchUI.Font.sans(size: 14, weight: .medium))
@@ -72,17 +72,17 @@ struct OutputSettingsView: View {
                 }
                 .padding(.horizontal, 12)
                 .frame(width: 230, height: 70, alignment: .leading)
-                .background(SwiftUI.Color(hex: "#141414"))
+                .background(MonarchUI.Color.surface)
                 .overlay(
                     Rectangle()
-                        .stroke(SwiftUI.Color(hex: "#343434"), lineWidth: 1)
+                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
                 )
                 
                 // Metadata Box
                 VStack(alignment: .leading, spacing: 4) {
                     Text("output.metadata", tableName: "Conversions")
                         .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(SwiftUI.Color(hex: "#9A9A9A"))
+                        .foregroundStyle(MonarchUI.Color.textSubtle)
                         .tracking(0.5)
                     Text(metadata)
                         .font(MonarchUI.Font.sans(size: 14, weight: .medium))
@@ -91,10 +91,10 @@ struct OutputSettingsView: View {
                 .padding(.horizontal, 12)
                 .frame(height: 70)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(SwiftUI.Color(hex: "#141414"))
+                .background(MonarchUI.Color.surface)
                 .overlay(
                     Rectangle()
-                        .stroke(SwiftUI.Color(hex: "#343434"), lineWidth: 1)
+                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
                 )
             }
             
@@ -127,11 +127,11 @@ struct OutputSettingsView: View {
             .padding(.top, 4)
         }
         .padding(18)
-        .background(SwiftUI.Color(hex: "#101010"))
+        .background(MonarchUI.Color.surface)
         .clipShape(RoundedRectangle(cornerRadius: 2))
         .overlay(
             RoundedRectangle(cornerRadius: 2)
-                .stroke(SwiftUI.Color(hex: "#303030"), lineWidth: 1)
+                .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
     }
 }

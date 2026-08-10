@@ -28,27 +28,27 @@ struct BatchDropzoneView: View {
                     .foregroundStyle(MonarchUI.Color.textPrimary)
                     .padding(.horizontal, 14)
                     .frame(height: 32)
-                    .background(SwiftUI.Color(hex: "#171717"))
+                    .background(MonarchUI.Color.surface)
                     .overlay(
                         RoundedRectangle(cornerRadius: 3)
-                            .stroke(SwiftUI.Color(hex: "#4B4B4B"), lineWidth: 1)
+                            .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
                     )
             }
             .buttonStyle(.plain)
             
             Text("dropzone.limit", tableName: "Conversions")
                 .font(MonarchUI.Font.mono(size: 10))
-                .foregroundStyle(SwiftUI.Color(hex: "#777777"))
+                .foregroundStyle(MonarchUI.Color.textDim)
                 .padding(.top, 2)
         }
         .frame(maxWidth: .infinity)
         .frame(height: 180)
-        .background(isTargeted ? SwiftUI.Color(hex: "#16131C") : SwiftUI.Color(hex: "#101010"))
+        .background(isTargeted ? MonarchUI.Color.accentVioletBg : MonarchUI.Color.surface)
         .clipShape(RoundedRectangle(cornerRadius: 2))
         .overlay(
             RoundedRectangle(cornerRadius: 2)
                 .stroke(
-                    isTargeted ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#404040"),
+                    isTargeted ? MonarchUI.Color.accentViolet : MonarchUI.Color.surfaceBorder,
                     style: StrokeStyle(lineWidth: isTargeted ? 2 : 1, dash: isTargeted ? [] : [4, 4])
                 )
         )

@@ -64,7 +64,7 @@ struct ConversionsTableView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
-            .foregroundStyle(SwiftUI.Color(hex: "#A3A3A3"))
+            .foregroundStyle(MonarchUI.Color.textSubtle)
             .padding(.horizontal, 12)
             .frame(height: 44)
             .overlay(
@@ -156,29 +156,29 @@ private struct TableRowView: View {
                 HStack(spacing: 9) {
                     Text(record.inputFormat.rawValue.uppercased())
                         .font(MonarchUI.Font.sans(size: 8, weight: .semibold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                         .frame(width: 20, height: 20)
                         .background(MonarchUI.Color.badgeGrayBg)
                     
                     Text(record.fileName)
                         .font(MonarchUI.Font.sans(size: 13))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
                 .frame(width: 274, alignment: .leading)
                 
                 // Dimensions
                 Text(ConversionFormatting.dimensions(record.dimensions))
                     .font(MonarchUI.Font.sans(size: 13))
-                    .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                    .foregroundStyle(MonarchUI.Color.textPrimary)
                     .frame(width: 235, alignment: .leading)
                 
                 // Output
                 HStack(spacing: 9) {
                     Text(String(record.outputFormat.rawValue.prefix(1)).uppercased())
                         .font(MonarchUI.Font.sans(size: 12))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                         .frame(width: 20, height: 20)
-                        .background(SwiftUI.Color(hex: "#474747"))
+                        .background(MonarchUI.Color.badgeGrayBg)
                     
                     Text("\(record.outputFormat.rawValue) · \(ConversionFormatting.byteSize(record.outputSizeBytes))")
                         .font(MonarchUI.Font.sans(size: 13))

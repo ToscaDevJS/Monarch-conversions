@@ -29,7 +29,7 @@ struct GlobalSearchBarView: View {
             )
             .overlay(
                 Rectangle()
-                    .stroke(SwiftUI.Color(hex: "#3F3F3F"), lineWidth: 1)
+                    .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
             )
         }
         .padding(.horizontal, 12)
@@ -37,7 +37,7 @@ struct GlobalSearchBarView: View {
         .background(MonarchUI.Color.searchBg)
         .overlay(
             Rectangle()
-                .stroke(SwiftUI.Color(hex: "#1B1B1B"), lineWidth: 1)
+                .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
     }
 }

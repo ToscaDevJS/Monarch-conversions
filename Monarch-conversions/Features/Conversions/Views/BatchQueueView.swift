@@ -20,7 +20,7 @@ struct BatchQueueView: View {
                 } label: {
                     Text("action.clear_all", tableName: "Common")
                         .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
+                        .foregroundStyle(MonarchUI.Color.textMuted)
                 }
                 .buttonStyle(.plain)
             }

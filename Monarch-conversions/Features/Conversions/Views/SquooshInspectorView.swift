@@ -30,15 +30,15 @@ struct SquooshInspectorView: View {
                     
                     Text("inspector.zoom", tableName: "Conversions")
                         .font(MonarchUI.Font.mono(size: 11))
-                        .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
+                        .foregroundStyle(MonarchUI.Color.textMuted)
                 }
             }
             .padding(.horizontal, 16)
             .frame(height: 40)
-            .background(SwiftUI.Color(hex: "#171717"))
+            .background(MonarchUI.Color.surface)
             .overlay(
                 Rectangle()
-                    .fill(SwiftUI.Color(hex: "#242424"))
+                    .fill(MonarchUI.Color.surfaceBorder)
                     .frame(height: 1),
                 alignment: .bottom
             )
@@ -52,20 +52,14 @@ struct SquooshInspectorView: View {
                 ZStack(alignment: .leading) {
                     // Right Side (Optimized Image)
                     ZStack {
-                        SwiftUI.Color(hex: "#0C0B10")
+                        MonarchUI.Color.background
                         
                         VStack {
                             Text("WEBP OPTIMIZED")
                                 .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
                                 .foregroundStyle(MonarchUI.Color.accentViolet)
                                 .frame(width: 320, height: 170)
-                                .background(
-                                    LinearGradient(
-                                        colors: [SwiftUI.Color(hex: "#1B1229"), SwiftUI.Color(hex: "#2B1B47")],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
+                                .background(MonarchUI.Color.accentVioletBg)
                                 .clipShape(RoundedRectangle(cornerRadius: 3))
                         }
                         
@@ -92,20 +86,14 @@ struct SquooshInspectorView: View {
                     // Left Side (Original Image clipped by splitX)
                     ZStack(alignment: .topLeading) {
                         ZStack {
-                            SwiftUI.Color(hex: "#14121A")
+                            MonarchUI.Color.surface
                             
                             VStack {
                                 Text("ORIGINAL (PNG)")
                                     .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
-                                    .foregroundStyle(SwiftUI.Color(hex: "#E2D9F7"))
+                                    .foregroundStyle(MonarchUI.Color.textPrimary)
                                     .frame(width: 320, height: 170)
-                                    .background(
-                                        LinearGradient(
-                                            colors: [SwiftUI.Color(hex: "#242030"), SwiftUI.Color(hex: "#342C44")],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
+                                    .background(MonarchUI.Color.searchBg)
                                     .clipShape(RoundedRectangle(cornerRadius: 3))
                             }
                             
@@ -162,13 +150,13 @@ struct SquooshInspectorView: View {
                 }
             }
             .frame(height: 280)
-            .background(SwiftUI.Color(hex: "#050505"))
+            .background(MonarchUI.Color.background)
         }
         .clipShape(RoundedRectangle(cornerRadius: 2))
-        .background(SwiftUI.Color(hex: "#101010"))
+        .background(MonarchUI.Color.surface)
         .overlay(
             RoundedRectangle(cornerRadius: 2)
-                .stroke(SwiftUI.Color(hex: "#303030"), lineWidth: 1)
+                .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
     }
 }

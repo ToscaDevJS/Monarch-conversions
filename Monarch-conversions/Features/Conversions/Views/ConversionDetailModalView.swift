@@ -50,11 +50,11 @@ struct ConversionDetailModalView: View {
                     Button(action: onClose) {
                         Text("×")
                             .font(MonarchUI.Font.sans(size: 17))
-                            .foregroundStyle(SwiftUI.Color(hex: "#B8B8B8"))
+                            .foregroundStyle(MonarchUI.Color.textSubtle)
                             .frame(width: 28, height: 28)
                             .overlay(
                                 Rectangle()
-                                    .stroke(SwiftUI.Color(hex: "#3A3A3A"), lineWidth: 1)
+                                    .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
                             )
                     }
                     .buttonStyle(.plain)
@@ -63,7 +63,7 @@ struct ConversionDetailModalView: View {
                 .frame(height: 74)
                 .overlay(
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .fill(MonarchUI.Color.divider)
                         .frame(height: 1),
                     alignment: .bottom
                 )
@@ -88,7 +88,7 @@ struct ConversionDetailModalView: View {
                         
                         Text(record.fileName)
                             .font(MonarchUI.Font.mono(size: 12))
-                            .foregroundStyle(SwiftUI.Color(hex: "#E8E8E6"))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
                         
                         Button {} label: {
                             Text("modal.copy_name", tableName: "Conversions")
@@ -103,7 +103,7 @@ struct ConversionDetailModalView: View {
                 .frame(height: 112)
                 .overlay(
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .fill(MonarchUI.Color.divider)
                         .frame(height: 1),
                     alignment: .bottom
                 )
@@ -114,15 +114,15 @@ struct ConversionDetailModalView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("modal.input", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
-                            .foregroundStyle(SwiftUI.Color(hex: "#B8B8B8"))
+                            .foregroundStyle(MonarchUI.Color.textSubtle)
                             .tracking(0.6)
                         
                         HStack(spacing: 9) {
                             Text(record.inputFormat.rawValue.uppercased())
                                 .font(MonarchUI.Font.sans(size: 10, weight: .semibold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(MonarchUI.Color.textPrimary)
                                 .frame(width: 28, height: 28)
-                                .background(SwiftUI.Color(hex: "#393939"))
+                                .background(MonarchUI.Color.badgeGrayBg)
                             
                             VStack(alignment: .leading, spacing: 1) {
                                 Text("\(record.inputFormat.rawValue.uppercased()) image")
@@ -147,15 +147,15 @@ struct ConversionDetailModalView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("modal.output", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
-                            .foregroundStyle(SwiftUI.Color(hex: "#B8B8B8"))
+                            .foregroundStyle(MonarchUI.Color.textSubtle)
                             .tracking(0.6)
                         
                         HStack(spacing: 9) {
                             Text(String(record.outputFormat.rawValue.prefix(1).uppercased()))
                                 .font(MonarchUI.Font.sans(size: 15))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(MonarchUI.Color.textPrimary)
                                 .frame(width: 28, height: 28)
-                                .background(SwiftUI.Color(hex: "#393939"))
+                                .background(MonarchUI.Color.badgeGrayBg)
                             
                             VStack(alignment: .leading, spacing: 1) {
                                 Text("\(record.outputFormat.rawValue) image")
@@ -173,7 +173,7 @@ struct ConversionDetailModalView: View {
                 .frame(height: 126)
                 .overlay(
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .fill(MonarchUI.Color.divider)
                         .frame(height: 1),
                     alignment: .bottom
                 )
@@ -194,7 +194,7 @@ struct ConversionDetailModalView: View {
                     GeometryReader { pGeo in
                         ZStack(alignment: .leading) {
                             Rectangle()
-                                .fill(SwiftUI.Color(hex: "#2A2A2A"))
+                                .fill(MonarchUI.Color.divider)
                             Rectangle()
                                 .fill(MonarchUI.Color.accentViolet)
                                 .frame(width: record.status == .working ? pGeo.size.width * 0.42 : pGeo.size.width)
@@ -209,7 +209,7 @@ struct ConversionDetailModalView: View {
                                 .foregroundStyle(MonarchUI.Color.textSecondary)
                             Text("modal.complete", tableName: "Conversions")
                                 .font(MonarchUI.Font.sans(size: 12))
-                                .foregroundStyle(SwiftUI.Color(hex: "#E6E6E4"))
+                                .foregroundStyle(MonarchUI.Color.textPrimary)
                         }
                         .frame(width: 220, alignment: .leading)
                         
@@ -219,7 +219,7 @@ struct ConversionDetailModalView: View {
                                 .foregroundStyle(MonarchUI.Color.textSecondary)
                             Text(record.status == .working ? String(localized: "modal.in_progress", table: "Conversions") : String(localized: "modal.complete", table: "Conversions"))
                                 .font(MonarchUI.Font.sans(size: 12))
-                                .foregroundStyle(SwiftUI.Color(hex: "#E6E6E4"))
+                                .foregroundStyle(MonarchUI.Color.textPrimary)
                         }
                         .frame(width: 220, alignment: .leading)
                         
@@ -229,7 +229,7 @@ struct ConversionDetailModalView: View {
                                 .foregroundStyle(MonarchUI.Color.textSecondary)
                             Text(record.status == .working ? String(localized: "modal.waiting", table: "Conversions") : String(localized: "modal.complete", table: "Conversions"))
                                 .font(MonarchUI.Font.sans(size: 12))
-                                .foregroundStyle(record.status == .working ? SwiftUI.Color(hex: "#7F7F7F") : SwiftUI.Color(hex: "#E6E6E4"))
+                                .foregroundStyle(record.status == .working ? MonarchUI.Color.textMuted : MonarchUI.Color.textPrimary)
                         }
                         Spacer()
                     }
@@ -238,7 +238,7 @@ struct ConversionDetailModalView: View {
                 .frame(height: 145)
                 .overlay(
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .fill(MonarchUI.Color.divider)
                         .frame(height: 1),
                     alignment: .bottom
                 )
@@ -258,22 +258,22 @@ struct ConversionDetailModalView: View {
                     HStack {
                         Text("Keep original size · Strip metadata · \(record.outputFormat.rawValue) output")
                             .font(MonarchUI.Font.mono(size: 11))
-                            .foregroundStyle(SwiftUI.Color(hex: "#B9B9B9"))
+                            .foregroundStyle(MonarchUI.Color.textSubtle)
                     }
                     .padding(.horizontal, 10)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(height: 34)
-                    .background(SwiftUI.Color(hex: "#181818"))
+                    .background(MonarchUI.Color.searchBg)
                     .overlay(
                         Rectangle()
-                            .stroke(SwiftUI.Color(hex: "#2A2A2A"), lineWidth: 1)
+                            .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
                     )
                 }
                 .padding(.horizontal, 24)
                 .frame(height: 105)
                 .overlay(
                     Rectangle()
-                        .fill(SwiftUI.Color(hex: "#2B2B2B"))
+                        .fill(MonarchUI.Color.divider)
                         .frame(height: 1),
                     alignment: .bottom
                 )
@@ -283,11 +283,11 @@ struct ConversionDetailModalView: View {
                     Button {} label: {
                         Text("modal.open_original", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 13, weight: .medium))
-                            .foregroundStyle(SwiftUI.Color(hex: "#E8E8E6"))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
                             .frame(width: 138, height: 36)
                             .overlay(
                                 Rectangle()
-                                    .stroke(SwiftUI.Color(hex: "#494949"), lineWidth: 1)
+                                    .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
                             )
                     }
                     .buttonStyle(.plain)
@@ -305,19 +305,19 @@ struct ConversionDetailModalView: View {
                     
                     Text("modal.esc_hint", tableName: "Conversions")
                         .font(MonarchUI.Font.mono(size: 11))
-                        .foregroundStyle(SwiftUI.Color(hex: "#858585"))
+                        .foregroundStyle(MonarchUI.Color.textMuted)
                 }
                 .padding(.horizontal, 24)
                 .frame(height: 74)
             }
             .frame(width: 760)
-            .background(SwiftUI.Color(hex: "#111111"))
+            .background(MonarchUI.Color.surface)
             .clipShape(RoundedRectangle(cornerRadius: 2))
             .overlay(
                 RoundedRectangle(cornerRadius: 2)
-                    .stroke(SwiftUI.Color(hex: "#3A3A3A"), lineWidth: 1)
+                    .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
             )
-            .shadow(color: SwiftUI.Color.black.opacity(0.65), radius: 40, y: 24)
+            .shadow(color: SwiftUI.Color.black.opacity(0.35), radius: 40, y: 24)
         }
     }
 }

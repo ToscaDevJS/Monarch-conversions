@@ -13,7 +13,7 @@ struct TelemetryFooterView: View {
                     
                     Text("Node us-east-1a")
                         .font(MonarchUI.Font.sans(size: 12, weight: .medium))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
                 
                 DividerBar()
@@ -24,7 +24,7 @@ struct TelemetryFooterView: View {
                         .foregroundStyle(MonarchUI.Color.textMuted)
                     Text("14.2 MB/s")
                         .font(MonarchUI.Font.sans(size: 12, weight: .semibold))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
                 
                 DividerBar()
@@ -35,7 +35,7 @@ struct TelemetryFooterView: View {
                         .foregroundStyle(MonarchUI.Color.textMuted)
                     Text("120ms")
                         .font(MonarchUI.Font.sans(size: 12, weight: .semibold))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
             }
             
@@ -53,21 +53,21 @@ struct TelemetryFooterView: View {
                     HStack(spacing: 6) {
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 11, weight: .medium))
-                            .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
                         
                         Text("footer.export_telemetry", tableName: "Common")
                             .font(MonarchUI.Font.sans(size: 11, weight: .medium))
-                            .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(
                         Rectangle()
-                            .fill(SwiftUI.Color(hex: "#252525"))
+                            .fill(MonarchUI.Color.badgeGrayBg)
                     )
                     .overlay(
                         Rectangle()
-                            .stroke(SwiftUI.Color(hex: "#333333"), lineWidth: 1)
+                            .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
                     )
                 }
                 .buttonStyle(.plain)
@@ -78,7 +78,7 @@ struct TelemetryFooterView: View {
         .background(MonarchUI.Color.searchBg)
         .overlay(
             Rectangle()
-                .fill(SwiftUI.Color(hex: "#282828"))
+                .fill(MonarchUI.Color.divider)
                 .frame(height: 1),
             alignment: .top
         )
@@ -88,7 +88,7 @@ struct TelemetryFooterView: View {
 private struct DividerBar: View {
     var body: some View {
         Rectangle()
-            .fill(SwiftUI.Color(hex: "#2D2D2D"))
+            .fill(MonarchUI.Color.divider)
             .frame(width: 1, height: 16)
     }
 }

@@ -140,7 +140,7 @@ private struct SparklineView: View {
                     path.addLine(to: pt)
                 }
             }
-            context.stroke(path, with: .color(SwiftUI.Color(hex: "#D8D8D8")), lineWidth: 1)
+            context.stroke(path, with: .color(MonarchUI.Color.textSecondary), lineWidth: 1)
         }
     }
 }

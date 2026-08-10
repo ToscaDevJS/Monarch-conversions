@@ -24,18 +24,18 @@ struct BatchQueueItemRow: View {
                 HStack(spacing: 10) {
                     Text(item.format.rawValue.uppercased())
                         .font(MonarchUI.Font.sans(size: 8, weight: .bold))
-                        .foregroundStyle(SwiftUI.Color.white)
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                         .frame(width: 26, height: 26)
-                        .background(SwiftUI.Color(hex: "#414141"))
+                        .background(MonarchUI.Color.badgeGrayBg)
                         .clipShape(RoundedRectangle(cornerRadius: 2))
                     
                     VStack(alignment: .leading, spacing: 2) {
                         Text(item.name)
                             .font(MonarchUI.Font.sans(size: 13, weight: .medium))
-                            .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
                         Text("\(ConversionFormatting.dimensions(item.dimensions)) · \(ConversionFormatting.byteSize(item.originalSizeBytes))")
                             .font(MonarchUI.Font.mono(size: 11))
-                            .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
+                            .foregroundStyle(MonarchUI.Color.textMuted)
                     }
                 }
                 
@@ -52,15 +52,15 @@ struct BatchQueueItemRow: View {
                 } else {
                     Text(trailingText)
                         .font(MonarchUI.Font.mono(size: 11))
-                        .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
+                        .foregroundStyle(MonarchUI.Color.textMuted)
                 }
             }
             .padding(12)
-            .background(isSelected ? SwiftUI.Color(hex: "#1A1720") : SwiftUI.Color(hex: "#101010"))
+            .background(isSelected ? MonarchUI.Color.accentVioletBg : MonarchUI.Color.surface)
             .clipShape(RoundedRectangle(cornerRadius: 2))
             .overlay(
                 RoundedRectangle(cornerRadius: 2)
-                    .stroke(isSelected ? MonarchUI.Color.accentViolet : SwiftUI.Color(hex: "#292929"), lineWidth: 1)
+                    .stroke(isSelected ? MonarchUI.Color.accentViolet : MonarchUI.Color.divider, lineWidth: 1)
             )
         }
         .buttonStyle(.plain)

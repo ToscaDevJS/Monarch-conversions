@@ -27,7 +27,7 @@ public struct ImportRejectionListView: View {
                     Button(action: onDismiss) {
                         Text("action.dismiss", tableName: "Common")
                             .font(MonarchUI.Font.sans(size: 11, weight: .medium))
-                            .foregroundStyle(SwiftUI.Color(hex: "#8F8F8F"))
+                            .foregroundStyle(MonarchUI.Color.textMuted)
                     }
                     .buttonStyle(.plain)
                 }
@@ -37,7 +37,7 @@ public struct ImportRejectionListView: View {
                         HStack {
                             Text(rejection.fileName)
                                 .font(MonarchUI.Font.sans(size: 12, weight: .medium))
-                                .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                                .foregroundStyle(MonarchUI.Color.textPrimary)
                                 .lineLimit(1)
 
                             Spacer()

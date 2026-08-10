@@ -9,21 +9,21 @@ struct StatusFooterView: View {
                 HStack(spacing: 8) {
                     Text("PNG")
                         .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(
                             Rectangle()
-                                .fill(SwiftUI.Color(hex: "#252525"))
+                                .fill(MonarchUI.Color.badgeGrayBg)
                         )
                         .overlay(
                             Rectangle()
-                                .stroke(SwiftUI.Color(hex: "#333333"), lineWidth: 1)
+                                .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
                         )
                     
                     Text("1 archivo")
                         .font(MonarchUI.Font.sans(size: 12, weight: .semibold))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                     
                     Text("·")
                         .foregroundStyle(MonarchUI.Color.textMuted)
@@ -43,7 +43,7 @@ struct StatusFooterView: View {
                     
                     Text("footer.quality 85%", tableName: "Common")
                         .font(MonarchUI.Font.sans(size: 12))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
                 
                 DividerBar()
@@ -56,7 +56,7 @@ struct StatusFooterView: View {
                     
                     Text("Descargas/Luminary")
                         .font(MonarchUI.Font.sans(size: 12))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
             }
             
@@ -72,7 +72,7 @@ struct StatusFooterView: View {
                     
                     Text("footer.synced", tableName: "Common")
                         .font(MonarchUI.Font.sans(size: 12))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                 }
                 
                 DividerBar()
@@ -81,12 +81,12 @@ struct StatusFooterView: View {
                 HStack(spacing: 12) {
                     Text("100%")
                         .font(MonarchUI.Font.sans(size: 12))
-                        .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
                     
                     Button(action: {}) {
                         Image(systemName: "arrow.up.right.square")
                             .font(.system(size: 13))
-                            .foregroundStyle(SwiftUI.Color(hex: "#E4E4E2"))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
                     }
                     .buttonStyle(.plain)
                 }
@@ -97,7 +97,7 @@ struct StatusFooterView: View {
         .background(MonarchUI.Color.searchBg)
         .overlay(
             Rectangle()
-                .fill(SwiftUI.Color(hex: "#282828"))
+                .fill(MonarchUI.Color.divider)
                 .frame(height: 1),
             alignment: .top
         )
@@ -107,7 +107,7 @@ struct StatusFooterView: View {
 private struct DividerBar: View {
     var body: some View {
         Rectangle()
-            .fill(SwiftUI.Color(hex: "#2D2D2D"))
+            .fill(MonarchUI.Color.divider)
             .frame(width: 1, height: 16)
     }
 }
