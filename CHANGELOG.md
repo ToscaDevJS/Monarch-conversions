@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.3.0
+
+**Highlights**
+
+- **Adaptive Appearance Mode:** Full dynamic Light and Dark mode support across all scenes, features, and UI components using semantic `MonarchUI.Color` tokens.
 
 - Added adaptive Light and Dark appearance mode (`MonarchUI.Color`) with dynamic system/theme color resolution across all scenes and components
 - Added `MonarchUITests` suite verifying dynamic color token initialization and appearance scheme mappings
