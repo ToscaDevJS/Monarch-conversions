@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0
+
+**Highlights**
+
+- **Dynamic Dashboard Metrics:** Connected `MetricsHeaderView` to SwiftData `@Query` for real-time calculation of processed images, working queue, items converted today, total storage saved, and active projects count.
+
 ## 0.6.0
 
 **Highlights**

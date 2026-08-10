@@ -1,6 +1,38 @@
 import SwiftUI
+import SwiftData
 
 struct MetricsHeaderView: View {
+    @Query private var records: [ConversionRecord]
+
+    private var processedText: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: records.count)) ?? "\(records.count)"
+    }
+
+    private var inQueueText: String {
+        let workingCount = records.filter { $0.status == .working }.count
+        return "\(workingCount)"
+    }
+
+    private var convertedTodayText: String {
+        let todayCount = records.filter {
+            $0.status == .done && Calendar.current.isDateInToday($0.timestamp)
+        }.count
+        return "\(todayCount)"
+    }
+
+    private var storageSavedText: String {
+        let totalOutputBytes = records.reduce(0) { $0 + $1.outputSizeBytes }
+        let estimatedSavingsBytes = Int64(Double(totalOutputBytes) * 1.8) // Estimated 1.8x savings ratio
+        return ConversionFormatting.byteSize(estimatedSavingsBytes)
+    }
+
+    private var activeProjectsText: String {
+        let uniqueProjects = Set(records.map { $0.project })
+        return "\(uniqueProjects.count)"
+    }
+
     var body: some View {
         HStack(alignment: .bottom, spacing: 0) {
             // Images processed
@@ -10,7 +42,7 @@ struct MetricsHeaderView: View {
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
                 HStack(spacing: 16) {
-                    Text("28,492")
+                    Text(processedText)
                         .font(MonarchUI.Font.mono(size: 21, weight: .regular))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
                     
@@ -29,7 +61,7 @@ struct MetricsHeaderView: View {
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
                 HStack {
-                    Text("12")
+                    Text(inQueueText)
                         .font(MonarchUI.Font.mono(size: 21, weight: .regular))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
                     
@@ -54,7 +86,7 @@ struct MetricsHeaderView: View {
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
                 HStack {
-                    Text("1,574")
+                    Text(convertedTodayText)
                         .font(MonarchUI.Font.mono(size: 21, weight: .regular))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
                     
@@ -78,7 +110,7 @@ struct MetricsHeaderView: View {
                     .font(MonarchUI.Font.sans(size: 12))
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
-                Text("748 GB")
+                Text(storageSavedText)
                     .font(MonarchUI.Font.mono(size: 21, weight: .regular))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
             }
@@ -93,7 +125,7 @@ struct MetricsHeaderView: View {
                     .font(MonarchUI.Font.sans(size: 12))
                     .foregroundStyle(MonarchUI.Color.textSecondary)
                 
-                Text("174")
+                Text(activeProjectsText)
                     .font(MonarchUI.Font.mono(size: 21, weight: .regular))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
             }
