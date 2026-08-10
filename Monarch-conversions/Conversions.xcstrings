@@ -1,340 +1,905 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "header.convert_title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Batch Image Conversion" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Conversión Masiva de Imágenes" } }
-      }
-    },
-    "header.convert_subtitle" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Upload single files or multi-image batches with Squoosh-style visual quality inspector." } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Sube archivos individuales o lotes de imágenes con un inspector de calidad visual estilo Squoosh." } }
-      }
-    },
     "convert.supported_formats" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Supported: JPG, PNG, WebP, AVIF, TIFF, SVG" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Soportados: JPG, PNG, WebP, AVIF, TIFF, SVG" } }
-      }
-    },
-    "dropzone.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Drop images here for batch conversion" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Arrastra imágenes aquí para conversión masiva" } }
-      }
-    },
-    "dropzone.subtitle" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "or choose files from your computer" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "o elige archivos de tu equipo" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supported: JPG, PNG, WebP, AVIF, TIFF, SVG"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soportados: JPG, PNG, WebP, AVIF, TIFF, SVG"
+          }
+        }
       }
     },
     "dropzone.limit" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Batch limit: 50 files · Max 100 MB per file" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Límite por lote: 50 archivos · Máx 100 MB por archivo" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batch limit: 50 files · Max 100 MB per file"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Límite por lote: 50 archivos · Máx 100 MB por archivo"
+          }
+        }
       }
     },
-    "queue.title %lld" : {
+    "dropzone.subtitle" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "BATCH QUEUE (%lld FILES)" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "COLA DE CONVERSIÓN (%lld ARCHIVOS)" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "or choose files from your computer"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "o elige archivos de tu equipo"
+          }
+        }
       }
     },
-    "rejection.title %lld" : {
+    "dropzone.title" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "REJECTED (%lld)" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "RECHAZADOS (%lld)" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drop images here for batch conversion"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrastra imágenes aquí para conversión masiva"
+          }
+        }
+      }
+    },
+    "header.convert_subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload single files or multi-image batches with Squoosh-style visual quality inspector."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sube archivos individuales o lotes de imágenes con un inspector de calidad visual estilo Squoosh."
+          }
+        }
+      }
+    },
+    "header.convert_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batch Image Conversion"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversión Masiva de Imágenes"
+          }
+        }
       }
     },
     "inspector.comparison" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Squoosh Comparison 1:1" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Comparativa Squoosh 1:1" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Squoosh Comparison 1:1"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comparativa Squoosh 1:1"
+          }
+        }
       }
     },
     "inspector.mode" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mode: Split Slider" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Modo: Deslizador Divisor" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode: Split Slider"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modo: Deslizador Divisor"
+          }
+        }
       }
     },
     "inspector.zoom" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Zoom: 100%" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Zoom: 100%" } }
-      }
-    },
-    "output.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Output settings" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes de salida" } }
-      }
-    },
-    "output.preset" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Workspace preset: WebP High" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Preset de trabajo: WebP Alta" } }
-      }
-    },
-    "output.format" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "FORMAT" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "FORMATO" } }
-      }
-    },
-    "output.quality" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "QUALITY" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "CALIDAD" } }
-      }
-    },
-    "output.dimensions" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "DIMENSIONS" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "DIMENSIONES" } }
-      }
-    },
-    "output.metadata" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "METADATA" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "METADATA" } }
-      }
-    },
-    "output.estimated_savings" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Total batch estimated savings:" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ahorro total estimado del lote:" } }
-      }
-    },
-    "output.add_batch" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add batch to conversion queue" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Añadir lote a la cola de conversión" } }
-      }
-    },
-    "metrics.processed" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Images processed" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Imágenes procesadas" } }
-      }
-    },
-    "metrics.in_queue" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "In queue (24h)" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "En cola (24h)" } }
-      }
-    },
-    "metrics.converted_today" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Converted today" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Convertidas hoy" } }
-      }
-    },
-    "metrics.storage_saved" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Storage saved" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Almacenamiento ahorrado" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom: 100%"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom: 100%"
+          }
+        }
       }
     },
     "metrics.active_projects" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Active projects" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Proyectos activos" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active projects"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proyectos activos"
+          }
+        }
       }
     },
-    "table.active_conversions" : {
+    "metrics.converted_today" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Active conversions" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Conversiones activas" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Converted today"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convertidas hoy"
+          }
+        }
       }
     },
-    "table.filter_status" : {
+    "metrics.in_queue" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Status: All" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Estado: Todos" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In queue (24h)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cola (24h)"
+          }
+        }
       }
     },
-    "table.filter_input" : {
+    "metrics.processed" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Input: All" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Entrada: Todos" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Images processed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imágenes procesadas"
+          }
+        }
       }
     },
-    "table.filter_output" : {
+    "metrics.storage_saved" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Output: All" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Salida: Todos" } }
-      }
-    },
-    "table.filter_project" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Project: All" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Proyecto: Todos" } }
-      }
-    },
-    "table.reset" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reset" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Restablecer" } }
-      }
-    },
-    "table.col_status" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Status" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Estado" } }
-      }
-    },
-    "table.col_file_id" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "File ID ⓘ" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "ID Archivo ⓘ" } }
-      }
-    },
-    "table.col_file_name" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "File name" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Nombre del archivo" } }
-      }
-    },
-    "table.col_dimensions" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Dimensions" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Dimensiones" } }
-      }
-    },
-    "table.col_output" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Output" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Salida" } }
-      }
-    },
-    "table.col_project" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Project" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Proyecto" } }
-      }
-    },
-    "table.col_added" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Added" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Añadido" } }
-      }
-    },
-    "status.working" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "↻ Working" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "↻ Procesando" } }
-      }
-    },
-    "status.done" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "✓ Done" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "✓ Listo" } }
-      }
-    },
-    "modal.details" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Conversion details" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Detalles de conversión" } }
-      }
-    },
-    "modal.queued_now" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Queued just now" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "En cola ahora mismo" } }
-      }
-    },
-    "modal.original_file" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Original file" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Archivo original" } }
-      }
-    },
-    "modal.copy_name" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copy name" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Copiar nombre" } }
-      }
-    },
-    "modal.input" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "INPUT" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "ENTRADA" } }
-      }
-    },
-    "modal.output" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "OUTPUT" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "SALIDA" } }
-      }
-    },
-    "modal.progress" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Conversion progress" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Progreso de conversión" } }
-      }
-    },
-    "modal.upload_verified" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Upload verified" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Carga verificada" } }
-      }
-    },
-    "modal.encoding" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Encoding" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Codificación" } }
-      }
-    },
-    "modal.optimize_save" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Optimize & save" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Optimizar y guardar" } }
-      }
-    },
-    "modal.in_progress" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "In progress" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "En progreso" } }
-      }
-    },
-    "modal.waiting" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Waiting" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "En espera" } }
-      }
-    },
-    "modal.complete" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Complete" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Completado" } }
-      }
-    },
-    "modal.settings" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Conversion settings" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Ajustes de conversión" } }
-      }
-    },
-    "modal.open_original" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open original" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Abrir original" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storage saved"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Almacenamiento ahorrado"
+          }
+        }
       }
     },
     "modal.close" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Cerrar" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar"
+          }
+        }
+      }
+    },
+    "modal.complete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completado"
+          }
+        }
+      }
+    },
+    "modal.copy_name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy name"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar nombre"
+          }
+        }
+      }
+    },
+    "modal.details" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversion details"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalles de conversión"
+          }
+        }
+      }
+    },
+    "modal.encoding" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encoding"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codificación"
+          }
+        }
       }
     },
     "modal.esc_hint" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press ESC to close" } },
-        "es" : { "stringUnit" : { "state" : "translated", "value" : "Presiona ESC para cerrar" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press ESC to close"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Presiona ESC para cerrar"
+          }
+        }
+      }
+    },
+    "modal.in_progress" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In progress"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En progreso"
+          }
+        }
+      }
+    },
+    "modal.input" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INPUT"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ENTRADA"
+          }
+        }
+      }
+    },
+    "modal.open_original" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open original"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir original"
+          }
+        }
+      }
+    },
+    "modal.optimize_save" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optimize & save"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optimizar y guardar"
+          }
+        }
+      }
+    },
+    "modal.original_file" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Original file"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo original"
+          }
+        }
+      }
+    },
+    "modal.output" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OUTPUT"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SALIDA"
+          }
+        }
+      }
+    },
+    "modal.progress" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversion progress"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progreso de conversión"
+          }
+        }
+      }
+    },
+    "modal.queued_now" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Queued just now"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En cola ahora mismo"
+          }
+        }
+      }
+    },
+    "modal.settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversion settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes de conversión"
+          }
+        }
+      }
+    },
+    "modal.upload_verified" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upload verified"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carga verificada"
+          }
+        }
+      }
+    },
+    "modal.waiting" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En espera"
+          }
+        }
+      }
+    },
+    "output.add_batch" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add batch to conversion queue"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir lote a la cola de conversión"
+          }
+        }
+      }
+    },
+    "output.dimensions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DIMENSIONS"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DIMENSIONES"
+          }
+        }
+      }
+    },
+    "output.estimated_savings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total batch estimated savings:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahorro total estimado del lote:"
+          }
+        }
+      }
+    },
+    "output.format" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FORMAT"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FORMATO"
+          }
+        }
+      }
+    },
+    "output.metadata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "METADATA"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "METADATA"
+          }
+        }
+      }
+    },
+    "output.preset" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Workspace preset: WebP High"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preset de trabajo: WebP Alta"
+          }
+        }
+      }
+    },
+    "output.quality" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QUALITY"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CALIDAD"
+          }
+        }
+      }
+    },
+    "output.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Output settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes de salida"
+          }
+        }
+      }
+    },
+    "queue.title %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BATCH QUEUE (%lld FILES)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "COLA DE CONVERSIÓN (%lld ARCHIVOS)"
+          }
+        }
+      }
+    },
+    "rejection.title %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REJECTED (%lld)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RECHAZADOS (%lld)"
+          }
+        }
+      }
+    },
+    "status.done" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Done"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Listo"
+          }
+        }
+      }
+    },
+    "status.working" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "↻ Working"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "↻ Procesando"
+          }
+        }
+      }
+    },
+    "table.active_conversions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active conversions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conversiones activas"
+          }
+        }
+      }
+    },
+    "table.col_added" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadido"
+          }
+        }
+      }
+    },
+    "table.col_dimensions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimensiones"
+          }
+        }
+      }
+    },
+    "table.col_file_id" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File ID ⓘ"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ID Archivo ⓘ"
+          }
+        }
+      }
+    },
+    "table.col_file_name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File name"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre del archivo"
+          }
+        }
+      }
+    },
+    "table.col_output" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Output"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salida"
+          }
+        }
+      }
+    },
+    "table.col_project" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proyecto"
+          }
+        }
+      }
+    },
+    "table.col_status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado"
+          }
+        }
+      }
+    },
+    "table.filter_input" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Input: All"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada: Todos"
+          }
+        }
+      }
+    },
+    "table.filter_output" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Output: All"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salida: Todos"
+          }
+        }
+      }
+    },
+    "table.filter_project" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project: All"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proyecto: Todos"
+          }
+        }
+      }
+    },
+    "table.filter_status" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status: All"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estado: Todos"
+          }
+        }
+      }
+    },
+    "table.reset" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restablecer"
+          }
+        }
       }
     }
   },
