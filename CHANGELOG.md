@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0
+
+**Highlights**
+
+- **Interactive Table Dropdown Filters:** Integrated interactive `Menu` controls in `ConversionsTableView` for Status (Working/Done), Input Format, Output Format, and Project.
+- **Filtering State & Reset:** Real-time array predicate filtering via `TableFilterState` with single-click reset capability.
+
 ## 0.4.0
 
 **Highlights**

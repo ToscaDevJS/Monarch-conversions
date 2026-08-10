@@ -3,8 +3,17 @@ import SwiftData
 
 struct ConversionsTableView: View {
     @Query(sort: \ConversionRecord.timestamp, order: .reverse) private var records: [ConversionRecord]
+    @State private var filterState = TableFilterState()
     var onSelectRecord: ((ConversionRecord) -> Void)? = nil
     
+    private var filteredRecords: [ConversionRecord] {
+        records.filtered(with: filterState)
+    }
+
+    private var availableProjects: [String] {
+        Array(Set(records.map { $0.project })).sorted()
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // Table Controls & Filters
@@ -22,18 +31,59 @@ struct ConversionsTableView: View {
                 
                 Spacer()
                 
-                HStack(spacing: 24) {
-                    FilterDropdown(title: String(localized: "table.filter_status", table: "Conversions"))
-                    FilterDropdown(title: String(localized: "table.filter_input", table: "Conversions"))
-                    FilterDropdown(title: String(localized: "table.filter_output", table: "Conversions"))
-                    FilterDropdown(title: String(localized: "table.filter_project", table: "Conversions"))
-                    
+                HStack(spacing: 16) {
+                    // Status Filter
+                    Menu {
+                        Button("Status: All") { filterState.status = nil }
+                        Button("Status: Working") { filterState.status = .working }
+                        Button("Status: Done") { filterState.status = .done }
+                    } label: {
+                        FilterLabel(title: "Status: \(filterState.status?.rawValue ?? "All")")
+                    }
+                    .menuStyle(.borderlessButton)
+
+                    // Input Format Filter
+                    Menu {
+                        Button("Input: All") { filterState.inputFormat = nil }
+                        ForEach(ImageFormat.allCases, id: \.self) { fmt in
+                            Button(fmt.rawValue) { filterState.inputFormat = fmt }
+                        }
+                    } label: {
+                        FilterLabel(title: "Input: \(filterState.inputFormat?.rawValue ?? "All")")
+                    }
+                    .menuStyle(.borderlessButton)
+
+                    // Output Format Filter
+                    Menu {
+                        Button("Output: All") { filterState.outputFormat = nil }
+                        ForEach(ImageFormat.outputEligibleCases, id: \.self) { fmt in
+                            Button(fmt.rawValue) { filterState.outputFormat = fmt }
+                        }
+                    } label: {
+                        FilterLabel(title: "Output: \(filterState.outputFormat?.rawValue ?? "All")")
+                    }
+                    .menuStyle(.borderlessButton)
+
+                    // Project Filter
+                    Menu {
+                        Button("Project: All") { filterState.project = nil }
+                        ForEach(availableProjects, id: \.self) { proj in
+                            Button(proj) { filterState.project = proj }
+                        }
+                    } label: {
+                        FilterLabel(title: "Project: \(filterState.project ?? "All")")
+                    }
+                    .menuStyle(.borderlessButton)
+
+                    // Reset Button
                     Button {
+                        filterState.reset()
                     } label: {
                         Text("table.reset", tableName: "Conversions")
-                            .font(MonarchUI.Font.sans(size: 13))
-                            .foregroundStyle(MonarchUI.Color.textMuted)
+                            .font(MonarchUI.Font.sans(size: 13, weight: filterState.isActive ? .semibold : .regular))
+                            .foregroundStyle(filterState.isActive ? MonarchUI.Color.accentViolet : MonarchUI.Color.textMuted)
                     }
+                    .disabled(!filterState.isActive)
                     .buttonStyle(.plain)
                 }
             }
@@ -77,7 +127,7 @@ struct ConversionsTableView: View {
             // Table Rows
             ScrollView {
                 VStack(spacing: 0) {
-                    ForEach(Array(records.enumerated()), id: \.element.id) { index, record in
+                    ForEach(Array(filteredRecords.enumerated()), id: \.element.id) { index, record in
                         TableRowView(record: record, isEven: index % 2 == 0) {
                             onSelectRecord?(record)
                         }
@@ -89,7 +139,7 @@ struct ConversionsTableView: View {
     }
 }
 
-private struct FilterDropdown: View {
+private struct FilterLabel: View {
     let title: String
     
     var body: some View {
