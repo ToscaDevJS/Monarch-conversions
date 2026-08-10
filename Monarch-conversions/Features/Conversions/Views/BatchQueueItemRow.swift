@@ -53,6 +53,7 @@ struct BatchQueueItemRow: View {
                     .frame(height: 22)
                     .background(MonarchUI.Color.accentVioletBg)
                     .clipShape(Capsule())
+                    .accessibilityIdentifier("status-converting")
                 } else if item.status == .done {
                     HStack(spacing: 4) {
                         Text("✓ Done")
@@ -63,6 +64,7 @@ struct BatchQueueItemRow: View {
                     .frame(height: 22)
                     .background(MonarchUI.Color.statusGreen.opacity(0.15))
                     .clipShape(Capsule())
+                    .accessibilityIdentifier("status-done")
                 } else if item.status == .failed {
                     HStack(spacing: 4) {
                         Text("✕ Failed")
@@ -73,6 +75,7 @@ struct BatchQueueItemRow: View {
                     .frame(height: 22)
                     .background(MonarchUI.Color.statusRed.opacity(0.15))
                     .clipShape(Capsule())
+                    .accessibilityIdentifier("status-failed")
                 } else if isSelected {
                     Text(trailingText)
                         .font(MonarchUI.Font.sans(size: 11, weight: .medium))

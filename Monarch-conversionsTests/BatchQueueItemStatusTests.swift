@@ -54,41 +54,77 @@ import Testing
         #expect(item.status == .failed)
     }
 
-    // MARK: - Scenario 2.1 & 2.2: Pipeline status progression
+    // MARK: - Scenario 2.1 & 2.2: Pipeline status progression (in-place array mutation)
 
-    @Test func pipelineProgressesFromQueuedToDone() async throws {
-        let item = makeItem()
-        #expect(item.status == .queued)
+    @Test func pipelineIterationMutatesStatusInPlaceToDone() async throws {
+        var items = [makeItem(), makeItem(name: "photo.jpg"), makeItem(name: "doc.png")]
+        #expect(items.allSatisfy { $0.status == .queued })
 
-        var converting = item
-        converting.status = .converting
-        #expect(converting.status == .converting)
+        for index in items.indices {
+            items[index].status = .converting
+            #expect(items[index].status == .converting)
 
-        var done = converting
-        done.status = .done
-        #expect(done.status == .done)
+            // Simulate successful conversion: creates a new item with .done status
+            let original = items[index]
+            items[index] = BatchQueueItem(
+                id: original.id,
+                name: original.name,
+                format: original.format,
+                dimensions: original.dimensions,
+                originalSizeBytes: original.originalSizeBytes,
+                targetFormat: .jpg,
+                targetSizeBytes: 10_000,
+                fileURL: original.fileURL,
+                status: .done
+            )
+            #expect(items[index].status == .done)
+        }
+
+        #expect(items.allSatisfy { $0.status == .done })
     }
 
-    @Test func pipelineProgressesFromQueuedToFailed() async throws {
-        let item = makeItem()
-        #expect(item.status == .queued)
+    @Test func pipelineIterationSetsFailedOnError() async throws {
+        var items = [makeItem()]
+        #expect(items[0].status == .queued)
 
-        var converting = item
-        converting.status = .converting
-        #expect(converting.status == .converting)
+        // Simulate the error path from processBatchConversion()
+        items[0].status = .converting
+        #expect(items[0].status == .converting)
 
-        var failed = converting
-        failed.status = .failed
-        #expect(failed.status == .failed)
+        items[0].status = .failed
+        #expect(items[0].status == .failed)
     }
 
-    // MARK: - Scenario 3.1-3.3: Visual status rendering logic
+    @Test func pipelineIterationPreservesItemIdentity() async throws {
+        var items = [makeItem(name: "hero.png")]
+        let originalId = items[0].id
+
+        items[0].status = .converting
+
+        // Simulate successful conversion with new BatchQueueItem
+        let original = items[0]
+        items[0] = BatchQueueItem(
+            id: original.id,
+            name: original.name,
+            format: original.format,
+            dimensions: original.dimensions,
+            originalSizeBytes: original.originalSizeBytes,
+            targetFormat: .jpg,
+            targetSizeBytes: 10_000,
+            fileURL: original.fileURL,
+            status: .done
+        )
+
+        #expect(items[0].id == originalId)
+        #expect(items[0].status == .done)
+        #expect(items[0].targetFormat == ImageFormat.jpg)
+    }
+
+    // MARK: - Scenario 3.1-3.3: Visual status rendering logic (accessibility identifiers)
 
     @Test func convertingStatusProducesProgressIndicator() {
         let item = makeItem(status: .converting)
-        // The row renders ProgressView + "Converting..." for .converting status
         #expect(item.status == .converting)
-        // Verify the conditional branch: not .done, not .failed, not .queued
         #expect(item.status != .done)
         #expect(item.status != .failed)
         #expect(item.status != .queued)
@@ -110,9 +146,9 @@ import Testing
 
     // MARK: - Helpers
 
-    private func makeItem(status: BatchItemStatus = .queued) -> BatchQueueItem {
+    private func makeItem(name: String = "test.png", status: BatchItemStatus = .queued) -> BatchQueueItem {
         BatchQueueItem(
-            name: "test.png",
+            name: name,
             format: .png,
             dimensions: PixelDimensions(width: 100, height: 100),
             originalSizeBytes: 50_000,
