@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added adaptive Light and Dark appearance mode (`MonarchUI.Color`) with dynamic system/theme color resolution across all scenes and components
+- Added `MonarchUITests` suite verifying dynamic color token initialization and appearance scheme mappings
+
 ## 0.2.0
 
 **Highlights**
