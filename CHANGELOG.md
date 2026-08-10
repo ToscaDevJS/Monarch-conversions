@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+
+**Highlights**
+
+- **Core Image Conversion Engine:** High-performance asynchronous image processing service (`ImageConversionService`) built on macOS ImageIO (`CGImageSource` and `CGImageDestination`).
+- **Interactive Output Settings:** Direct binding of target formats (JPEG, PNG, WebP, AVIF, HEIC, TIFF), lossy compression quality, dimension constraints, and EXIF metadata stripping.
+- **SwiftData Batch Pipeline:** Automatic persistence of batch `ConversionRecord` items in SwiftData `ModelContext` upon conversion completion.
+
 ## 0.3.0
 
 **Highlights**

@@ -1,13 +1,19 @@
 import SwiftUI
+import SwiftData
 
 struct ConvertScene: View {
     var onSelectTab: ((AppTab) -> Void)? = nil
 
+    @Environment(\.modelContext) private var modelContext
+
     @State private var items: [BatchQueueItem] = []
     @State private var rejections: [ImportRejection] = []
     @State private var selectedId: UUID? = nil
+    @State private var conversionSettings = ConversionSettings(targetFormat: .png, quality: 0.82)
+    @State private var isProcessing: Bool = false
 
     private let importService = ImageImportService()
+    private let conversionService = ImageConversionService()
 
     var selectedItem: BatchQueueItem? {
         if let selectedId = selectedId {
@@ -61,6 +67,52 @@ struct ConvertScene: View {
         }
     }
 
+    private func processBatchConversion() {
+        guard !items.isEmpty, !isProcessing else { return }
+        isProcessing = true
+
+        Task {
+            for index in items.indices {
+                let item = items[index]
+                guard let sourceURL = item.fileURL else { continue }
+
+                do {
+                    let result = try await conversionService.convert(sourceURL: sourceURL, settings: conversionSettings)
+
+                    let updatedItem = BatchQueueItem(
+                        id: item.id,
+                        name: item.name,
+                        format: item.format,
+                        dimensions: item.dimensions,
+                        originalSizeBytes: item.originalSizeBytes,
+                        targetFormat: conversionSettings.targetFormat,
+                        targetSizeBytes: result.outputSizeBytes,
+                        fileURL: item.fileURL
+                    )
+                    items[index] = updatedItem
+
+                    let record = ConversionRecord(
+                        fileId: item.id.uuidString,
+                        fileName: item.name,
+                        inputFormat: item.format,
+                        dimensions: result.outputDimensions,
+                        outputFormat: conversionSettings.targetFormat,
+                        outputSizeBytes: result.outputSizeBytes,
+                        project: "Default",
+                        status: .done,
+                        timestamp: Date()
+                    )
+                    modelContext.insert(record)
+                } catch {
+                    print("Conversion failed for \(item.name): \(error.localizedDescription)")
+                }
+            }
+
+            try? modelContext.save()
+            isProcessing = false
+        }
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
@@ -108,7 +160,13 @@ struct ConvertScene: View {
                             targetSizeText: targetSizeText
                         )
 
-                        OutputSettingsView()
+                        OutputSettingsView(
+                            settings: $conversionSettings,
+                            isProcessing: isProcessing,
+                            onAddBatch: {
+                                processBatchConversion()
+                            }
+                        )
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }

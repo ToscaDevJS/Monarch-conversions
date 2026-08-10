@@ -1,10 +1,8 @@
 import SwiftUI
 
 struct OutputSettingsView: View {
-    @State private var format: String = "WebP"
-    @State private var quality: String = "82 / High"
-    @State private var dimensions: String = "Keep original (4096px)"
-    @State private var metadata: String = "Remove EXIF"
+    @Binding var settings: ConversionSettings
+    var isProcessing: Bool = false
     var onAddBatch: (() -> Void)? = nil
     
     var body: some View {
@@ -28,11 +26,18 @@ struct OutputSettingsView: View {
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(MonarchUI.Color.accentViolet)
                         .tracking(0.5)
-                    HStack {
-                        Text("\(format) ⌄")
+                    Menu {
+                        ForEach(ImageFormat.outputEligibleCases, id: \.self) { fmt in
+                            Button(fmt.rawValue) {
+                                settings.targetFormat = fmt
+                            }
+                        }
+                    } label: {
+                        Text("\(settings.targetFormat.rawValue) ⌄")
                             .font(MonarchUI.Font.sans(size: 14, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                     }
+                    .menuStyle(.borderlessButton)
                 }
                 .padding(.horizontal, 12)
                 .frame(width: 180, height: 70, alignment: .leading)
@@ -48,9 +53,17 @@ struct OutputSettingsView: View {
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(MonarchUI.Color.textSubtle)
                         .tracking(0.5)
-                    Text(quality)
-                        .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                        .foregroundStyle(MonarchUI.Color.textPrimary)
+                    Menu {
+                        Button("95% (Maximum)") { settings.quality = 0.95 }
+                        Button("82% (High)") { settings.quality = 0.82 }
+                        Button("65% (Medium)") { settings.quality = 0.65 }
+                        Button("45% (Low)") { settings.quality = 0.45 }
+                    } label: {
+                        Text("\(Int(settings.quality * 100))% ⌄")
+                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                    }
+                    .menuStyle(.borderlessButton)
                 }
                 .padding(.horizontal, 12)
                 .frame(width: 180, height: 70, alignment: .leading)
@@ -66,9 +79,26 @@ struct OutputSettingsView: View {
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(MonarchUI.Color.textSubtle)
                         .tracking(0.5)
-                    Text(dimensions)
-                        .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                        .foregroundStyle(MonarchUI.Color.textPrimary)
+                    Menu {
+                        Button("Keep Original") {
+                            settings.maxWidth = nil
+                            settings.maxHeight = nil
+                        }
+                        Button("Max 2048px") {
+                            settings.maxWidth = 2048
+                            settings.maxHeight = 2048
+                        }
+                        Button("Max 1024px") {
+                            settings.maxWidth = 1024
+                            settings.maxHeight = 1024
+                        }
+                    } label: {
+                        let text = settings.maxWidth != nil ? "Max \(settings.maxWidth!)px ⌄" : "Original ⌄"
+                        Text(text)
+                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                    }
+                    .menuStyle(.borderlessButton)
                 }
                 .padding(.horizontal, 12)
                 .frame(width: 230, height: 70, alignment: .leading)
@@ -84,9 +114,15 @@ struct OutputSettingsView: View {
                         .font(MonarchUI.Font.sans(size: 11))
                         .foregroundStyle(MonarchUI.Color.textSubtle)
                         .tracking(0.5)
-                    Text(metadata)
-                        .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                        .foregroundStyle(MonarchUI.Color.textPrimary)
+                    Menu {
+                        Button("Preserve Metadata") { settings.preserveMetadata = true }
+                        Button("Remove EXIF") { settings.preserveMetadata = false }
+                    } label: {
+                        Text(settings.preserveMetadata ? "Preserve ⌄" : "Remove EXIF ⌄")
+                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                    }
+                    .menuStyle(.borderlessButton)
                 }
                 .padding(.horizontal, 12)
                 .frame(height: 70)
@@ -104,7 +140,7 @@ struct OutputSettingsView: View {
                         .font(MonarchUI.Font.sans(size: 13))
                         .foregroundStyle(MonarchUI.Color.textSecondary)
                     
-                    Text("8.85 MB → 1.49 MB (-83%)")
+                    Text("Target: \(settings.targetFormat.rawValue) (\(Int(settings.quality * 100))%)")
                         .font(MonarchUI.Font.mono(size: 13, weight: .semibold))
                         .foregroundStyle(MonarchUI.Color.accentViolet)
                 }
@@ -114,14 +150,21 @@ struct OutputSettingsView: View {
                 Button {
                     onAddBatch?()
                 } label: {
-                    Text("output.add_batch", tableName: "Conversions")
-                        .font(MonarchUI.Font.sans(size: 14, weight: .semibold))
-                        .foregroundStyle(MonarchUI.Color.accentVioletBg)
-                        .padding(.horizontal, 28)
-                        .frame(height: 42)
-                        .background(MonarchUI.Color.accentViolet)
-                        .clipShape(RoundedRectangle(cornerRadius: 2))
+                    HStack(spacing: 6) {
+                        if isProcessing {
+                            ProgressView()
+                                .controlSize(.small)
+                        }
+                        Text(isProcessing ? "Converting..." : "Convert Batch", comment: "Convert action button")
+                            .font(MonarchUI.Font.sans(size: 14, weight: .semibold))
+                            .foregroundStyle(MonarchUI.Color.accentVioletBg)
+                    }
+                    .padding(.horizontal, 28)
+                    .frame(height: 42)
+                    .background(isProcessing ? MonarchUI.Color.accentViolet.opacity(0.5) : MonarchUI.Color.accentViolet)
+                    .clipShape(RoundedRectangle(cornerRadius: 2))
                 }
+                .disabled(isProcessing)
                 .buttonStyle(.plain)
             }
             .padding(.top, 4)
@@ -137,7 +180,7 @@ struct OutputSettingsView: View {
 }
 
 #Preview {
-    OutputSettingsView()
+    OutputSettingsView(settings: .constant(ConversionSettings()))
         .padding()
         .background(MonarchUI.Color.background)
 }

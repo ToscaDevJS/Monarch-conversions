@@ -49,7 +49,7 @@ public struct ImageImportService: Sendable {
             }()
 
             var dimensions: PixelDimensions? = nil
-            if let source = source, let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any] {
+            if let source = source, CGImageSourceGetStatus(source) == .statusComplete, let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any] {
                 let width = (properties[kCGImagePropertyPixelWidth] as? NSNumber)?.intValue ?? 0
                 let height = (properties[kCGImagePropertyPixelHeight] as? NSNumber)?.intValue ?? 0
                 if width > 0 && height > 0 {
@@ -84,7 +84,8 @@ public struct ImageImportService: Sendable {
                 dimensions: validDimensions,
                 originalSizeBytes: sizeBytes,
                 targetFormat: nil,
-                targetSizeBytes: nil
+                targetSizeBytes: nil,
+                fileURL: url
             )
             outcomes.append(.accepted(item))
         }

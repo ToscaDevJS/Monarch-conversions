@@ -13,34 +13,31 @@ import Testing
         fixturesURL.appendingPathComponent(name)
     }
 
-    @Test func acceptsSupportedFormatsWithMetadata() async {
+    @Test(arguments: [
+        "sample.png",
+        "sample.jpg",
+        "sample.tif",
+        "sample.heic",
+        "sample.jp2",
+        "sample.webp",
+        "sample.avif",
+        "sample.jxl"
+    ]) func acceptsSupportedFormatsWithMetadata(name: String) async {
         let service = ImageImportService()
-        let supportedNames = [
-            "sample.png",
-            "sample.jpg",
-            "sample.tif",
-            "sample.heic",
-            "sample.jp2",
-            "sample.webp",
-            "sample.avif",
-            "sample.jxl"
-        ]
+        let url = fixtureURL(name)
+        let outcomes = await service.importFiles(at: [url], existingCount: 0)
 
-        let urls = supportedNames.map { fixtureURL($0) }
-        let outcomes = await service.importFiles(at: urls, existingCount: 0)
-
-        #expect(outcomes.count == supportedNames.count)
-        for (index, outcome) in outcomes.enumerated() {
-            switch outcome {
-            case .accepted(let item):
-                #expect(item.name == supportedNames[index])
-                #expect(item.dimensions.width == 400)
-                #expect(item.dimensions.height == 300)
-                #expect(item.originalSizeBytes > 0)
-                #expect(item.targetFormat == nil)
-            case .rejected(let rejection):
-                Issue.record("Expected \(supportedNames[index]) to be accepted, but was rejected with \(rejection.reason)")
-            }
+        #expect(outcomes.count == 1)
+        guard let outcome = outcomes.first else { return }
+        switch outcome {
+        case .accepted(let item):
+            #expect(item.name == name)
+            #expect(item.dimensions.width == 400)
+            #expect(item.dimensions.height == 300)
+            #expect(item.originalSizeBytes > 0)
+            #expect(item.targetFormat == nil)
+        case .rejected(let rejection):
+            Issue.record("Expected \(name) to be accepted, but was rejected with \(rejection.reason)")
         }
     }
 

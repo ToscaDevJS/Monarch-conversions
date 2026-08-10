@@ -8,6 +8,7 @@ public struct BatchQueueItem: Identifiable, Equatable, Sendable {
     public let originalSizeBytes: Int64
     public let targetFormat: ImageFormat?
     public let targetSizeBytes: Int64?
+    public let fileURL: URL?
 
     public var reductionPercent: Int? {
         guard let target = targetSizeBytes else { return nil }
@@ -24,7 +25,8 @@ public struct BatchQueueItem: Identifiable, Equatable, Sendable {
         dimensions: PixelDimensions,
         originalSizeBytes: Int64,
         targetFormat: ImageFormat? = nil,
-        targetSizeBytes: Int64? = nil
+        targetSizeBytes: Int64? = nil,
+        fileURL: URL? = nil
     ) {
         self.id = id
         self.name = name
@@ -33,5 +35,6 @@ public struct BatchQueueItem: Identifiable, Equatable, Sendable {
         self.originalSizeBytes = originalSizeBytes
         self.targetFormat = targetFormat
         self.targetSizeBytes = targetSizeBytes
+        self.fileURL = fileURL
     }
 }
