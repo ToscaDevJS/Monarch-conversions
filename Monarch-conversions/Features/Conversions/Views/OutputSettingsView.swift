@@ -125,6 +125,37 @@ struct OutputSettingsView: View {
                     .menuStyle(.borderlessButton)
                 }
                 .padding(.horizontal, 12)
+                .frame(width: 170, height: 70, alignment: .leading)
+                .background(MonarchUI.Color.surface)
+                .overlay(
+                    Rectangle()
+                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
+                )
+
+                // Destination Folder Box
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Destination Folder", comment: "Output folder selection title")
+                        .font(MonarchUI.Font.sans(size: 11))
+                        .foregroundStyle(MonarchUI.Color.textSubtle)
+                        .tracking(0.5)
+                    Menu {
+                        Button("Same as Source File") {
+                            settings.outputDirectoryURL = nil
+                        }
+                        Button("Choose Folder...") {
+                            if let selected = DirectoryPickerHelper.pickFolder() {
+                                settings.outputDirectoryURL = selected
+                            }
+                        }
+                    } label: {
+                        let folderLabel = settings.outputDirectoryURL?.lastPathComponent ?? "Same as Source"
+                        Text("\(folderLabel) ⌄")
+                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                    }
+                    .menuStyle(.borderlessButton)
+                }
+                .padding(.horizontal, 12)
                 .frame(height: 70)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(MonarchUI.Color.surface)
@@ -176,6 +207,18 @@ struct OutputSettingsView: View {
             RoundedRectangle(cornerRadius: 2)
                 .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
+    }
+}
+
+@MainActor
+struct DirectoryPickerHelper {
+    static func pickFolder() -> URL? {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = "Select Output Folder"
+        return panel.runModal() == .OK ? panel.url : nil
     }
 }
 

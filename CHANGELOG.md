@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0
+
+**Highlights**
+
+- **Output Destination Folder Picker:** Added Destination Folder `Menu` control box in `OutputSettingsView` integrated with `NSOpenPanel` for choosing custom export directories.
+
 ## 0.8.0
 
 **Highlights**
