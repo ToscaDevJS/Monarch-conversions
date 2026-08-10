@@ -3,6 +3,7 @@ import SwiftUI
 struct ConversionDetailModalView: View {
     let record: ConversionRecord
     let onClose: () -> Void
+    @State private var copiedFeedback: Bool = false
     
     var body: some View {
         ZStack {
@@ -90,10 +91,18 @@ struct ConversionDetailModalView: View {
                             .font(MonarchUI.Font.mono(size: 12))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                         
-                        Button {} label: {
-                            Text("modal.copy_name", tableName: "Conversions")
+                        Button {
+                            NSPasteboard.general.clearContents()
+                            NSPasteboard.general.setString(record.fileName, forType: .string)
+                            copiedFeedback = true
+                            Task {
+                                try? await Task.sleep(nanoseconds: 1_500_000_000)
+                                copiedFeedback = false
+                            }
+                        } label: {
+                            Text(copiedFeedback ? "Copied!" : String(localized: "modal.copy_name", table: "Conversions"))
                                 .font(MonarchUI.Font.sans(size: 12))
-                                .foregroundStyle(MonarchUI.Color.accentViolet)
+                                .foregroundStyle(copiedFeedback ? MonarchUI.Color.statusGreen : MonarchUI.Color.accentViolet)
                         }
                         .buttonStyle(.plain)
                     }
@@ -280,7 +289,9 @@ struct ConversionDetailModalView: View {
                 
                 // Action Buttons Bar
                 HStack(spacing: 12) {
-                    Button {} label: {
+                    Button {
+                        NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: NSHomeDirectory())
+                    } label: {
                         Text("modal.open_original", tableName: "Conversions")
                             .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
@@ -300,6 +311,7 @@ struct ConversionDetailModalView: View {
                             .background(MonarchUI.Color.accentViolet)
                     }
                     .buttonStyle(.plain)
+                    .keyboardShortcut(.cancelAction)
                     
                     Spacer()
                     

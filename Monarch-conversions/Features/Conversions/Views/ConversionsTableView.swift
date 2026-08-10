@@ -4,10 +4,13 @@ import SwiftData
 struct ConversionsTableView: View {
     @Query(sort: \ConversionRecord.timestamp, order: .reverse) private var records: [ConversionRecord]
     @State private var filterState = TableFilterState()
+    var searchText: String = ""
     var onSelectRecord: ((ConversionRecord) -> Void)? = nil
     
     private var filteredRecords: [ConversionRecord] {
-        records.filtered(with: filterState)
+        var state = filterState
+        state.searchText = searchText
+        return records.filtered(with: state)
     }
 
     private var availableProjects: [String] {

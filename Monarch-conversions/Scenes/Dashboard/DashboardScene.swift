@@ -19,7 +19,7 @@ struct DashboardScene: View {
                     
                     MetricsHeaderView()
                     
-                    ConversionsTableView { record in
+                    ConversionsTableView(searchText: searchText) { record in
                         selectedRecord = record
                     }
                 }

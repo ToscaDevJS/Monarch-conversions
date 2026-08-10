@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0
+
+**Highlights**
+
+- **Global Search Integration & ⌘K Shortcut:** Real-time query filtering across filenames, IDs, formats, and projects in `GlobalSearchBarView` with keyboard shortcut focus (`⌘K`).
+- **Functional System Actions:** Integrated `NSPasteboard` clipboard copying ("Copy name"), `NSWorkspace` file launching ("Open original"), and `ESC` key modal dismissal.
+
 ## 0.5.0
 
 **Highlights**
