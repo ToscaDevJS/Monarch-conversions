@@ -41,7 +41,39 @@ struct BatchQueueItemRow: View {
                 
                 Spacer()
                 
-                if isSelected {
+                if item.status == .converting {
+                    HStack(spacing: 4) {
+                        ProgressView()
+                            .controlSize(.small)
+                        Text("Converting...")
+                            .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
+                            .foregroundStyle(MonarchUI.Color.accentViolet)
+                    }
+                    .padding(.horizontal, 8)
+                    .frame(height: 22)
+                    .background(MonarchUI.Color.accentVioletBg)
+                    .clipShape(Capsule())
+                } else if item.status == .done {
+                    HStack(spacing: 4) {
+                        Text("✓ Done")
+                            .font(MonarchUI.Font.sans(size: 11, weight: .bold))
+                            .foregroundStyle(MonarchUI.Color.statusGreen)
+                    }
+                    .padding(.horizontal, 8)
+                    .frame(height: 22)
+                    .background(MonarchUI.Color.statusGreen.opacity(0.15))
+                    .clipShape(Capsule())
+                } else if item.status == .failed {
+                    HStack(spacing: 4) {
+                        Text("✕ Failed")
+                            .font(MonarchUI.Font.sans(size: 11, weight: .bold))
+                            .foregroundStyle(MonarchUI.Color.statusRed)
+                    }
+                    .padding(.horizontal, 8)
+                    .frame(height: 22)
+                    .background(MonarchUI.Color.statusRed.opacity(0.15))
+                    .clipShape(Capsule())
+                } else if isSelected {
                     Text(trailingText)
                         .font(MonarchUI.Font.sans(size: 11, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.accentVioletBg)

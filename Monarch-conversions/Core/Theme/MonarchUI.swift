@@ -28,6 +28,7 @@ enum MonarchUI {
         
         static let statusGreen = SwiftUI.Color(lightHex: "#16A34A", darkHex: "#78C86B")
         static let statusGreenGlow = SwiftUI.Color(lightHex: "#DCFCE7", darkHex: "#163414")
+        static let statusRed = SwiftUI.Color(lightHex: "#DC2626", darkHex: "#EF4444")
         
         static let rowWorkingBg = SwiftUI.Color(lightHex: "#E2E8F0", darkHex: "#2B2B2B")
         static let rowAlternateBg = SwiftUI.Color(lightHex: "#F8F9FA", darkHex: "#1A1A1A")

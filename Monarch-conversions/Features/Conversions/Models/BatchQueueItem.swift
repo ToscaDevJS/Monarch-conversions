@@ -1,5 +1,12 @@
 import Foundation
 
+public enum BatchItemStatus: String, Sendable, Equatable, CaseIterable {
+    case queued
+    case converting
+    case done
+    case failed
+}
+
 public struct BatchQueueItem: Identifiable, Equatable, Sendable {
     public let id: UUID
     public let name: String
@@ -9,6 +16,7 @@ public struct BatchQueueItem: Identifiable, Equatable, Sendable {
     public let targetFormat: ImageFormat?
     public let targetSizeBytes: Int64?
     public let fileURL: URL?
+    public var status: BatchItemStatus
 
     public var reductionPercent: Int? {
         guard let target = targetSizeBytes else { return nil }
@@ -26,7 +34,8 @@ public struct BatchQueueItem: Identifiable, Equatable, Sendable {
         originalSizeBytes: Int64,
         targetFormat: ImageFormat? = nil,
         targetSizeBytes: Int64? = nil,
-        fileURL: URL? = nil
+        fileURL: URL? = nil,
+        status: BatchItemStatus = .queued
     ) {
         self.id = id
         self.name = name
@@ -36,5 +45,6 @@ public struct BatchQueueItem: Identifiable, Equatable, Sendable {
         self.targetFormat = targetFormat
         self.targetSizeBytes = targetSizeBytes
         self.fileURL = fileURL
+        self.status = status
     }
 }

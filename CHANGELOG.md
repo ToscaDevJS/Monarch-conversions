@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.10.0
+
+**Highlights**
+
+- **Real-Time Batch Queue Status Indicators:** Each item in the batch conversion queue now shows its individual processing status — spinner while converting, green checkmark when done, red cross on failure.
+
+- Added `BatchItemStatus` enum (`.queued`, `.converting`, `.done`, `.failed`) with live status progression in the batch conversion pipeline
+- Added visual status badges in `BatchQueueItemRow` — `ProgressView` spinner for converting, green "✓ Done" checkmark, and red "✕ Failed" cross
+- Added 11 unit tests in `BatchQueueItemStatusTests` covering all status transitions, pipeline progression, and badge rendering logic
+- Added `statusRed` semantic color token to `MonarchUI.Color` for failure state indicators
+
 ## 0.9.0
 
 **Highlights**

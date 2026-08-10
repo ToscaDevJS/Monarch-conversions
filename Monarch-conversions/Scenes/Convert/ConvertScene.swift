@@ -75,6 +75,7 @@ struct ConvertScene: View {
             for index in items.indices {
                 let item = items[index]
                 guard let sourceURL = item.fileURL else { continue }
+                items[index].status = .converting
 
                 do {
                     let result = try await conversionService.convert(sourceURL: sourceURL, settings: conversionSettings)
@@ -87,7 +88,8 @@ struct ConvertScene: View {
                         originalSizeBytes: item.originalSizeBytes,
                         targetFormat: conversionSettings.targetFormat,
                         targetSizeBytes: result.outputSizeBytes,
-                        fileURL: item.fileURL
+                        fileURL: item.fileURL,
+                        status: .done
                     )
                     items[index] = updatedItem
 
@@ -104,6 +106,7 @@ struct ConvertScene: View {
                     )
                     modelContext.insert(record)
                 } catch {
+                    items[index].status = .failed
                     print("Conversion failed for \(item.name): \(error.localizedDescription)")
                 }
             }

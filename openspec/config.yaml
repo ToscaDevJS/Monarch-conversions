@@ -3,7 +3,7 @@ schema: spec-driven
 context: |
   Tech stack: macOS SwiftUI app (Xcode project Monarch-conversions.xcodeproj), SwiftData, @Observable
   Architecture: Vertical slicing -- App -> Scenes -> Features -> Core (see ARCHITECTURE.md)
-  Testing: xcodebuild test, XCTest (unit + UI targets), Strict TDD enabled
+  Testing: xcodebuild test, Swift Testing (unit) + XCTest (UI), Strict TDD enabled
   Style: Spanish architecture docs, English code/SDD artifacts
 
 strict_tdd: true
@@ -12,10 +12,15 @@ testing:
   test_command: >-
     xcodebuild test -project "Monarch-conversions.xcodeproj"
     -scheme "Monarch-conversions" -destination "platform=macOS"
-  framework: XCTest
+  framework:
+    unit: Swift Testing (@Test, @Suite, #expect)
+    ui: XCTest (XCUIApplication, XCTestCase)
   unit_target: Monarch-conversionsTests
   ui_target: Monarch-conversionsUITests
-  coverage_command: ""
+  coverage_command: >-
+    xcodebuild test -project "Monarch-conversions.xcodeproj"
+    -scheme "Monarch-conversions" -destination "platform=macOS"
+    -enableCodeCoverage YES
   coverage_threshold: 0
 
 rules:
