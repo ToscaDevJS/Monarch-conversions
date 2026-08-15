@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.11.0
+
+**Highlights**
+
+- **Swift 6 Strict Concurrency & Actor Isolation:** Resolved actor isolation and concurrency warnings across conversion models, services, views, and test suites with explicit `@MainActor` annotations.
+- **Robust macOS UI Testing Architecture:** Added direct scene routing via `-ui-testing-convert` launch argument and stable accessibility identifiers (`batch-dropzone`, `browse-files-button`, `batch-queue`, `nav-convert`) to ensure deterministic XCTest execution on macOS.
+
+- Resolved Swift 6 `@MainActor` warnings in `ImageImportService`, `ImageFilePicker`, conversion domain models, format utilities, and test suites
+- Refactored `BatchQueueStatusUITests` to remove brittle `app.windows.firstMatch` dependency and validate explicit accessibility components directly
+- Added direct scene routing in `AppRouter` for isolated UI test execution
+- Verified full test suite pass: 69/69 tests passing with 0 Xcode build warnings
+
 ## 0.10.0
 
 **Highlights**
