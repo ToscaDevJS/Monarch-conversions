@@ -35,6 +35,7 @@ struct BatchDropzoneView: View {
                     )
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("browse-files-button")
             
             Text("dropzone.limit", tableName: "Conversions")
                 .font(MonarchUI.Font.mono(size: 10))
@@ -52,6 +53,8 @@ struct BatchDropzoneView: View {
                     style: StrokeStyle(lineWidth: isTargeted ? 2 : 1, dash: isTargeted ? [] : [4, 4])
                 )
         )
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("batch-dropzone")
         .dropDestination(for: URL.self) { urls, _ in
             guard !urls.isEmpty else { return false }
             onDropFiles?(urls)

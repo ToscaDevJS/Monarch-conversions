@@ -9,38 +9,39 @@ final class BatchQueueStatusUITests: XCTestCase {
 
     @MainActor
     func testConvertSceneLaunches() throws {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchConvertScene()
 
-        // Verify the convert tab is accessible
-        let convertTab = app.windows.firstMatch
-        XCTAssertTrue(convertTab.exists, "App window should be present")
+        XCTAssertTrue(app.descendants(matching: .any)["batch-dropzone"].exists)
+        XCTAssertTrue(app.buttons["browse-files-button"].exists)
+        XCTAssertTrue(app.buttons["nav-convert"].exists)
     }
 
     @MainActor
     func testStatusBadgeAccessibilityIdentifiers() throws {
-        let app = XCUIApplication()
-        app.launch()
+        let app = launchConvertScene()
 
-        // The status badges use identifiers: "status-converting", "status-done", "status-failed"
-        // These are rendered when BatchQueueItemRow has items with matching status.
-        // This test verifies the identifiers are defined in the codebase by checking
-        // the app launches and the identifiers are registered.
-        //
-        // Full badge rendering verification requires automating image import to
-        // populate the batch queue, which is covered by the unit tests in
-        // BatchQueueItemStatusTests.
-
-        // Verify any status badge identifier is recognized by the accessibility framework
         let convertingBadge = app.descendants(matching: .any)["status-converting"]
         let doneBadge = app.descendants(matching: .any)["status-done"]
         let failedBadge = app.descendants(matching: .any)["status-failed"]
 
-        // Identifiers exist in the accessibility tree (even if no element currently matches)
-        XCTAssertFalse(convertingBadge.exists || doneBadge.exists || failedBadge.exists,
-                       "Status badges should not be visible with empty queue")
+        XCTAssertTrue(app.descendants(matching: .any)["batch-queue"].exists)
+        XCTAssertFalse(
+            convertingBadge.exists || doneBadge.exists || failedBadge.exists,
+            "Status badges should not be visible with an empty queue"
+        )
+    }
 
-        // Verify the app has basic UI elements
-        XCTAssertTrue(app.windows.firstMatch.exists)
+    @MainActor
+    private func launchConvertScene() -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += ["-ui-testing-convert"]
+        app.launch()
+
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5), "App should launch in the foreground")
+
+        let dropzone = app.descendants(matching: .any)["batch-dropzone"]
+        XCTAssertTrue(dropzone.waitForExistence(timeout: 5), "Convert scene should be visible on launch")
+
+        return app
     }
 }

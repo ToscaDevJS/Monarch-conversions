@@ -43,5 +43,7 @@ struct BatchQueueView: View {
                 }
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("batch-queue")
     }
 }

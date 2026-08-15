@@ -29,13 +29,26 @@ struct TopNavHeaderView: View {
             
             // Nav Links
             HStack(spacing: 28) {
-                NavItem(title: String(localized: "nav.studio", table: "Common"), isActive: activeTab == .studio, hasDropdown: true) {
+                NavItem(
+                    title: String(localized: "nav.studio", table: "Common"),
+                    isActive: activeTab == .studio,
+                    hasDropdown: true,
+                    accessibilityIdentifier: "nav-studio"
+                ) {
                     onSelectTab?(.studio)
                 }
-                NavItem(title: String(localized: "nav.convert", table: "Common"), isActive: activeTab == .convert) {
+                NavItem(
+                    title: String(localized: "nav.convert", table: "Common"),
+                    isActive: activeTab == .convert,
+                    accessibilityIdentifier: "nav-convert"
+                ) {
                     onSelectTab?(.convert)
                 }
-                NavItem(title: String(localized: "nav.settings", table: "Common"), isActive: activeTab == .settings) {
+                NavItem(
+                    title: String(localized: "nav.settings", table: "Common"),
+                    isActive: activeTab == .settings,
+                    accessibilityIdentifier: "nav-settings"
+                ) {
                     onSelectTab?(.settings)
                 }
             }
@@ -75,6 +88,7 @@ private struct NavItem: View {
     let title: String
     var isActive: Bool = false
     var hasDropdown: Bool = false
+    let accessibilityIdentifier: String
     let action: () -> Void
     
     var body: some View {
@@ -105,6 +119,7 @@ private struct NavItem: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier(accessibilityIdentifier)
     }
 }
 
