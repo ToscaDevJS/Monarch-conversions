@@ -17,6 +17,7 @@ public nonisolated struct BatchQueueItem: Identifiable, Equatable, Sendable {
     public let targetSizeBytes: Int64?
     public let fileURL: URL?
     public var status: BatchItemStatus
+    public var isFallbackDestination: Bool
 
     public var reductionPercent: Int? {
         guard let target = targetSizeBytes else { return nil }
@@ -35,7 +36,8 @@ public nonisolated struct BatchQueueItem: Identifiable, Equatable, Sendable {
         targetFormat: ImageFormat? = nil,
         targetSizeBytes: Int64? = nil,
         fileURL: URL? = nil,
-        status: BatchItemStatus = .queued
+        status: BatchItemStatus = .queued,
+        isFallbackDestination: Bool = false
     ) {
         self.id = id
         self.name = name
@@ -46,5 +48,6 @@ public nonisolated struct BatchQueueItem: Identifiable, Equatable, Sendable {
         self.targetSizeBytes = targetSizeBytes
         self.fileURL = fileURL
         self.status = status
+        self.isFallbackDestination = isFallbackDestination
     }
 }

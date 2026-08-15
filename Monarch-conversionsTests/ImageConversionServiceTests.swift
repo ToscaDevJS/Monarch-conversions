@@ -77,4 +77,62 @@ import Testing
             try await service.convert(sourceURL: sourceURL, settings: settings)
         }
     }
+
+    @Test func convertsWithWritableDirectoryWithoutFallback() async throws {
+        let service = ImageConversionService()
+        let sourceURL = fixtureURL("sample.png")
+        let tempDir = temporaryDirectoryURL
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+        defer {
+            try? FileManager.default.removeItem(at: tempDir)
+        }
+
+        let settings = ConversionSettings(
+            targetFormat: .jpg,
+            quality: 0.8,
+            outputDirectoryURL: tempDir
+        )
+
+        let result = try await service.convert(sourceURL: sourceURL, settings: settings)
+
+        #expect(result.wasFallback == false)
+        #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
+        #expect(result.outputURL.deletingLastPathComponent().path == tempDir.path)
+    }
+
+    @Test func convertsWithNonWritableDirectoryFallingBackToDownloads() async throws {
+        let service = ImageConversionService()
+        let sourceURL = fixtureURL("sample.png")
+        // System directory is read-only in sandbox / SIP
+        let readOnlyDir = URL(fileURLWithPath: "/System/Library")
+
+        let settings = ConversionSettings(
+            targetFormat: .jpg,
+            quality: 0.8,
+            outputDirectoryURL: readOnlyDir
+        )
+
+        let result = try await service.convert(sourceURL: sourceURL, settings: settings)
+
+        #expect(result.wasFallback == true)
+        #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
+        #expect(result.outputURL.deletingLastPathComponent().path == ImageConversionService.fallbackDirectory().path)
+
+        // Clean up converted file from fallback directory
+        try? FileManager.default.removeItem(at: result.outputURL)
+    }
+
+    @Test func batchQueueItemTracksFallbackState() {
+        var item = BatchQueueItem(
+            name: "test.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1024
+        )
+
+        #expect(item.isFallbackDestination == false)
+        item.isFallbackDestination = true
+        #expect(item.isFallbackDestination == true)
+    }
 }

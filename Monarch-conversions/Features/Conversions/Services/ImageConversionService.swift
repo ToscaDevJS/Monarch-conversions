@@ -34,17 +34,20 @@ public nonisolated struct ImageConversionResult: Sendable, Equatable {
     public let outputSizeBytes: Int64
     public let outputDimensions: PixelDimensions
     public let durationSeconds: Double
+    public let wasFallback: Bool
 
     public init(
         outputURL: URL,
         outputSizeBytes: Int64,
         outputDimensions: PixelDimensions,
-        durationSeconds: Double
+        durationSeconds: Double,
+        wasFallback: Bool = false
     ) {
         self.outputURL = outputURL
         self.outputSizeBytes = outputSizeBytes
         self.outputDimensions = outputDimensions
         self.durationSeconds = durationSeconds
+        self.wasFallback = wasFallback
     }
 }
 
@@ -73,6 +76,14 @@ public nonisolated struct ImageConversionService: Sendable {
         }
     }
 
+    public static func fallbackDirectory() -> URL {
+        if let downloads = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first,
+           FileManager.default.isWritableFile(atPath: downloads.path) {
+            return downloads
+        }
+        return FileManager.default.temporaryDirectory
+    }
+
     public func convert(
         sourceURL: URL,
         settings: ConversionSettings
@@ -83,10 +94,18 @@ public nonisolated struct ImageConversionService: Sendable {
             throw ConversionError.unsupportedTargetFormat(settings.targetFormat)
         }
 
-        let hasAccess = sourceURL.startAccessingSecurityScopedResource()
+        let hasSourceAccess = sourceURL.startAccessingSecurityScopedResource()
         defer {
-            if hasAccess {
+            if hasSourceAccess {
                 sourceURL.stopAccessingSecurityScopedResource()
+            }
+        }
+
+        let chosenOutputDirectory = settings.outputDirectoryURL
+        let hasOutputAccess = chosenOutputDirectory?.startAccessingSecurityScopedResource() ?? false
+        defer {
+            if hasOutputAccess, let chosen = chosenOutputDirectory {
+                chosen.stopAccessingSecurityScopedResource()
             }
         }
 
@@ -95,19 +114,62 @@ public nonisolated struct ImageConversionService: Sendable {
             throw ConversionError.unreadableSource
         }
 
-        // Determine target output URL
-        let outputDirectory = settings.outputDirectoryURL ?? sourceURL.deletingLastPathComponent()
+        // Determine target output URL and check directory write permissions
+        let candidateDirectory = chosenOutputDirectory ?? sourceURL.deletingLastPathComponent()
         let fileBaseName = sourceURL.deletingPathExtension().lastPathComponent
         let ext = settings.targetFormat == .jpg ? "jpg" : settings.targetFormat.rawValue.lowercased()
-        let destinationURL = outputDirectory.appendingPathComponent("\(fileBaseName)_converted.\(ext)")
+
+        let isDirectoryWritable = FileManager.default.isWritableFile(atPath: candidateDirectory.path)
+        let resolvedDirectory: URL
+        let initialWasFallback: Bool
+
+        if isDirectoryWritable {
+            resolvedDirectory = candidateDirectory
+            initialWasFallback = false
+        } else {
+            resolvedDirectory = Self.fallbackDirectory()
+            initialWasFallback = true
+        }
+
+        var destinationURL = resolvedDirectory.appendingPathComponent("\(fileBaseName)_converted.\(ext)")
+        var wasFallback = initialWasFallback
 
         // Prepare destination
-        guard let destination = CGImageDestinationCreateWithURL(
+        var destination = CGImageDestinationCreateWithURL(
             destinationURL as CFURL,
             targetUTI.identifier as CFString,
             1,
             nil
-        ) else {
+        )
+
+        if destination == nil {
+            let fallbackDir = Self.fallbackDirectory()
+            let fallbackURL = fallbackDir.appendingPathComponent("\(fileBaseName)_converted.\(ext)")
+            if let fallbackDestination = CGImageDestinationCreateWithURL(
+                fallbackURL as CFURL,
+                targetUTI.identifier as CFString,
+                1,
+                nil
+            ) {
+                destination = fallbackDestination
+                destinationURL = fallbackURL
+                wasFallback = true
+            } else {
+                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(fileBaseName)_converted.\(ext)")
+                if let tempDestination = CGImageDestinationCreateWithURL(
+                    tempURL as CFURL,
+                    targetUTI.identifier as CFString,
+                    1,
+                    nil
+                ) {
+                    destination = tempDestination
+                    destinationURL = tempURL
+                    wasFallback = true
+                }
+            }
+        }
+
+        guard let validDestination = destination else {
             throw ConversionError.destinationCreationFailed
         }
 
@@ -145,9 +207,9 @@ public nonisolated struct ImageConversionService: Sendable {
             throw ConversionError.conversionFailed
         }
 
-        CGImageDestinationAddImage(destination, finalCGImage, destinationProperties as CFDictionary)
+        CGImageDestinationAddImage(validDestination, finalCGImage, destinationProperties as CFDictionary)
 
-        guard CGImageDestinationFinalize(destination) else {
+        guard CGImageDestinationFinalize(validDestination) else {
             throw ConversionError.conversionFailed
         }
 
@@ -159,7 +221,8 @@ public nonisolated struct ImageConversionService: Sendable {
             outputURL: destinationURL,
             outputSizeBytes: outputSizeBytes,
             outputDimensions: outputDimensions,
-            durationSeconds: duration
+            durationSeconds: duration,
+            wasFallback: wasFallback
         )
     }
 }
