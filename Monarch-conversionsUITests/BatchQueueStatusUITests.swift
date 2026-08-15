@@ -1,10 +1,17 @@
 import XCTest
 
 final class BatchQueueStatusUITests: XCTestCase {
+    private var app: XCUIApplication?
 
     @MainActor
     override func setUpWithError() throws {
         continueAfterFailure = false
+    }
+
+    @MainActor
+    override func tearDownWithError() throws {
+        app?.terminate()
+        app = nil
     }
 
     @MainActor
@@ -34,6 +41,7 @@ final class BatchQueueStatusUITests: XCTestCase {
     @MainActor
     private func launchConvertScene() -> XCUIApplication {
         let app = XCUIApplication()
+        self.app = app
         app.launchArguments += ["-ui-testing-convert"]
         app.launch()
 

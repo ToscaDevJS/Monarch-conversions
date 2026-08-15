@@ -89,7 +89,8 @@ struct ConvertScene: View {
                         targetFormat: conversionSettings.targetFormat,
                         targetSizeBytes: result.outputSizeBytes,
                         fileURL: item.fileURL,
-                        status: .done
+                        status: .done,
+                        isFallbackDestination: result.wasFallback
                     )
                     items[index] = updatedItem
 

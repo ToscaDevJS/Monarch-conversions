@@ -55,10 +55,15 @@ struct BatchQueueItemRow: View {
                     .clipShape(Capsule())
                     .accessibilityIdentifier("status-converting")
                 } else if item.status == .done {
-                    HStack(spacing: 4) {
+                    HStack(spacing: 6) {
                         Text("✓ Done")
                             .font(MonarchUI.Font.sans(size: 11, weight: .bold))
                             .foregroundStyle(MonarchUI.Color.statusGreen)
+                        if item.isFallbackDestination {
+                            Text("· Downloads")
+                                .font(MonarchUI.Font.sans(size: 10, weight: .medium))
+                                .foregroundStyle(MonarchUI.Color.textMuted)
+                        }
                     }
                     .padding(.horizontal, 8)
                     .frame(height: 22)
