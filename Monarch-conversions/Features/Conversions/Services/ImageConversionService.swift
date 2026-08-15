@@ -3,7 +3,7 @@ import ImageIO
 import UniformTypeIdentifiers
 import CoreGraphics
 
-public enum ConversionError: Error, LocalizedError, Equatable {
+public nonisolated enum ConversionError: Error, LocalizedError, Equatable {
     case missingSourceURL
     case unreadableSource
     case unsupportedTargetFormat(ImageFormat)
@@ -29,7 +29,7 @@ public enum ConversionError: Error, LocalizedError, Equatable {
     }
 }
 
-public struct ImageConversionResult: Sendable, Equatable {
+public nonisolated struct ImageConversionResult: Sendable, Equatable {
     public let outputURL: URL
     public let outputSizeBytes: Int64
     public let outputDimensions: PixelDimensions
@@ -48,7 +48,7 @@ public struct ImageConversionResult: Sendable, Equatable {
     }
 }
 
-public struct ImageConversionService: Sendable {
+public nonisolated struct ImageConversionService: Sendable {
 
     public init() {}
 

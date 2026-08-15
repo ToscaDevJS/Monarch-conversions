@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ImageFormat: String, Codable, CaseIterable, Sendable {
+public nonisolated enum ImageFormat: String, Codable, CaseIterable, Sendable {
     case png = "PNG"
     case jpg = "JPG"
     /// Decode-only: WebP can be imported but MUST NOT be offered as a conversion output (target) format.
@@ -16,11 +16,11 @@ public enum ImageFormat: String, Codable, CaseIterable, Sendable {
     /// Formats eligible to appear in a conversion output (target) picker.
     /// Excludes decode-only/import-only formats (`webp`, `jpegXL`) so future `allCases`-driven
     /// output pickers never accidentally offer them.
-    public static var outputEligibleCases: [ImageFormat] {
+    public nonisolated static var outputEligibleCases: [ImageFormat] {
         allCases.filter { $0 != .webp && $0 != .jpegXL }
     }
 
-    public init?(fileExtension: String) {
+    public nonisolated init?(fileExtension: String) {
         let normalized = fileExtension.lowercased()
         switch normalized {
         case "png":

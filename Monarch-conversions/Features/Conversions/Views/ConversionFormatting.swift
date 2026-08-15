@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ConversionFormatting {
+public nonisolated enum ConversionFormatting {
     public static func byteSize(_ bytes: Int64) -> String {
         if bytes < 1_000_000 {
             let kb = Int(round(Double(bytes) / 1_000.0))

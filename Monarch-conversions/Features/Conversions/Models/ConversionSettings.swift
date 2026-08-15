@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ConversionSettings: Equatable, Sendable {
+public nonisolated struct ConversionSettings: Equatable, Sendable {
     public var targetFormat: ImageFormat
     public var quality: Double // 0.0 to 1.0
     public var maxWidth: Int?

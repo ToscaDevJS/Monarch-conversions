@@ -3,6 +3,7 @@ import SwiftData
 import Foundation
 @testable import Monarch_conversions
 
+@MainActor
 @Suite struct ConversionSeedServiceTests {
     @Test func seedInitialDataIsIdempotentAndTyped() async throws {
         let schema = Schema([ConversionRecord.self])

@@ -2,6 +2,7 @@ import Testing
 import SwiftUI
 @testable import Monarch_conversions
 
+@MainActor
 @Suite(.serialized)
 struct UserSettingsTests {
 

@@ -1,13 +1,13 @@
 import Foundation
 
-public enum BatchItemStatus: String, Sendable, Equatable, CaseIterable {
+public nonisolated enum BatchItemStatus: String, Sendable, Equatable, CaseIterable {
     case queued
     case converting
     case done
     case failed
 }
 
-public struct BatchQueueItem: Identifiable, Equatable, Sendable {
+public nonisolated struct BatchQueueItem: Identifiable, Equatable, Sendable {
     public let id: UUID
     public let name: String
     public let format: ImageFormat
@@ -26,7 +26,7 @@ public struct BatchQueueItem: Identifiable, Equatable, Sendable {
         return Int(round(pct))
     }
 
-    public init(
+    public nonisolated init(
         id: UUID = UUID(),
         name: String,
         format: ImageFormat,

@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum AppearanceOption: String, CaseIterable, Identifiable, Codable {
+nonisolated enum AppearanceOption: String, CaseIterable, Identifiable, Codable {
     case dark = "Dark"
     case light = "Light"
     case system = "System Setting"
@@ -16,7 +16,7 @@ enum AppearanceOption: String, CaseIterable, Identifiable, Codable {
     }
 }
 
-enum AppLanguage: String, CaseIterable, Identifiable, Codable {
+nonisolated enum AppLanguage: String, CaseIterable, Identifiable, Codable {
     case english = "en"
     case spanish = "es"
     

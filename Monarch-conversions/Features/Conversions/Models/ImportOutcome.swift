@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ImportOutcome: Equatable, Sendable {
+public nonisolated enum ImportOutcome: Equatable, Sendable {
     case accepted(BatchQueueItem)
     case rejected(ImportRejection)
 }

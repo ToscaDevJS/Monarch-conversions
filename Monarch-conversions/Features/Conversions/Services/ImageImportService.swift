@@ -2,7 +2,7 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
-public struct ImageImportService: Sendable {
+public nonisolated struct ImageImportService: Sendable {
     public var maxFileSizeBytes: Int64
     public var maxBatchCount: Int
 
@@ -14,12 +14,12 @@ public struct ImageImportService: Sendable {
         self.maxBatchCount = maxBatchCount
     }
 
-    public static var allowedContentTypes: [UTType] {
+    public nonisolated static var allowedContentTypes: [UTType] {
         let extensions = ["png", "jpg", "jpeg", "webp", "avif", "tif", "tiff", "heic", "heif", "jp2", "j2k", "jpf", "jxl"]
         return extensions.compactMap { UTType(filenameExtension: $0) }
     }
 
-    public nonisolated func importFiles(at urls: [URL], existingCount: Int) async -> [ImportOutcome] {
+    public func importFiles(at urls: [URL], existingCount: Int) async -> [ImportOutcome] {
         var outcomes: [ImportOutcome] = []
         var acceptedCount = 0
 
