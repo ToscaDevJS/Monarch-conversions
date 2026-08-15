@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.12.0
+
+**Highlights**
+
+- **App Sandbox Write Permission Fallback & Security-Scoped Bookmark Management:** Implemented pre-flight write accessibility checks in `ImageConversionService` with automatic and seamless fallback to `~/Downloads` for sandboxed conversion batches.
+- **Visual Fallback Indicators:** Added "✓ Done · Downloads" fallback status badge in `BatchQueueItemRow` and propagated fallback state across batch pipelines.
+
+- Implemented pre-flight writable check and resilient fallback cascade to `~/Downloads` (and temporary directory) when write permission is not granted on source parent directory under App Sandbox
+- Added security-scoped resource bracketing (`startAccessingSecurityScopedResource()` / `stopAccessingSecurityScopedResource()`) for custom output directories
+- Added `wasFallback: Bool` property to `ImageConversionResult` and `isFallbackDestination: Bool` to `BatchQueueItem`
+- Added comprehensive unit tests in `ImageConversionServiceTests` covering writable and non-writable directory routing
+- Stabilized macOS UI test lifecycle in `BatchQueueStatusUITests` with explicit app teardown
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.11.0
 
 **Highlights**
