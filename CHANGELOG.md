@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.15.1
+
+**Highlights**
+
+- **UI Dropdown Chevron Cleanup:** Removed duplicate disclosure chevron arrows across dashboard table filter selectors and output settings menus, restoring clean native macOS borderless styling.
+
+- Removed manual `Image(systemName: "chevron.down")` from `FilterLabel` in `ConversionsTableView.swift`
+- Removed hardcoded unicode `" ⌄"` characters from all 5 menu labels in `OutputSettingsView.swift`
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.15.0
 
 **Highlights**
