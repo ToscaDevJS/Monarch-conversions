@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.0
+
+**Highlights**
+
+- **Reveal in Finder Action for Converted Files:** Added one-click "Reveal in Finder" quick action button and context menu on converted batch items, instantly selecting the output file in macOS Finder using `NSWorkspace.shared.activateFileViewerSelecting`.
+- **Output File URL Tracking:** Added `outputFileURL: URL?` property to `BatchQueueItem` with end-to-end propagation from `ImageConversionResult.outputURL`.
+
+- Added `outputFileURL: URL?` property to `BatchQueueItem` and wired result URLs in `ConvertScene.processBatchConversion`
+- Added `"reveal-in-finder-button"` action button to `BatchQueueItemRow` when item status is `.done`
+- Added `.contextMenu` on `BatchQueueItemRow` supporting "Reveal in Finder" for converted outputs and "Show Source in Finder" for sources
+- Added unit tests in `BatchQueueItemTests` and UI tests in `BatchQueueStatusUITests`
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.12.0
 
 **Highlights**
