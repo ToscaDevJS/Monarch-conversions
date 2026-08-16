@@ -43,5 +43,8 @@ struct Monarch_conversionsApp: App {
             RootView()
         }
         .modelContainer(sharedModelContainer)
+        .commands {
+            SidebarCommands()
+        }
     }
 }

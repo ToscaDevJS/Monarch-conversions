@@ -24,6 +24,27 @@ struct RootView: View {
         }
         .preferredColorScheme(userSettings.preferredColorScheme)
         .environment(\.locale, userSettings.language.locale)
+        .background {
+            Group {
+                Button("Studio Tab") {
+                    router.navigateTo(.studio)
+                }
+                .keyboardShortcut("1", modifiers: .command)
+
+                Button("Convert Tab") {
+                    router.navigateTo(.convert)
+                }
+                .keyboardShortcut("2", modifiers: .command)
+
+                Button("Settings Tab") {
+                    router.navigateTo(.settings)
+                }
+                .keyboardShortcut("3", modifiers: .command)
+            }
+            .opacity(0)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+        }
     }
 }
 
