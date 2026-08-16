@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.15.0
+
+**Highlights**
+
+- **Realtime Connected Batch Status Footer:** Replaced disconnected fake cloud mock footers with a unified `BatchStatusFooterView` providing live batch statistics, local ImageIO engine status, output directory reveal button, and accurate storage savings telemetry.
+- **Removed Cloud Mocks:** Completely removed obsolete `TelemetryFooterView` and `StatusFooterView` files and static dummy mock metrics.
+
+- Added `BatchStatusFooterView` bound to queue items, conversion settings, and processing state
+- Added unit test suite `BatchStatusFooterTests` covering empty, active, and completed batch queues
+- Cleaned up scene layouts across `ConvertScene`, `DashboardScene`, and `SettingsScene`
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.14.0
 
 **Highlights**
