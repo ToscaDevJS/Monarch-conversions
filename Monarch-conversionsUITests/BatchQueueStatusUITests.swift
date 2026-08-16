@@ -30,11 +30,12 @@ final class BatchQueueStatusUITests: XCTestCase {
         let convertingBadge = app.descendants(matching: .any)["status-converting"]
         let doneBadge = app.descendants(matching: .any)["status-done"]
         let failedBadge = app.descendants(matching: .any)["status-failed"]
+        let revealButton = app.buttons["reveal-in-finder-button"]
 
         XCTAssertTrue(app.descendants(matching: .any)["batch-queue"].exists)
         XCTAssertFalse(
-            convertingBadge.exists || doneBadge.exists || failedBadge.exists,
-            "Status badges should not be visible with an empty queue"
+            convertingBadge.exists || doneBadge.exists || failedBadge.exists || revealButton.exists,
+            "Status badges and reveal buttons should not be visible with an empty queue"
         )
     }
 

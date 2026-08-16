@@ -1,9 +1,18 @@
 import SwiftUI
+#if canImport(AppKit)
+import AppKit
+#endif
 
 struct BatchQueueItemRow: View {
     let item: BatchQueueItem
     let isSelected: Bool
     let onSelect: () -> Void
+
+    private func revealInFinder(url: URL) {
+        #if os(macOS)
+        NSWorkspace.shared.activateFileViewerSelecting([url])
+        #endif
+    }
     
     private var trailingText: String {
         guard let targetFormat = item.targetFormat else {
@@ -56,20 +65,38 @@ struct BatchQueueItemRow: View {
                     .accessibilityIdentifier("status-converting")
                 } else if item.status == .done {
                     HStack(spacing: 6) {
-                        Text("✓ Done")
-                            .font(MonarchUI.Font.sans(size: 11, weight: .bold))
-                            .foregroundStyle(MonarchUI.Color.statusGreen)
-                        if item.isFallbackDestination {
-                            Text("· Downloads")
-                                .font(MonarchUI.Font.sans(size: 10, weight: .medium))
-                                .foregroundStyle(MonarchUI.Color.textMuted)
+                        HStack(spacing: 6) {
+                            Text("✓ Done")
+                                .font(MonarchUI.Font.sans(size: 11, weight: .bold))
+                                .foregroundStyle(MonarchUI.Color.statusGreen)
+                            if item.isFallbackDestination {
+                                Text("· Downloads")
+                                    .font(MonarchUI.Font.sans(size: 10, weight: .medium))
+                                    .foregroundStyle(MonarchUI.Color.textMuted)
+                            }
+                        }
+                        .padding(.horizontal, 8)
+                        .frame(height: 22)
+                        .background(MonarchUI.Color.statusGreen.opacity(0.15))
+                        .clipShape(Capsule())
+                        .accessibilityIdentifier("status-done")
+
+                        if let outputURL = item.outputFileURL {
+                            Button {
+                                revealInFinder(url: outputURL)
+                            } label: {
+                                Image(systemName: "folder")
+                                    .font(.system(size: 11, weight: .semibold))
+                                    .foregroundStyle(MonarchUI.Color.textPrimary)
+                                    .frame(width: 24, height: 22)
+                                    .background(MonarchUI.Color.badgeGrayBg)
+                                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                            }
+                            .buttonStyle(.plain)
+                            .help("Reveal in Finder")
+                            .accessibilityIdentifier("reveal-in-finder-button")
                         }
                     }
-                    .padding(.horizontal, 8)
-                    .frame(height: 22)
-                    .background(MonarchUI.Color.statusGreen.opacity(0.15))
-                    .clipShape(Capsule())
-                    .accessibilityIdentifier("status-done")
                 } else if item.status == .failed {
                     HStack(spacing: 4) {
                         Text("✕ Failed")
@@ -104,5 +131,20 @@ struct BatchQueueItemRow: View {
             )
         }
         .buttonStyle(.plain)
+        .contextMenu {
+            if let outputURL = item.outputFileURL {
+                Button {
+                    revealInFinder(url: outputURL)
+                } label: {
+                    Label("Reveal in Finder", systemImage: "folder")
+                }
+            } else if let sourceURL = item.fileURL {
+                Button {
+                    revealInFinder(url: sourceURL)
+                } label: {
+                    Label("Show Source in Finder", systemImage: "folder")
+                }
+            }
+        }
     }
 }
