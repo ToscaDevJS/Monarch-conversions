@@ -146,14 +146,9 @@ private struct FilterLabel: View {
     let title: String
     
     var body: some View {
-        HStack(spacing: 5) {
-            Text(title)
-                .font(MonarchUI.Font.sans(size: 13))
-                .foregroundStyle(MonarchUI.Color.textMuted)
-            Image(systemName: "chevron.down")
-                .font(.system(size: 8, weight: .bold))
-                .foregroundStyle(MonarchUI.Color.textMuted)
-        }
+        Text(title)
+            .font(MonarchUI.Font.sans(size: 13))
+            .foregroundStyle(MonarchUI.Color.textMuted)
     }
 }
 

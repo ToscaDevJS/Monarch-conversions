@@ -33,7 +33,7 @@ struct OutputSettingsView: View {
                             }
                         }
                     } label: {
-                        Text("\(settings.targetFormat.rawValue) ⌄")
+                        Text(settings.targetFormat.rawValue)
                             .font(MonarchUI.Font.sans(size: 14, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                     }
@@ -59,7 +59,7 @@ struct OutputSettingsView: View {
                         Button("65% (Medium)") { settings.quality = 0.65 }
                         Button("45% (Low)") { settings.quality = 0.45 }
                     } label: {
-                        Text("\(Int(settings.quality * 100))% ⌄")
+                        Text("\(Int(settings.quality * 100))%")
                             .font(MonarchUI.Font.sans(size: 14, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                     }
@@ -93,7 +93,7 @@ struct OutputSettingsView: View {
                             settings.maxHeight = 1024
                         }
                     } label: {
-                        let text = settings.maxWidth != nil ? "Max \(settings.maxWidth!)px ⌄" : "Original ⌄"
+                        let text = settings.maxWidth != nil ? "Max \(settings.maxWidth!)px" : "Original"
                         Text(text)
                             .font(MonarchUI.Font.sans(size: 14, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
@@ -118,7 +118,7 @@ struct OutputSettingsView: View {
                         Button("Preserve Metadata") { settings.preserveMetadata = true }
                         Button("Remove EXIF") { settings.preserveMetadata = false }
                     } label: {
-                        Text(settings.preserveMetadata ? "Preserve ⌄" : "Remove EXIF ⌄")
+                        Text(settings.preserveMetadata ? "Preserve" : "Remove EXIF")
                             .font(MonarchUI.Font.sans(size: 14, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                     }
@@ -149,7 +149,7 @@ struct OutputSettingsView: View {
                         }
                     } label: {
                         let folderLabel = settings.outputDirectoryURL?.lastPathComponent ?? "Same as Source"
-                        Text("\(folderLabel) ⌄")
+                        Text(folderLabel)
                             .font(MonarchUI.Font.sans(size: 14, weight: .medium))
                             .foregroundStyle(MonarchUI.Color.textPrimary)
                     }
