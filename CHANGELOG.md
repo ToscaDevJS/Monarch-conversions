@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.14.0
+
+**Highlights**
+
+- **Keyboard Shortcuts & Power User Navigation:** Added full macOS keyboard shortcuts for rapid batch operations (`⌘O` for file import, `⌘R`/`⌘↵` for batch conversion, `⌘⌫` for removing selected queue items, and `⌘K` for clearing the queue).
+- **Global Tab Navigation & Menu Bar Integration:** Added `⌘1` (Studio), `⌘2` (Convert), and `⌘3` (Settings) tab switching and integrated native macOS `SidebarCommands()`.
+
+- Added scene-level keyboard shortcuts (`⌘O`, `⌘R`, `⌘↵`, `⌘⌫`, `⌘K`) in `ConvertScene.swift`
+- Added global scene switching shortcuts (`⌘1`, `⌘2`, `⌘3`) in `RootView.swift`
+- Added native macOS menu commands with `SidebarCommands()` in `Monarch_conversionsApp.swift`
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.13.0
 
 **Highlights**
