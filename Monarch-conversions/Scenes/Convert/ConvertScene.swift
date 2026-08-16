@@ -89,6 +89,7 @@ struct ConvertScene: View {
                         targetFormat: conversionSettings.targetFormat,
                         targetSizeBytes: result.outputSizeBytes,
                         fileURL: item.fileURL,
+                        outputFileURL: result.outputURL,
                         status: .done,
                         isFallbackDestination: result.wasFallback
                     )

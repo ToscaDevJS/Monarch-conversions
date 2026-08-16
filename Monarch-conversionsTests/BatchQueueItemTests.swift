@@ -98,4 +98,30 @@ import Foundation
         #expect(a == b)
         #expect(a != differentTarget)
     }
+
+    @Test func outputFileURLDefaultsToNilWhenOmitted() {
+        let item = BatchQueueItem(
+            name: "sample.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1024
+        )
+        #expect(item.outputFileURL == nil)
+    }
+
+    @Test func outputFileURLCanBeAssignedAndCompared() {
+        let outputURL = URL(fileURLWithPath: "/tmp/sample_converted.webp")
+        var item = BatchQueueItem(
+            name: "sample.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1024,
+            outputFileURL: outputURL
+        )
+        #expect(item.outputFileURL == outputURL)
+
+        let newURL = URL(fileURLWithPath: "/tmp/sample_converted.avif")
+        item.outputFileURL = newURL
+        #expect(item.outputFileURL == newURL)
+    }
 }
