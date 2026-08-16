@@ -28,11 +28,11 @@ struct DashboardScene: View {
                 
                 Spacer(minLength: 0)
                 
-                // Bottom Bars
-                VStack(spacing: 0) {
-                    TelemetryFooterView()
-                    StatusFooterView()
-                }
+                BatchStatusFooterView(
+                    items: [],
+                    settings: ConversionSettings(),
+                    isProcessing: false
+                )
             }
             .background(MonarchUI.Color.background)
             .ignoresSafeArea(.all, edges: .bottom)

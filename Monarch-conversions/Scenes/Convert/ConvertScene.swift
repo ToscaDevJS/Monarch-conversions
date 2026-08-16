@@ -195,10 +195,11 @@ struct ConvertScene: View {
 
             Spacer(minLength: 0)
 
-            VStack(spacing: 0) {
-                TelemetryFooterView()
-                StatusFooterView()
-            }
+            BatchStatusFooterView(
+                items: items,
+                settings: conversionSettings,
+                isProcessing: isProcessing
+            )
         }
         .background(MonarchUI.Color.background)
         .background {
