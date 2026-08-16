@@ -118,6 +118,19 @@ struct ConvertScene: View {
         }
     }
 
+    private func deleteSelectedItem() {
+        guard let currentId = selectedId,
+              let index = items.firstIndex(where: { $0.id == currentId }) else { return }
+        items.remove(at: index)
+        selectedId = items.first?.id
+    }
+
+    private func clearQueue() {
+        items.removeAll()
+        selectedId = nil
+        rejections.removeAll()
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
@@ -149,8 +162,7 @@ struct ConvertScene: View {
                             items: $items,
                             selectedId: $selectedId,
                             onClearAll: {
-                                items.removeAll()
-                                selectedId = nil
+                                clearQueue()
                             }
                         )
                     }
@@ -189,6 +201,38 @@ struct ConvertScene: View {
             }
         }
         .background(MonarchUI.Color.background)
+        .background {
+            Group {
+                Button("Import Images") {
+                    let urls = ImageFilePicker.pickFiles()
+                    handleImport(urls)
+                }
+                .keyboardShortcut("o", modifiers: .command)
+
+                Button("Start Batch") {
+                    processBatchConversion()
+                }
+                .keyboardShortcut("r", modifiers: .command)
+
+                Button("Start Batch Return") {
+                    processBatchConversion()
+                }
+                .keyboardShortcut(.return, modifiers: .command)
+
+                Button("Delete Selected") {
+                    deleteSelectedItem()
+                }
+                .keyboardShortcut(.delete, modifiers: .command)
+
+                Button("Clear Queue") {
+                    clearQueue()
+                }
+                .keyboardShortcut("k", modifiers: .command)
+            }
+            .opacity(0)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+        }
         .ignoresSafeArea(.all, edges: .bottom)
         .onAppear {
             if selectedId == nil {
