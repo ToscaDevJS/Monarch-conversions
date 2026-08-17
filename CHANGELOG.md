@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.23.0
+
+**Highlights**
+
+- **Conversion History Purge & Item Deletion:** Added dedicated "Clear History" action with confirmation dialog in the Studio conversions table, right-click context menu single record deletion, modal footer deletion, and full bilingual localization support.
+
+- Added "Clear History" button with `.confirmationDialog` in `ConversionsTableView.swift`
+- Added "Delete Record" option to table row context menu
+- Added "Delete" action button to `ConversionDetailModalView.swift`
+- Added localization keys to `Conversions.xcstrings` and `Common.xcstrings`
+- Completed full OpenSpec SDD change artifacts under `openspec/changes/delete-conversion-history/`
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.22.0
 
 **Highlights**

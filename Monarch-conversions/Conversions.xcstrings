@@ -228,6 +228,7 @@
       }
     },
     "modal.close" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -244,6 +245,7 @@
       }
     },
     "modal.complete" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -260,6 +262,7 @@
       }
     },
     "modal.copy_name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -276,6 +279,7 @@
       }
     },
     "modal.details" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -292,6 +296,7 @@
       }
     },
     "modal.encoding" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -308,6 +313,7 @@
       }
     },
     "modal.esc_hint" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -324,6 +330,7 @@
       }
     },
     "modal.in_progress" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -340,6 +347,7 @@
       }
     },
     "modal.input" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -356,6 +364,7 @@
       }
     },
     "modal.open_original" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -372,6 +381,7 @@
       }
     },
     "modal.optimize_save" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -388,6 +398,7 @@
       }
     },
     "modal.original_file" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -404,6 +415,7 @@
       }
     },
     "modal.output" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -420,6 +432,7 @@
       }
     },
     "modal.progress" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -436,6 +449,7 @@
       }
     },
     "modal.queued_now" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -452,6 +466,7 @@
       }
     },
     "modal.settings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -468,6 +483,7 @@
       }
     },
     "modal.upload_verified" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -484,6 +500,7 @@
       }
     },
     "modal.waiting" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -900,6 +917,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restablecer"
+          }
+        }
+      }
+    },
+    "table.clear_history" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear History"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar Historial"
+          }
+        }
+      }
+    },
+    "table.clear_history_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear Conversion History?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Borrar historial de conversiones?"
+          }
+        }
+      }
+    },
+    "table.clear_history_message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All conversion records will be permanently deleted from history."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos los registros de conversión se eliminarán permanentemente del historial."
+          }
+        }
+      }
+    },
+    "table.clear_history_confirm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear All History"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar todo el historial"
+          }
+        }
+      }
+    },
+    "table.delete_record" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Record"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar registro"
           }
         }
       }

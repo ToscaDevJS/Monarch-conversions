@@ -38,9 +38,17 @@ struct DashboardScene: View {
             .ignoresSafeArea(.all, edges: .bottom)
             
             if let record = selectedRecord {
-                ConversionDetailModalView(record: record) {
-                    selectedRecord = nil
-                }
+                ConversionDetailModalView(
+                    record: record,
+                    onClose: {
+                        selectedRecord = nil
+                    },
+                    onDelete: {
+                        modelContext.delete(record)
+                        try? modelContext.save()
+                        selectedRecord = nil
+                    }
+                )
                 .transition(.opacity)
             }
         }

@@ -22,5 +22,14 @@ struct AppLocalizationTests {
         
         let settingsTitle = NSLocalizedString("header.settings_title", tableName: "Settings", bundle: bundle, value: "Workspace Preferences", comment: "")
         #expect(!settingsTitle.isEmpty)
+
+        let clearHistory = NSLocalizedString("table.clear_history", tableName: "Conversions", bundle: bundle, value: "Clear History", comment: "")
+        #expect(!clearHistory.isEmpty)
+
+        let deleteRecord = NSLocalizedString("table.delete_record", tableName: "Conversions", bundle: bundle, value: "Delete Record", comment: "")
+        #expect(!deleteRecord.isEmpty)
+
+        let deleteAction = NSLocalizedString("action.delete", tableName: "Common", bundle: bundle, value: "Delete", comment: "")
+        #expect(!deleteAction.isEmpty)
     }
 }

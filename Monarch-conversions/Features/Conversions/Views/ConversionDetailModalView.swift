@@ -6,6 +6,7 @@ import AppKit
 struct ConversionDetailModalView: View {
     let record: ConversionRecord
     let onClose: () -> Void
+    var onDelete: (() -> Void)? = nil
 
     @State private var copiedNameFeedback: Bool = false
     @State private var copiedIdFeedback: Bool = false
@@ -334,6 +335,25 @@ struct ConversionDetailModalView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
                     .buttonStyle(.plain)
+
+                    if let onDelete = onDelete {
+                        Button {
+                            onDelete()
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "trash")
+                                    .font(.system(size: 12))
+                                Text("action.delete", tableName: "Common")
+                                    .font(MonarchUI.Font.sans(size: 12, weight: .medium))
+                            }
+                            .padding(.horizontal, 12)
+                            .frame(height: 32)
+                            .background(MonarchUI.Color.shortcutBg)
+                            .foregroundStyle(MonarchUI.Color.statusRed)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                        }
+                        .buttonStyle(.plain)
+                    }
 
                     Spacer()
 

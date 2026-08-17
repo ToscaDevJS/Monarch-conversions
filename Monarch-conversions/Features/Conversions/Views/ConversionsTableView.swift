@@ -2,8 +2,10 @@ import SwiftUI
 import SwiftData
 
 struct ConversionsTableView: View {
+    @Environment(\.modelContext) private var modelContext
     @Query(sort: \ConversionRecord.timestamp, order: .reverse) private var records: [ConversionRecord]
     @State private var filterState = TableFilterState()
+    @State private var showingClearConfirmation = false
     var searchText: String = ""
     var onSelectTab: ((AppTab) -> Void)? = nil
     var onSelectRecord: ((ConversionRecord) -> Void)? = nil
@@ -16,6 +18,18 @@ struct ConversionsTableView: View {
 
     private var availableProjects: [String] {
         Array(Set(records.map { $0.project })).sorted()
+    }
+
+    private func clearAllHistory() {
+        for record in records {
+            modelContext.delete(record)
+        }
+        try? modelContext.save()
+    }
+
+    private func deleteRecord(_ record: ConversionRecord) {
+        modelContext.delete(record)
+        try? modelContext.save()
     }
 
     var body: some View {
@@ -88,6 +102,21 @@ struct ConversionsTableView: View {
                             .foregroundStyle(filterState.isActive ? MonarchUI.Color.accentViolet : MonarchUI.Color.textMuted)
                     }
                     .disabled(!filterState.isActive)
+                    .buttonStyle(.plain)
+
+                    // Clear History Button
+                    Button {
+                        showingClearConfirmation = true
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "trash")
+                                .font(.system(size: 11))
+                            Text("table.clear_history", tableName: "Conversions")
+                                .font(MonarchUI.Font.sans(size: 13, weight: .regular))
+                        }
+                        .foregroundStyle(records.isEmpty ? MonarchUI.Color.textMuted.opacity(0.4) : MonarchUI.Color.statusRed)
+                    }
+                    .disabled(records.isEmpty)
                     .buttonStyle(.plain)
                 }
             }
@@ -195,15 +224,38 @@ struct ConversionsTableView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         ForEach(Array(filteredRecords.enumerated()), id: \.element.id) { index, record in
-                            TableRowView(record: record, isEven: index % 2 == 0) {
-                                onSelectRecord?(record)
-                            }
+                            TableRowView(
+                                record: record,
+                                isEven: index % 2 == 0,
+                                onSelect: {
+                                    onSelectRecord?(record)
+                                },
+                                onDelete: {
+                                    deleteRecord(record)
+                                }
+                            )
                         }
                     }
                 }
             }
         }
         .padding(.top, 64)
+        .confirmationDialog(
+            Text("table.clear_history_title", tableName: "Conversions"),
+            isPresented: $showingClearConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button(role: .destructive) {
+                clearAllHistory()
+            } label: {
+                Text("table.clear_history_confirm", tableName: "Conversions")
+            }
+            Button(role: .cancel) { } label: {
+                Text("action.cancel", tableName: "Common")
+            }
+        } message: {
+            Text("table.clear_history_message", tableName: "Conversions")
+        }
     }
 }
 
@@ -221,6 +273,7 @@ private struct TableRowView: View {
     let record: ConversionRecord
     let isEven: Bool
     var onSelect: (() -> Void)? = nil
+    var onDelete: (() -> Void)? = nil
     
     var rowBackground: SwiftUI.Color {
         if record.status == .working {
@@ -372,6 +425,18 @@ private struct TableRowView: View {
                 onSelect?()
             } label: {
                 Label("View Details", systemImage: "info.circle")
+            }
+
+            Divider()
+
+            Button(role: .destructive) {
+                onDelete?()
+            } label: {
+                Label {
+                    Text("table.delete_record", tableName: "Conversions")
+                } icon: {
+                    Image(systemName: "trash")
+                }
             }
         }
     }
