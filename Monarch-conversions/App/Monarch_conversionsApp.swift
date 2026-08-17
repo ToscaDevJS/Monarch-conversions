@@ -45,6 +45,20 @@ struct Monarch_conversionsApp: App {
         .modelContainer(sharedModelContainer)
         .commands {
             SidebarCommands()
+            CommandGroup(replacing: .appInfo) {
+                Button("About Monarch") {
+                    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.18.0"
+                    let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "20"
+                    NSApplication.shared.orderFrontStandardAboutPanel(
+                        options: [
+                            .applicationName: "Monarch",
+                            .applicationVersion: version,
+                            .version: build,
+                            NSApplication.AboutPanelOptionKey(rawValue: "Copyright"): "Copyright © 2026 ToscaDev. All rights reserved."
+                        ]
+                    )
+                }
+            }
         }
     }
 }

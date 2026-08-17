@@ -17,9 +17,13 @@ struct SettingsScene: View {
                     
                     ScrollView {
                         VStack(alignment: .leading, spacing: 0) {
-                            AppearancePanelView(settings: userSettings)
-                            LanguagePanelView(settings: userSettings)
-                            WorkflowPanelView(settings: userSettings)
+                            if selectedSection == .about {
+                                AboutPanelView()
+                            } else {
+                                AppearancePanelView(settings: userSettings)
+                                LanguagePanelView(settings: userSettings)
+                                WorkflowPanelView(settings: userSettings)
+                            }
                         }
                         .padding(.leading, 42)
                         .frame(maxWidth: 770, alignment: .leading)

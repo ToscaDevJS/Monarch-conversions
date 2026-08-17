@@ -6,6 +6,7 @@ enum SettingsSection: String, CaseIterable, Identifiable {
     case notifications = "Notifications"
     case conversionDefaults = "Conversion defaults"
     case storagePrivacy = "Storage & privacy"
+    case about = "About Monarch"
     
     var id: String { rawValue }
 }
@@ -48,6 +49,20 @@ struct SettingsSidebarView: View {
                 }
                 SidebarItem(title: String(localized: "settings.section_storage", table: "Settings"), isSelected: selectedSection == .storagePrivacy) {
                     selectedSection = .storagePrivacy
+                }
+            }
+            
+            // System & Info Group
+            VStack(alignment: .leading, spacing: 5) {
+                Text("ABOUT", comment: "About section header")
+                    .font(MonarchUI.Font.mono(size: 11, weight: .regular))
+                    .foregroundStyle(MonarchUI.Color.textDim)
+                    .tracking(0.8)
+                    .padding(.top, 14)
+                    .padding(.bottom, 6)
+                
+                SidebarItem(title: "About Monarch", isSelected: selectedSection == .about) {
+                    selectedSection = .about
                 }
             }
             
