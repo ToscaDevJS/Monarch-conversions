@@ -19,6 +19,7 @@ final class ConversionRecord {
     var project: String
     var statusRaw: String
     var timestamp: Date
+    var outputFilePath: String?
 
     var inputFormat: ImageFormat {
         get { ImageFormat(rawValue: inputFormatRaw) ?? .png }
@@ -43,6 +44,11 @@ final class ConversionRecord {
         set { statusRaw = newValue.rawValue }
     }
 
+    var outputURL: URL? {
+        guard let path = outputFilePath, !path.isEmpty else { return nil }
+        return URL(fileURLWithPath: path)
+    }
+
     init(
         id: String = UUID().uuidString,
         fileId: String,
@@ -53,7 +59,8 @@ final class ConversionRecord {
         outputSizeBytes: Int64,
         project: String,
         status: ConversionStatus = .working,
-        timestamp: Date = Date()
+        timestamp: Date = Date(),
+        outputFilePath: String? = nil
     ) {
         self.id = id
         self.fileId = fileId
@@ -66,5 +73,6 @@ final class ConversionRecord {
         self.project = project
         self.statusRaw = status.rawValue
         self.timestamp = timestamp
+        self.outputFilePath = outputFilePath
     }
 }

@@ -107,12 +107,16 @@ struct ConversionsTableView: View {
                 Text("table.col_file_id", tableName: "Conversions")
                     .frame(width: 115, alignment: .leading)
                 Text("table.col_file_name", tableName: "Conversions")
+                    .padding(.trailing, 16)
                     .frame(width: 274, alignment: .leading)
                 Text("table.col_dimensions", tableName: "Conversions")
+                    .padding(.trailing, 16)
                     .frame(width: 235, alignment: .leading)
                 Text("table.col_output", tableName: "Conversions")
+                    .padding(.trailing, 16)
                     .frame(width: 274, alignment: .leading)
                 Text("table.col_project", tableName: "Conversions")
+                    .padding(.trailing, 16)
                     .frame(width: 170, alignment: .leading)
                 Text("table.col_added", tableName: "Conversions")
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -277,6 +281,7 @@ private struct TableRowView: View {
                         .lineLimit(1)
                         .truncationMode(.middle)
                 }
+                .padding(.trailing, 16)
                 .frame(width: 274, alignment: .leading)
                 
                 // Dimensions
@@ -284,6 +289,7 @@ private struct TableRowView: View {
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
                     .lineLimit(1)
+                    .padding(.trailing, 16)
                     .frame(width: 235, alignment: .leading)
                 
                 // Output
@@ -299,6 +305,7 @@ private struct TableRowView: View {
                         .foregroundStyle(MonarchUI.Color.textMuted)
                         .lineLimit(1)
                 }
+                .padding(.trailing, 16)
                 .frame(width: 274, alignment: .leading)
                 
                 // Project
@@ -307,6 +314,7 @@ private struct TableRowView: View {
                     .foregroundStyle(MonarchUI.Color.textMuted)
                     .lineLimit(1)
                     .truncationMode(.tail)
+                    .padding(.trailing, 16)
                     .frame(width: 170, alignment: .leading)
                 
                 // Added
@@ -327,6 +335,45 @@ private struct TableRowView: View {
             )
         }
         .buttonStyle(.plain)
+        .onDrag {
+            if let outputURL = record.outputURL {
+                return NSItemProvider(contentsOf: outputURL) ?? NSItemProvider(object: outputURL as NSURL)
+            }
+            return NSItemProvider()
+        }
+        .contextMenu {
+            if let outputURL = record.outputURL {
+                Button {
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.writeObjects([outputURL as NSURL])
+                } label: {
+                    Label("Copy Converted File", systemImage: "doc.on.doc")
+                }
+
+                Button {
+                    #if os(macOS)
+                    NSWorkspace.shared.activateFileViewerSelecting([outputURL])
+                    #endif
+                } label: {
+                    Label("Reveal in Finder", systemImage: "folder")
+                }
+            }
+
+            Button {
+                let pasteboard = NSPasteboard.general
+                pasteboard.clearContents()
+                pasteboard.setString(record.fileId, forType: .string)
+            } label: {
+                Label("Copy File ID", systemImage: "number")
+            }
+
+            Button {
+                onSelect?()
+            } label: {
+                Label("View Details", systemImage: "info.circle")
+            }
+        }
     }
 
     private func timeAgoString(from date: Date) -> String {

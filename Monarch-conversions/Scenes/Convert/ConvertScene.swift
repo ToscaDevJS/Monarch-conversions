@@ -104,7 +104,8 @@ struct ConvertScene: View {
                         outputSizeBytes: result.outputSizeBytes,
                         project: "Default",
                         status: .done,
-                        timestamp: Date()
+                        timestamp: Date(),
+                        outputFilePath: result.outputURL.path
                     )
                     modelContext.insert(record)
                 } catch {
