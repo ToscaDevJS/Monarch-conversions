@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.17.0
+
+**Highlights**
+
+- **Production App Sandbox & App Store Entitlements:** Created dedicated `Monarch-conversions.entitlements` configuring `com.apple.security.files.user-selected.read-write` and `com.apple.security.files.bookmarks.app-scope`, enabling seamless output directory writing and persistent security-scoped folder access.
+- **Mac App Store Metadata:** Configured production category `public.app-category.graphics-design`, display name `Monarch`, and human-readable copyright in build configurations.
+
+- Added `Monarch-conversions/Monarch-conversions.entitlements`
+- Configured `CODE_SIGN_ENTITLEMENTS` in project build settings
+- Verified clean build and full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.16.1
 
 **Highlights**
