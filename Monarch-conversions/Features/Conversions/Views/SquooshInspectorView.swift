@@ -180,6 +180,12 @@ struct SquooshInspectorView: View {
             RoundedRectangle(cornerRadius: 2)
                 .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
+        .onDrag {
+            if let imageURL = imageURL {
+                return NSItemProvider(contentsOf: imageURL) ?? NSItemProvider(object: imageURL as NSURL)
+            }
+            return NSItemProvider()
+        }
     }
 }
 

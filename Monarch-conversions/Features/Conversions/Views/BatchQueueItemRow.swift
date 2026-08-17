@@ -131,14 +131,36 @@ struct BatchQueueItemRow: View {
             )
         }
         .buttonStyle(.plain)
+        .onDrag {
+            if let provider = item.dragItemProvider {
+                return provider
+            }
+            return NSItemProvider()
+        }
         .contextMenu {
             if let outputURL = item.outputFileURL {
+                Button {
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.writeObjects([outputURL as NSURL])
+                } label: {
+                    Label("Copy Converted File", systemImage: "doc.on.doc")
+                }
+
                 Button {
                     revealInFinder(url: outputURL)
                 } label: {
                     Label("Reveal in Finder", systemImage: "folder")
                 }
             } else if let sourceURL = item.fileURL {
+                Button {
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.writeObjects([sourceURL as NSURL])
+                } label: {
+                    Label("Copy Source File", systemImage: "doc.on.doc")
+                }
+
                 Button {
                     revealInFinder(url: sourceURL)
                 } label: {

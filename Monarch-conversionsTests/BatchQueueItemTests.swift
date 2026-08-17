@@ -124,4 +124,38 @@ import Foundation
         item.outputFileURL = newURL
         #expect(item.outputFileURL == newURL)
     }
+
+    @Test func dragItemProviderReturnsOutputURLWhenAvailable() {
+        let outputURL = URL(fileURLWithPath: "/tmp/sample_converted.webp")
+        let item = BatchQueueItem(
+            name: "sample.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1024,
+            outputFileURL: outputURL
+        )
+        #expect(item.dragItemProvider != nil)
+    }
+
+    @Test func dragItemProviderReturnsSourceURLWhenOutputIsNil() {
+        let sourceURL = URL(fileURLWithPath: "/tmp/sample.png")
+        let item = BatchQueueItem(
+            name: "sample.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1024,
+            fileURL: sourceURL
+        )
+        #expect(item.dragItemProvider != nil)
+    }
+
+    @Test func dragItemProviderReturnsNilWhenBothURLsAreNil() {
+        let item = BatchQueueItem(
+            name: "sample.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 1024
+        )
+        #expect(item.dragItemProvider == nil)
+    }
 }

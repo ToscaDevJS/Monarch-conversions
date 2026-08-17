@@ -54,3 +54,19 @@ public nonisolated struct BatchQueueItem: Identifiable, Equatable, Sendable {
         self.isFallbackDestination = isFallbackDestination
     }
 }
+
+#if canImport(AppKit)
+import AppKit
+
+extension BatchQueueItem {
+    public var dragItemProvider: NSItemProvider? {
+        if let outputURL = outputFileURL {
+            return NSItemProvider(contentsOf: outputURL) ?? NSItemProvider(object: outputURL as NSURL)
+        } else if let fileURL = fileURL {
+            return NSItemProvider(contentsOf: fileURL) ?? NSItemProvider(object: fileURL as NSURL)
+        }
+        return nil
+    }
+}
+#endif
+
