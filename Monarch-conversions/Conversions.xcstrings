@@ -6,13 +6,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Supported: JPG, PNG, WebP, AVIF, TIFF, SVG"
+            "value" : "Supported: JPG, PNG, WebP, AVIF, TIFF, DNG, SVG"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Soportados: JPG, PNG, WebP, AVIF, TIFF, SVG"
+            "value" : "Soportados: JPG, PNG, WebP, AVIF, TIFF, DNG, SVG"
           }
         }
       }

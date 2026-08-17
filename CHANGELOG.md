@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.24.0
+
+**Highlights**
+
+- **DNG / RAW Image Import & Conversion Support (Strict TDD):** Added native support for importing and converting Digital Negative (DNG / Apple ProRAW) camera photos directly into web-optimized formats (JPG, PNG, WebP, AVIF, HEIC, TIFF) verified via strict Red-Green-Refactor TDD cycle.
+
+- Added `.dng` case and file extension mapping to `ImageFormat.swift`
+- Configured DNG as decode-only (input format) in `outputEligibleCases`
+- Added DNG content type support to `ImageImportService.swift`
+- Added unit tests for ProRAW/DNG decoding and conversion in `ImageImportServiceTests.swift` and `ImageConversionServiceTests.swift`
+- Completed full OpenSpec SDD change artifacts under `openspec/changes/dng-raw-import-support/`
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.23.0
 
 **Highlights**

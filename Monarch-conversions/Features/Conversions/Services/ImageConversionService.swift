@@ -71,7 +71,7 @@ public nonisolated struct ImageConversionService: Sendable {
             return .tiff
         case .jpeg2000:
             return UTType("public.jpeg-2000") ?? UTType("public.jp2")
-        case .svg, .jpegXL:
+        case .svg, .jpegXL, .dng:
             return nil
         }
     }

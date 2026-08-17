@@ -12,6 +12,7 @@ import Testing
         #expect(ImageFormat(rawValue: "HEIC") == .heic)
         #expect(ImageFormat(rawValue: "JP2") == .jpeg2000)
         #expect(ImageFormat(rawValue: "JXL") == .jpegXL)
+        #expect(ImageFormat(rawValue: "DNG") == .dng)
 
         #expect(ImageFormat.png.rawValue == "PNG")
         #expect(ImageFormat.jpg.rawValue == "JPG")
@@ -22,6 +23,7 @@ import Testing
         #expect(ImageFormat.heic.rawValue == "HEIC")
         #expect(ImageFormat.jpeg2000.rawValue == "JP2")
         #expect(ImageFormat.jpegXL.rawValue == "JXL")
+        #expect(ImageFormat.dng.rawValue == "DNG")
     }
 
     @Test func unknownRawValueIsNil() {
@@ -48,6 +50,8 @@ import Testing
         #expect(ImageFormat(fileExtension: "jpf") == .jpeg2000)
         #expect(ImageFormat(fileExtension: "jxl") == .jpegXL)
         #expect(ImageFormat(fileExtension: "JXL") == .jpegXL)
+        #expect(ImageFormat(fileExtension: "dng") == .dng)
+        #expect(ImageFormat(fileExtension: "DNG") == .dng)
         #expect(ImageFormat(fileExtension: "bmp") == nil)
     }
 
@@ -60,6 +64,7 @@ import Testing
     @Test func outputEligibleCasesExcludeDecodeOnlyFormats() {
         #expect(!ImageFormat.outputEligibleCases.contains(.webp))
         #expect(!ImageFormat.outputEligibleCases.contains(.jpegXL))
+        #expect(!ImageFormat.outputEligibleCases.contains(.dng))
         #expect(ImageFormat.outputEligibleCases.contains(.png))
         #expect(ImageFormat.outputEligibleCases.contains(.heic))
     }

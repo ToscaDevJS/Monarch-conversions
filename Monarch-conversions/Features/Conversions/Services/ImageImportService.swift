@@ -15,7 +15,7 @@ public nonisolated struct ImageImportService: Sendable {
     }
 
     public nonisolated static var allowedContentTypes: [UTType] {
-        let extensions = ["png", "jpg", "jpeg", "webp", "avif", "tif", "tiff", "heic", "heif", "jp2", "j2k", "jpf", "jxl"]
+        let extensions = ["png", "jpg", "jpeg", "webp", "avif", "tif", "tiff", "heic", "heif", "jp2", "j2k", "jpf", "jxl", "dng"]
         return extensions.compactMap { UTType(filenameExtension: $0) }
     }
 

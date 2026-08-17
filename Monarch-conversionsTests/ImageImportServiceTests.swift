@@ -159,4 +159,24 @@ import Testing
         }
         #expect(item2.name == "sample.jpg")
     }
+
+    @Test func acceptsDngImageFiles() async {
+        let path = "/Users/orlandojesus/Downloads/imagnes/IMG_2925 copia.DNG"
+        guard FileManager.default.fileExists(atPath: path) else { return }
+        let dngURL = URL(fileURLWithPath: path)
+        let service = ImageImportService()
+        let outcomes = await service.importFiles(at: [dngURL], existingCount: 0)
+
+        #expect(outcomes.count == 1)
+        guard case .accepted(let item) = outcomes.first else {
+            Issue.record("Expected DNG file to be accepted in import service")
+            return
+        }
+
+        #expect(item.name == "IMG_2925 copia.DNG")
+        #expect(item.format.rawValue == "DNG")
+        #expect(item.dimensions.width == 3088)
+        #expect(item.dimensions.height == 2316)
+        #expect(item.originalSizeBytes > 0)
+    }
 }
