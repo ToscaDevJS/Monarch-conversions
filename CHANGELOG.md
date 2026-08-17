@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.22.0
+
+**Highlights**
+
+- **Technical Inspector Modal Redesign:** Replaced legacy mock progress states with a sleek macOS Quick-Look style inspection card featuring real metadata, live image preview, outward drag-and-drop (`.onDrag`), exact file specs, and direct action shortcuts.
+
+- Redesigned `ConversionDetailModalView.swift` with live thumbnail preview and outward drag
+- Added 2x2 technical specification grid (Transformation, Resolution, Output Size, Processed Date)
+- Added direct action buttons: "Reveal in Finder", "Copy File", "Copy ID", and "Close" (`Esc`)
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.21.0
 
 **Highlights**
