@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.16.0
+
+**Highlights**
+
+- **Purged Mock Seeds & Honest Data Pipeline:** Removed `ConversionSeedService` and mock dataset injection, ensuring the application database exclusively records authentic user conversions. Added an automatic migration cleaner for legacy mock records.
+- **Sanitized Metrics Header:** Removed fake Bezier sparkline and static ASCII glyphs, presenting clean, typographic, real-time statistics.
+- **Interactive Table Empty State:** Added a dedicated empty state with direct shortcut navigation (`⌘2`) to the conversion studio when no history exists or filters yield 0 results.
+
+- Removed `ConversionSeedService.swift` and `ConversionSeedServiceTests.swift`
+- Cleaned `MetricsHeaderView.swift` with genuine aggregation properties
+- Added `TableEmptyStateView` in `ConversionsTableView.swift`
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.15.1
 
 **Highlights**
