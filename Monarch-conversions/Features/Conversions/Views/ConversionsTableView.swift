@@ -5,6 +5,7 @@ struct ConversionsTableView: View {
     @Query(sort: \ConversionRecord.timestamp, order: .reverse) private var records: [ConversionRecord]
     @State private var filterState = TableFilterState()
     var searchText: String = ""
+    var onSelectTab: ((AppTab) -> Void)? = nil
     var onSelectRecord: ((ConversionRecord) -> Void)? = nil
     
     private var filteredRecords: [ConversionRecord] {
@@ -127,12 +128,72 @@ struct ConversionsTableView: View {
                 alignment: .bottom
             )
             
-            // Table Rows
-            ScrollView {
-                VStack(spacing: 0) {
-                    ForEach(Array(filteredRecords.enumerated()), id: \.element.id) { index, record in
-                        TableRowView(record: record, isEven: index % 2 == 0) {
-                            onSelectRecord?(record)
+            // Table Content / Empty States
+            if records.isEmpty {
+                VStack(spacing: 16) {
+                    Image(systemName: "photo.on.rectangle.angled")
+                        .font(.system(size: 38))
+                        .foregroundStyle(MonarchUI.Color.textMuted.opacity(0.6))
+
+                    VStack(spacing: 4) {
+                        Text("No Conversions Yet")
+                            .font(MonarchUI.Font.sans(size: 15, weight: .semibold))
+                            .foregroundStyle(MonarchUI.Color.textPrimary)
+
+                        Text("Convert images in the Convert tab to track batch history and performance metrics.")
+                            .font(MonarchUI.Font.sans(size: 13))
+                            .foregroundStyle(MonarchUI.Color.textMuted)
+                    }
+
+                    Button {
+                        onSelectTab?(.convert)
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 12))
+                            Text("Start Converting")
+                                .font(MonarchUI.Font.sans(size: 13, weight: .medium))
+                            Text("⌘2")
+                                .font(MonarchUI.Font.mono(size: 11))
+                                .foregroundStyle(MonarchUI.Color.textMuted)
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 7)
+                        .background(MonarchUI.Color.accentViolet)
+                        .foregroundStyle(SwiftUI.Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, 4)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.vertical, 48)
+            } else if filteredRecords.isEmpty {
+                VStack(spacing: 12) {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
+                        .font(.system(size: 32))
+                        .foregroundStyle(MonarchUI.Color.textMuted)
+
+                    Text("No matching conversion records")
+                        .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                        .foregroundStyle(MonarchUI.Color.textPrimary)
+
+                    Button("Reset Filters") {
+                        filterState.reset()
+                    }
+                    .font(MonarchUI.Font.sans(size: 12, weight: .medium))
+                    .foregroundStyle(MonarchUI.Color.accentViolet)
+                    .buttonStyle(.plain)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(.vertical, 40)
+            } else {
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ForEach(Array(filteredRecords.enumerated()), id: \.element.id) { index, record in
+                            TableRowView(record: record, isEven: index % 2 == 0) {
+                                onSelectRecord?(record)
+                            }
                         }
                     }
                 }
