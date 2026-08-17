@@ -15,6 +15,14 @@ public nonisolated enum ConversionFormatting {
         return "\(d.width) × \(d.height)"
     }
 
+    public static func shortFileId(_ fileId: String) -> String {
+        let trimmed = fileId.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.count > 8 {
+            return String(trimmed.prefix(8)).uppercased()
+        }
+        return trimmed.uppercased()
+    }
+
     public static func reduction(percent: Int) -> String {
         return "\(percent)%"
     }

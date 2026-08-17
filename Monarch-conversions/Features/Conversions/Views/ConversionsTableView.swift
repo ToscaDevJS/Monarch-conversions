@@ -256,10 +256,12 @@ private struct TableRowView: View {
                 .frame(width: 137, alignment: .leading)
                 
                 // File ID
-                Text(record.fileId)
-                    .font(MonarchUI.Font.sans(size: 13))
+                Text(ConversionFormatting.shortFileId(record.fileId))
+                    .font(MonarchUI.Font.mono(size: 12))
                     .foregroundStyle(MonarchUI.Color.textMuted)
+                    .lineLimit(1)
                     .frame(width: 115, alignment: .leading)
+                    .help(record.fileId)
                 
                 // File name
                 HStack(spacing: 9) {
@@ -272,6 +274,8 @@ private struct TableRowView: View {
                     Text(record.fileName)
                         .font(MonarchUI.Font.sans(size: 13))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
                 }
                 .frame(width: 274, alignment: .leading)
                 
@@ -279,6 +283,7 @@ private struct TableRowView: View {
                 Text(ConversionFormatting.dimensions(record.dimensions))
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(MonarchUI.Color.textPrimary)
+                    .lineLimit(1)
                     .frame(width: 235, alignment: .leading)
                 
                 // Output
@@ -292,6 +297,7 @@ private struct TableRowView: View {
                     Text("\(record.outputFormat.rawValue) · \(ConversionFormatting.byteSize(record.outputSizeBytes))")
                         .font(MonarchUI.Font.sans(size: 13))
                         .foregroundStyle(MonarchUI.Color.textMuted)
+                        .lineLimit(1)
                 }
                 .frame(width: 274, alignment: .leading)
                 
@@ -299,12 +305,15 @@ private struct TableRowView: View {
                 Text(record.project)
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(MonarchUI.Color.textMuted)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
                     .frame(width: 170, alignment: .leading)
                 
                 // Added
                 Text(timeAgoString(from: record.timestamp))
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(MonarchUI.Color.textMuted)
+                    .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.horizontal, 12)

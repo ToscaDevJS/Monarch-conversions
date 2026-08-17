@@ -44,6 +44,8 @@ struct ConversionDetailModalView: View {
                         Text("Batch \(record.fileId)")
                             .font(MonarchUI.Font.mono(size: 14))
                             .foregroundStyle(MonarchUI.Color.textSecondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
                     }
                     
                     Spacer()

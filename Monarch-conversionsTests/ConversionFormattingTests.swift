@@ -17,6 +17,12 @@ import Testing
         #expect(ConversionFormatting.dimensions(dim) == "4096 × 2731")
     }
 
+    @Test func shortFileIdFormatting() {
+        #expect(ConversionFormatting.shortFileId("0784F5C9-0536-4940-ACB6-CF2C9C966F08") == "0784F5C9")
+        #expect(ConversionFormatting.shortFileId("BATCH-101") == "BATCH-10")
+        #expect(ConversionFormatting.shortFileId("0417") == "0417")
+    }
+
     @Test func reductionFormatting() {
         #expect(ConversionFormatting.reduction(percent: -85) == "-85%")
         #expect(ConversionFormatting.reduction(percent: 0) == "0%")

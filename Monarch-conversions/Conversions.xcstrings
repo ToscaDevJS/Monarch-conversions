@@ -178,6 +178,7 @@
       }
     },
     "metrics.in_queue" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -210,6 +211,7 @@
       }
     },
     "metrics.storage_saved" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
