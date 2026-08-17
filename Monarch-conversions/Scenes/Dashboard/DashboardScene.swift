@@ -19,7 +19,7 @@ struct DashboardScene: View {
                     
                     MetricsHeaderView()
                     
-                    ConversionsTableView(searchText: searchText) { record in
+                    ConversionsTableView(searchText: searchText, onSelectTab: onSelectTab) { record in
                         selectedRecord = record
                     }
                 }
@@ -46,7 +46,24 @@ struct DashboardScene: View {
         }
         .animation(.easeInOut(duration: 0.15), value: selectedRecord != nil)
         .onAppear {
-            ConversionSeedService.seedInitialDataIfNeeded(modelContext: modelContext)
+            cleanLegacySeedsIfNeeded()
+        }
+    }
+
+    private func cleanLegacySeedsIfNeeded() {
+        let legacyNames = [
+            "hero-banner.png", "product-shot.jpg", "brand-mark.svg",
+            "event-poster.tiff", "launch-grid.jpg", "team-photo.png",
+            "podcast-cover.png", "newsletter-header.jpg"
+        ]
+        let descriptor = FetchDescriptor<ConversionRecord>()
+        if let allRecords = try? modelContext.fetch(descriptor) {
+            for record in allRecords {
+                if legacyNames.contains(record.fileName) || record.project == "Marketing" || record.project == "Storefront" || record.project == "Brand" || record.project == "Events" {
+                    modelContext.delete(record)
+                }
+            }
+            try? modelContext.save()
         }
     }
 }
