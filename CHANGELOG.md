@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.19.0
+
+**Highlights**
+
+- **Native About Monarch Panel & Menu Command:** Added a dedicated About Monarch panel in Settings and hooked up the native macOS Application Menu `About Monarch` command with official AppIcon branding, dynamic versioning, privacy guarantee, and repository links.
+
+- Added `AboutPanelView.swift` in Settings featuring privacy guarantees and resource links
+- Integrated `CommandGroup(replacing: .appInfo)` in `Monarch_conversionsApp.swift`
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.18.0
 
 **Highlights**
