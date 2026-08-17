@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.16.1
+
+**Highlights**
+
+- **Table Column Wrapping Fix & Compact ID Formatting:** Prevented multi-line text breaking on hyphenated UUIDs by implementing a compact 8-character monospaced identifier representation with full UUID tooltip help and enforcing strict single-line truncation across all table cells.
+
+- Added `ConversionFormatting.shortFileId` helper with full unit test coverage
+- Added `.lineLimit(1)`, `.truncationMode(.middle)`, and `.help(record.fileId)` to table cells and detail modal headers
+- Consolidated UI automation test suite to single app instance
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.16.0
 
 **Highlights**
