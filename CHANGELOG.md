@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.21.0
+
+**Highlights**
+
+- **Dashboard Table Drag-and-Drop & Column Spacing:** Enabled outward drag-and-drop (`.onDrag`) directly from completed conversion history rows into external apps and Finder, added quick context menu actions (Copy File, Reveal in Finder, Copy ID), and added whitespace padding between table columns to prevent text clipping.
+
+- Added `outputFilePath` and `outputURL` properties to `ConversionRecord`
+- Added `.onDrag` and rich `.contextMenu` to `TableRowView` in `ConversionsTableView`
+- Added right column padding between file name, dimensions, and output columns
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.20.0
 
 **Highlights**
