@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.18.0
+
+**Highlights**
+
+- **Official Production App Iconography:** Generated and integrated the official Monarch icon set across all 10 required macOS resolutions (16x16 up to 1024x1024 / 512@2x) with dark obsidian squircle and luminous faceted prism butterfly branding.
+
+- Added full PNG icon resolution set to `AppIcon.appiconset`
+- Updated `AppIcon.appiconset/Contents.json` asset mappings
+- Verified asset catalog compilation and full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.17.0
 
 **Highlights**
