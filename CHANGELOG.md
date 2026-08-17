@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.20.0
+
+**Highlights**
+
+- **Outward Drag & Drop and Direct Export:** Enabled outward drag-and-drop (`.onDrag`) directly from conversion queue items and the inspector view into Finder, Photoshop, Figma, Slack, or Mail using native `NSItemProvider`. Added clipboard file-copy actions to context menus.
+
+- Added `BatchQueueItem.dragItemProvider` with unit test coverage
+- Added `.onDrag` provider to `BatchQueueItemRow` and `SquooshInspectorView`
+- Added "Copy Converted File" and "Copy Source File" context menu actions
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.19.0
 
 **Highlights**
