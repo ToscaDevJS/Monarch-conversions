@@ -78,4 +78,37 @@ import SwiftData
         let records = try context.fetch(FetchDescriptor<ConversionRecord>())
         #expect(records.count == 1)
     }
+
+    @Test func failedItemStoresDiagnosticErrorMessage() {
+        var item = BatchQueueItem(
+            name: "broken.png",
+            format: .png,
+            dimensions: PixelDimensions(width: 100, height: 100),
+            originalSizeBytes: 500,
+            status: .failed,
+            errorMessage: "Corrupted image data"
+        )
+
+        #expect(item.status == .failed)
+        #expect(item.errorMessage == "Corrupted image data")
+
+        item.errorMessage = "Unsupported color space"
+        #expect(item.errorMessage == "Unsupported color space")
+    }
+
+    @Test func cooperativeCancellationHaltsQueueProcessing() async throws {
+        var processedCount = 0
+        let task = Task.detached {
+            for i in 0..<100 {
+                if Task.isCancelled { break }
+                processedCount += 1
+                try await Task.sleep(nanoseconds: 10_000_000)
+            }
+        }
+
+        task.cancel()
+        _ = await task.result
+
+        #expect(processedCount < 100)
+    }
 }

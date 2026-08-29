@@ -11,6 +11,7 @@ struct ConvertScene: View {
     @State private var selectedId: UUID? = nil
     @State private var conversionSettings = ConversionSettings(targetFormat: .png, quality: 0.82)
     @State private var isProcessing: Bool = false
+    @State private var conversionTask: Task<Void, Never>? = nil
 
     private let importService = ImageImportService()
     private let conversionService = ImageConversionService()
@@ -67,63 +68,90 @@ struct ConvertScene: View {
         }
     }
 
+    private func cancelConversion() {
+        conversionTask?.cancel()
+        conversionTask = nil
+        isProcessing = false
+    }
+
     private func processBatchConversion() {
         guard !items.isEmpty, !isProcessing else { return }
         let pendingItemIDs = BatchQueueProcessor.pendingItems(in: items).map { $0.id }
         guard !pendingItemIDs.isEmpty else { return }
         isProcessing = true
 
-        Task {
+        let service = conversionService
+        let settings = conversionSettings
+
+        conversionTask = Task.detached(priority: .userInitiated) {
             for targetId in pendingItemIDs {
-                guard let index = items.firstIndex(where: { $0.id == targetId }),
-                      items[index].status == .queued,
-                      let sourceURL = items[index].fileURL else { continue }
-                let item = items[index]
-                items[index].status = .converting
+                if Task.isCancelled { break }
+
+                let itemInfo: (url: URL, name: String)? = await MainActor.run {
+                    guard let index = items.firstIndex(where: { $0.id == targetId }),
+                          items[index].status == .queued,
+                          let sourceURL = items[index].fileURL else { return nil }
+                    items[index].status = .converting
+                    return (sourceURL, items[index].name)
+                }
+
+                guard let info = itemInfo else { continue }
+                if Task.isCancelled { break }
 
                 do {
-                    let result = try await conversionService.convert(sourceURL: sourceURL, settings: conversionSettings)
+                    let result = try await service.convert(sourceURL: info.url, settings: settings)
 
-                    let updatedItem = BatchQueueItem(
-                        id: item.id,
-                        name: item.name,
-                        format: item.format,
-                        dimensions: item.dimensions,
-                        originalSizeBytes: item.originalSizeBytes,
-                        targetFormat: conversionSettings.targetFormat,
-                        targetSizeBytes: result.outputSizeBytes,
-                        fileURL: item.fileURL,
-                        outputFileURL: result.outputURL,
-                        status: .done,
-                        isFallbackDestination: result.wasFallback
-                    )
-                    if let currentIndex = items.firstIndex(where: { $0.id == targetId }) {
+                    if Task.isCancelled { break }
+
+                    await MainActor.run {
+                        guard let currentIndex = items.firstIndex(where: { $0.id == targetId }) else { return }
+                        let current = items[currentIndex]
+                        let updatedItem = BatchQueueItem(
+                            id: current.id,
+                            name: current.name,
+                            format: current.format,
+                            dimensions: current.dimensions,
+                            originalSizeBytes: current.originalSizeBytes,
+                            targetFormat: settings.targetFormat,
+                            targetSizeBytes: result.outputSizeBytes,
+                            fileURL: current.fileURL,
+                            outputFileURL: result.outputURL,
+                            status: .done,
+                            isFallbackDestination: result.wasFallback
+                        )
                         items[currentIndex] = updatedItem
-                    }
 
-                    let record = ConversionRecord(
-                        fileId: item.id.uuidString,
-                        fileName: item.name,
-                        inputFormat: item.format,
-                        dimensions: result.outputDimensions,
-                        outputFormat: conversionSettings.targetFormat,
-                        outputSizeBytes: result.outputSizeBytes,
-                        project: "Default",
-                        status: .done,
-                        timestamp: Date(),
-                        outputFilePath: result.outputURL.path
-                    )
-                    modelContext.insert(record)
-                } catch {
-                    if let currentIndex = items.firstIndex(where: { $0.id == targetId }) {
-                        items[currentIndex].status = .failed
+                        let record = ConversionRecord(
+                            fileId: current.id.uuidString,
+                            fileName: current.name,
+                            inputFormat: current.format,
+                            dimensions: result.outputDimensions,
+                            outputFormat: settings.targetFormat,
+                            outputSizeBytes: result.outputSizeBytes,
+                            project: "Default",
+                            status: .done,
+                            timestamp: Date(),
+                            outputFilePath: result.outputURL.path
+                        )
+                        modelContext.insert(record)
                     }
-                    print("Conversion failed for \(item.name): \(error.localizedDescription)")
+                } catch {
+                    if Task.isCancelled { break }
+                    await MainActor.run {
+                        if let currentIndex = items.firstIndex(where: { $0.id == targetId }) {
+                            items[currentIndex].status = .failed
+                            items[currentIndex].errorMessage = error.localizedDescription
+                        }
+                        print("Conversion failed for \(info.name): \(error.localizedDescription)")
+                    }
                 }
             }
 
-            try? modelContext.save()
-            isProcessing = false
+            await MainActor.run {
+                try? modelContext.save()
+                isProcessing = false
+                conversionTask = nil
+            }
         }
     }
 
@@ -210,7 +238,10 @@ struct ConvertScene: View {
             BatchStatusFooterView(
                 items: items,
                 settings: conversionSettings,
-                isProcessing: isProcessing
+                isProcessing: isProcessing,
+                onCancel: {
+                    cancelConversion()
+                }
             )
         }
         .background(MonarchUI.Color.background)

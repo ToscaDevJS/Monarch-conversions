@@ -7,15 +7,18 @@ public struct BatchStatusFooterView: View {
     public let items: [BatchQueueItem]
     public let settings: ConversionSettings
     public let isProcessing: Bool
+    public var onCancel: (() -> Void)? = nil
 
     public init(
         items: [BatchQueueItem],
         settings: ConversionSettings,
-        isProcessing: Bool
+        isProcessing: Bool,
+        onCancel: (() -> Void)? = nil
     ) {
         self.items = items
         self.settings = settings
         self.isProcessing = isProcessing
+        self.onCancel = onCancel
     }
 
     public var totalOriginalBytes: Int64 {
@@ -143,12 +146,28 @@ public struct BatchStatusFooterView: View {
             // Right: Conversion Realtime Status
             HStack(spacing: 10) {
                 if isProcessing {
-                    HStack(spacing: 6) {
-                        ProgressView()
-                            .controlSize(.small)
-                        Text("Converting \(doneItems.count + 1) of \(items.count)...")
-                            .font(MonarchUI.Font.sans(size: 12, weight: .semibold))
-                            .foregroundStyle(MonarchUI.Color.accentViolet)
+                    HStack(spacing: 8) {
+                        HStack(spacing: 6) {
+                            ProgressView()
+                                .controlSize(.small)
+                            Text("Converting \(doneItems.count + 1) of \(items.count)...")
+                                .font(MonarchUI.Font.sans(size: 12, weight: .semibold))
+                                .foregroundStyle(MonarchUI.Color.accentViolet)
+                        }
+
+                        if let onCancel = onCancel {
+                            Button(action: onCancel) {
+                                Text("action.cancel", tableName: "Common")
+                                    .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
+                                    .foregroundStyle(MonarchUI.Color.statusRed)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(MonarchUI.Color.statusRed.opacity(0.12))
+                                    .clipShape(RoundedRectangle(cornerRadius: 3))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("cancel-conversion-button")
+                        }
                     }
                 } else if !doneItems.isEmpty {
                     HStack(spacing: 6) {

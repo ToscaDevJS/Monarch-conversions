@@ -107,6 +107,7 @@ struct BatchQueueItemRow: View {
                     .frame(height: 22)
                     .background(MonarchUI.Color.statusRed.opacity(0.15))
                     .clipShape(Capsule())
+                    .help(item.errorMessage ?? "Conversion failed")
                     .accessibilityIdentifier("status-failed")
                 } else if isSelected {
                     Text(trailingText)
