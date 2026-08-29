@@ -84,9 +84,7 @@ import Testing
     }
 
     @Test func convertsRealDngToJpgIfPresent() async throws {
-        let path = "/Users/orlandojesus/Downloads/imagnes/IMG_2925 copia.DNG"
-        guard FileManager.default.fileExists(atPath: path) else { return }
-        let sourceURL = URL(fileURLWithPath: path)
+        let sourceURL = fixtureURL("sample.dng")
         let service = ImageConversionService()
         let tempDir = temporaryDirectoryURL
         try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
@@ -105,8 +103,8 @@ import Testing
 
         #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
         #expect(result.outputSizeBytes > 0)
-        #expect(result.outputDimensions.width == 3088)
-        #expect(result.outputDimensions.height == 2316)
+        #expect(result.outputDimensions.width == 100)
+        #expect(result.outputDimensions.height == 100)
     }
 
     @Test func convertsWithWritableDirectoryWithoutFallback() async throws {

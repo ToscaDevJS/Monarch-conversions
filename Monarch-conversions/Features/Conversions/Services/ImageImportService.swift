@@ -49,11 +49,26 @@ public nonisolated struct ImageImportService: Sendable {
             }()
 
             var dimensions: PixelDimensions? = nil
-            if let source = source, CGImageSourceGetStatus(source) == .statusComplete, let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [CFString: Any] {
-                let width = (properties[kCGImagePropertyPixelWidth] as? NSNumber)?.intValue ?? 0
-                let height = (properties[kCGImagePropertyPixelHeight] as? NSNumber)?.intValue ?? 0
-                if width > 0 && height > 0 {
-                    dimensions = PixelDimensions(width: width, height: height)
+            if let source = source, CGImageSourceGetStatus(source) == .statusComplete {
+                if let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [String: Any] {
+                    var width = (properties[kCGImagePropertyPixelWidth as String] as? NSNumber)?.intValue ?? 0
+                    var height = (properties[kCGImagePropertyPixelHeight as String] as? NSNumber)?.intValue ?? 0
+
+                    if width == 0 || height == 0, let exif = properties[kCGImagePropertyExifDictionary as String] as? [String: Any] {
+                        width = (exif[kCGImagePropertyExifPixelXDimension as String] as? NSNumber)?.intValue ?? width
+                        height = (exif[kCGImagePropertyExifPixelYDimension as String] as? NSNumber)?.intValue ?? height
+                    }
+                    if width == 0 || height == 0, let tiff = properties[kCGImagePropertyTIFFDictionary as String] as? [String: Any] {
+                        width = (tiff["ImageWidth"] as? NSNumber)?.intValue ?? width
+                        height = (tiff["ImageLength"] as? NSNumber)?.intValue ?? height
+                    }
+                    if width > 0 && height > 0 {
+                        dimensions = PixelDimensions(width: width, height: height)
+                    }
+                }
+
+                if dimensions == nil, let cgImage = CGImageSourceCreateImageAtIndex(source, 0, nil) {
+                    dimensions = PixelDimensions(width: cgImage.width, height: cgImage.height)
                 }
             }
 
