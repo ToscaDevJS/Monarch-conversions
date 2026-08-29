@@ -105,4 +105,35 @@ import SwiftData
             try container.mainContext.save()
         }
     }
+
+    @MainActor
+    @Test func inMemoryRequestNeverWritesToTheStoreURL() throws {
+        let tempDir = temporaryDirectoryURL
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tempDir) }
+
+        let storeURL = tempDir.appendingPathComponent("default.store")
+        let container = ModelContainerFactory.createContainer(storeURL: storeURL, isStoredInMemoryOnly: true)
+
+        let record = ConversionRecord(
+            id: "rec-inmem-only",
+            fileId: "FIO",
+            fileName: "memory-only.png",
+            inputFormat: .png,
+            dimensions: PixelDimensions(width: 64, height: 64),
+            outputFormat: .jpg,
+            outputSizeBytes: 256,
+            project: "InMemoryOnly",
+            status: .done,
+            timestamp: Date()
+        )
+        container.mainContext.insert(record)
+        try container.mainContext.save()
+
+        let fetched = try container.mainContext.fetch(FetchDescriptor<ConversionRecord>())
+        #expect(fetched.count == 1)
+
+        let leftovers = try FileManager.default.contentsOfDirectory(atPath: tempDir.path)
+        #expect(leftovers.isEmpty)
+    }
 }
