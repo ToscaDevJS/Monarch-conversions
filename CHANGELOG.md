@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.25.0
+
+**Highlights**
+
+- **Strict TDD Domain Coverage for Import Outcomes:** Added dedicated unit test suite for `ImportOutcome` discriminated union enum (`.accepted` / `.rejected`), validating payload extraction, all rejection reason variants, Equatable value comparison, and Sendable concurrency safety across task boundaries.
+- **SDD Specification Completeness:** Formalized and verified OpenSpec artifacts under `openspec/changes/import-outcome-tests/` with 100% test pass rate and zero regressions.
+
+- Added `ImportOutcomeTests.swift` covering all enum cases and payload extractions
+- Added Equatable equality and inequality verification across distinct variants
+- Added async Sendable cross-boundary isolation tests
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.24.0
 
 **Highlights**
