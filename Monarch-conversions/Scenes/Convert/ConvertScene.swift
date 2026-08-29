@@ -69,12 +69,16 @@ struct ConvertScene: View {
 
     private func processBatchConversion() {
         guard !items.isEmpty, !isProcessing else { return }
+        let pendingItemIDs = BatchQueueProcessor.pendingItems(in: items).map { $0.id }
+        guard !pendingItemIDs.isEmpty else { return }
         isProcessing = true
 
         Task {
-            for index in items.indices {
+            for targetId in pendingItemIDs {
+                guard let index = items.firstIndex(where: { $0.id == targetId }),
+                      items[index].status == .queued,
+                      let sourceURL = items[index].fileURL else { continue }
                 let item = items[index]
-                guard let sourceURL = item.fileURL else { continue }
                 items[index].status = .converting
 
                 do {
@@ -93,7 +97,9 @@ struct ConvertScene: View {
                         status: .done,
                         isFallbackDestination: result.wasFallback
                     )
-                    items[index] = updatedItem
+                    if let currentIndex = items.firstIndex(where: { $0.id == targetId }) {
+                        items[currentIndex] = updatedItem
+                    }
 
                     let record = ConversionRecord(
                         fileId: item.id.uuidString,
@@ -109,7 +115,9 @@ struct ConvertScene: View {
                     )
                     modelContext.insert(record)
                 } catch {
-                    items[index].status = .failed
+                    if let currentIndex = items.firstIndex(where: { $0.id == targetId }) {
+                        items[currentIndex].status = .failed
+                    }
                     print("Conversion failed for \(item.name): \(error.localizedDescription)")
                 }
             }
@@ -120,6 +128,7 @@ struct ConvertScene: View {
     }
 
     private func deleteSelectedItem() {
+        guard !isProcessing else { return }
         guard let currentId = selectedId,
               let index = items.firstIndex(where: { $0.id == currentId }) else { return }
         items.remove(at: index)
@@ -127,6 +136,7 @@ struct ConvertScene: View {
     }
 
     private func clearQueue() {
+        guard !isProcessing else { return }
         items.removeAll()
         selectedId = nil
         rejections.removeAll()
