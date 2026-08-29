@@ -65,6 +65,7 @@ import Testing
         #expect(!ImageFormat.outputEligibleCases.contains(.webp))
         #expect(!ImageFormat.outputEligibleCases.contains(.jpegXL))
         #expect(!ImageFormat.outputEligibleCases.contains(.dng))
+        #expect(!ImageFormat.outputEligibleCases.contains(.svg))
         #expect(ImageFormat.outputEligibleCases.contains(.png))
         #expect(ImageFormat.outputEligibleCases.contains(.heic))
     }

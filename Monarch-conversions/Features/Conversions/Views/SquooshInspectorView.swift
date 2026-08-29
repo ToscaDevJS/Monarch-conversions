@@ -6,11 +6,19 @@ struct SquooshInspectorView: View {
     let targetFormatText: String
     let targetSizeText: String
     var imageURL: URL? = nil
+    var outputImageURL: URL? = nil
     @State private var sliderOffset: CGFloat = 0.5
     
-    private var loadedImage: NSImage? {
+    private var loadedOriginalImage: NSImage? {
         guard let imageURL = imageURL else { return nil }
         return NSImage(contentsOf: imageURL)
+    }
+
+    private var loadedOutputImage: NSImage? {
+        if let outputImageURL = outputImageURL {
+            return NSImage(contentsOf: outputImageURL)
+        }
+        return loadedOriginalImage
     }
 
     var body: some View {
@@ -61,14 +69,14 @@ struct SquooshInspectorView: View {
                         MonarchUI.Color.background
                         
                         VStack {
-                            if let nsImage = loadedImage {
+                            if let nsImage = loadedOutputImage {
                                 Image(nsImage: nsImage)
                                     .resizable()
                                     .scaledToFit()
                                     .frame(maxHeight: 240)
                                     .clipShape(RoundedRectangle(cornerRadius: 3))
                             } else {
-                                Text("WEBP OPTIMIZED")
+                                Text(targetFormatText.isEmpty ? "OPTIMIZED" : "\(targetFormatText) OPTIMIZED")
                                     .font(MonarchUI.Font.mono(size: 14, weight: .semibold))
                                     .foregroundStyle(MonarchUI.Color.accentViolet)
                                     .frame(width: 320, height: 170)
@@ -103,7 +111,7 @@ struct SquooshInspectorView: View {
                             MonarchUI.Color.surface
                             
                             VStack {
-                                if let nsImage = loadedImage {
+                                if let nsImage = loadedOriginalImage {
                                     Image(nsImage: nsImage)
                                         .resizable()
                                         .scaledToFit()

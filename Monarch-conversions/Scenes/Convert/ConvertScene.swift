@@ -186,7 +186,8 @@ struct ConvertScene: View {
                             originalSizeText: originalSizeText,
                             targetFormatText: targetFormatText,
                             targetSizeText: targetSizeText,
-                            imageURL: selectedItem?.fileURL
+                            imageURL: selectedItem?.fileURL,
+                            outputImageURL: selectedItem?.outputFileURL
                         )
 
                         OutputSettingsView(

@@ -19,7 +19,7 @@ public nonisolated enum ImageFormat: String, Codable, CaseIterable, Sendable {
     /// Excludes decode-only/import-only formats (`webp`, `jpegXL`, `dng`) so future `allCases`-driven
     /// output pickers never accidentally offer them.
     public nonisolated static var outputEligibleCases: [ImageFormat] {
-        allCases.filter { $0 != .webp && $0 != .jpegXL && $0 != .dng }
+        allCases.filter { $0 != .webp && $0 != .jpegXL && $0 != .dng && $0 != .svg }
     }
 
     public nonisolated init?(fileExtension: String) {
