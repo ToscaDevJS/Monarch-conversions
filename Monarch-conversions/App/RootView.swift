@@ -6,22 +6,26 @@ struct RootView: View {
     @State private var userSettings = UserSettings()
     
     var body: some View {
-        Group {
-            switch router.activeTab {
-            case .settings:
-                SettingsScene(userSettings: userSettings) { newTab in
-                    router.navigateTo(newTab)
-                }
-            case .convert:
-                ConvertScene { newTab in
-                    router.navigateTo(newTab)
-                }
-            default:
-                DashboardScene { newTab in
-                    router.navigateTo(newTab)
-                }
+        ZStack {
+            DashboardScene { newTab in
+                router.navigateTo(newTab)
             }
+            .opacity(router.activeTab == .studio ? 1 : 0)
+            .allowsHitTesting(router.activeTab == .studio)
+
+            ConvertScene { newTab in
+                router.navigateTo(newTab)
+            }
+            .opacity(router.activeTab == .convert ? 1 : 0)
+            .allowsHitTesting(router.activeTab == .convert)
+
+            SettingsScene(userSettings: userSettings) { newTab in
+                router.navigateTo(newTab)
+            }
+            .opacity(router.activeTab == .settings ? 1 : 0)
+            .allowsHitTesting(router.activeTab == .settings)
         }
+        .frame(minWidth: MonarchUI.Layout.minWindowWidth, minHeight: MonarchUI.Layout.minWindowHeight)
         .preferredColorScheme(userSettings.preferredColorScheme)
         .environment(\.locale, userSettings.language.locale)
         .background {

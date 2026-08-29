@@ -51,6 +51,11 @@ enum MonarchUI {
             .system(size: size, weight: weight, design: .default)
         }
     }
+
+    enum Layout {
+        static let minWindowWidth: CGFloat = 860
+        static let minWindowHeight: CGFloat = 600
+    }
 }
 
 extension SwiftUI.Color {

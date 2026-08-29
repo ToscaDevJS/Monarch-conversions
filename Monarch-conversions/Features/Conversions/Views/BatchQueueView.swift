@@ -32,16 +32,19 @@ struct BatchQueueView: View {
                 alignment: .bottom
             )
             
-            VStack(spacing: 8) {
-                ForEach(items) { item in
-                    BatchQueueItemRow(
-                        item: item,
-                        isSelected: selectedId == item.id
-                    ) {
-                        selectedId = item.id
+            ScrollView {
+                LazyVStack(spacing: 8) {
+                    ForEach(items) { item in
+                        BatchQueueItemRow(
+                            item: item,
+                            isSelected: selectedId == item.id
+                        ) {
+                            selectedId = item.id
+                        }
                     }
                 }
             }
+            .frame(maxHeight: 340)
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("batch-queue")

@@ -10,7 +10,9 @@ struct Monarch_conversionsApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .frame(minWidth: MonarchUI.Layout.minWindowWidth, minHeight: MonarchUI.Layout.minWindowHeight)
         }
+        .windowResizability(.contentMinSize)
         .modelContainer(sharedModelContainer)
         .commands {
             SidebarCommands()
