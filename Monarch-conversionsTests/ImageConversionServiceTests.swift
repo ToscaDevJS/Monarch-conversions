@@ -166,4 +166,61 @@ import Testing
         item.isFallbackDestination = true
         #expect(item.isFallbackDestination == true)
     }
+
+    @Test func generatesUniqueFilenameWhenOutputAlreadyExists() async throws {
+        let service = ImageConversionService()
+        let sourceURL = fixtureURL("sample.png")
+        let tempDir = temporaryDirectoryURL
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+        defer {
+            try? FileManager.default.removeItem(at: tempDir)
+        }
+
+        let existingURL = tempDir.appendingPathComponent("sample_converted.jpg")
+        let sentinelData = "SENTINEL_DO_NOT_OVERWRITE".data(using: .utf8)!
+        try sentinelData.write(to: existingURL)
+
+        let settings = ConversionSettings(
+            targetFormat: .jpg,
+            quality: 0.8,
+            outputDirectoryURL: tempDir
+        )
+
+        let result = try await service.convert(sourceURL: sourceURL, settings: settings)
+
+        #expect(result.outputURL.lastPathComponent == "sample_converted-1.jpg")
+        #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
+
+        // Confirm original file was not overwritten
+        let originalContent = try Data(contentsOf: existingURL)
+        #expect(originalContent == sentinelData)
+    }
+
+    @Test func generatesSequentialUniqueFilenamesOnMultipleCollisions() async throws {
+        let service = ImageConversionService()
+        let sourceURL = fixtureURL("sample.png")
+        let tempDir = temporaryDirectoryURL
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+        defer {
+            try? FileManager.default.removeItem(at: tempDir)
+        }
+
+        let file0 = tempDir.appendingPathComponent("sample_converted.jpg")
+        let file1 = tempDir.appendingPathComponent("sample_converted-1.jpg")
+        try "0".data(using: .utf8)!.write(to: file0)
+        try "1".data(using: .utf8)!.write(to: file1)
+
+        let settings = ConversionSettings(
+            targetFormat: .jpg,
+            quality: 0.8,
+            outputDirectoryURL: tempDir
+        )
+
+        let result = try await service.convert(sourceURL: sourceURL, settings: settings)
+
+        #expect(result.outputURL.lastPathComponent == "sample_converted-2.jpg")
+        #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
+    }
 }

@@ -84,6 +84,22 @@ public nonisolated struct ImageConversionService: Sendable {
         return FileManager.default.temporaryDirectory
     }
 
+    public static func uniqueDestinationURL(in directory: URL, baseName: String, ext: String) -> URL {
+        let initialURL = directory.appendingPathComponent("\(baseName)_converted.\(ext)")
+        guard FileManager.default.fileExists(atPath: initialURL.path) else {
+            return initialURL
+        }
+
+        var counter = 1
+        while true {
+            let candidateURL = directory.appendingPathComponent("\(baseName)_converted-\(counter).\(ext)")
+            if !FileManager.default.fileExists(atPath: candidateURL.path) {
+                return candidateURL
+            }
+            counter += 1
+        }
+    }
+
     public func convert(
         sourceURL: URL,
         settings: ConversionSettings
@@ -94,18 +110,18 @@ public nonisolated struct ImageConversionService: Sendable {
             throw ConversionError.unsupportedTargetFormat(settings.targetFormat)
         }
 
-        let hasSourceAccess = sourceURL.startAccessingSecurityScopedResource()
+        let hasSecurityAccess = sourceURL.startAccessingSecurityScopedResource()
         defer {
-            if hasSourceAccess {
+            if hasSecurityAccess {
                 sourceURL.stopAccessingSecurityScopedResource()
             }
         }
 
         let chosenOutputDirectory = settings.outputDirectoryURL
-        let hasOutputAccess = chosenOutputDirectory?.startAccessingSecurityScopedResource() ?? false
+        let hasOutputSecurityAccess = chosenOutputDirectory?.startAccessingSecurityScopedResource() ?? false
         defer {
-            if hasOutputAccess, let chosen = chosenOutputDirectory {
-                chosen.stopAccessingSecurityScopedResource()
+            if hasOutputSecurityAccess {
+                chosenOutputDirectory?.stopAccessingSecurityScopedResource()
             }
         }
 
@@ -131,7 +147,7 @@ public nonisolated struct ImageConversionService: Sendable {
             initialWasFallback = true
         }
 
-        var destinationURL = resolvedDirectory.appendingPathComponent("\(fileBaseName)_converted.\(ext)")
+        var destinationURL = Self.uniqueDestinationURL(in: resolvedDirectory, baseName: fileBaseName, ext: ext)
         var wasFallback = initialWasFallback
 
         // Prepare destination
@@ -144,7 +160,7 @@ public nonisolated struct ImageConversionService: Sendable {
 
         if destination == nil {
             let fallbackDir = Self.fallbackDirectory()
-            let fallbackURL = fallbackDir.appendingPathComponent("\(fileBaseName)_converted.\(ext)")
+            let fallbackURL = Self.uniqueDestinationURL(in: fallbackDir, baseName: fileBaseName, ext: ext)
             if let fallbackDestination = CGImageDestinationCreateWithURL(
                 fallbackURL as CFURL,
                 targetUTI.identifier as CFString,
@@ -155,7 +171,7 @@ public nonisolated struct ImageConversionService: Sendable {
                 destinationURL = fallbackURL
                 wasFallback = true
             } else {
-                let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(fileBaseName)_converted.\(ext)")
+                let tempURL = Self.uniqueDestinationURL(in: FileManager.default.temporaryDirectory, baseName: fileBaseName, ext: ext)
                 if let tempDestination = CGImageDestinationCreateWithURL(
                     tempURL as CFURL,
                     targetUTI.identifier as CFString,
