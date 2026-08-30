@@ -1,0 +1,27 @@
+{
+  "subject_hash": "sha256:84b0339b5eb8cb976d268c765ff1afca912cbe0f93411b8997a8d19c485efe66",
+  "lens": "review-reliability",
+  "inspection": {
+    "status": "completed",
+    "paths": [
+      ".atl/skill-registry.md",
+      "CHANGELOG.md",
+      "Monarch-conversions.xcodeproj/project.pbxproj",
+      "Monarch-conversions/Features/Conversions/Services/ImageConversionService.swift",
+      "Monarch-conversionsTests/Fixtures/sample_orientation_6.jpg",
+      "Monarch-conversionsTests/ImageConversionServiceTests.swift",
+      "openspec/changes/fix-exif-orientation-double-rotation/design.md",
+      "openspec/changes/fix-exif-orientation-double-rotation/proposal.md",
+      "openspec/changes/fix-exif-orientation-double-rotation/specs/orientation-and-metadata/spec.md",
+      "openspec/changes/fix-exif-orientation-double-rotation/tasks.md",
+      "openspec/changes/fix-exif-orientation-double-rotation/verify-report.md"
+    ]
+  },
+  "findings": [],
+  "evidence": [
+    "MARKETING_VERSION bumped to 0.26.0 and CURRENT_PROJECT_VERSION bumped to 26 across all targets in project.pbxproj",
+    "CHANGELOG.md updated with 0.26.0 release notes and technical highlights",
+    "ImageConversionService correctly normalizes orientation tags when decoding with transform to prevent double rotation",
+    "All 98 unit tests and 7 UI tests pass cleanly with zero regressions"
+  ]
+}
