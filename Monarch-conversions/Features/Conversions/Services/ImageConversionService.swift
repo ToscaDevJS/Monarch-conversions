@@ -215,6 +215,16 @@ public nonisolated struct ImageConversionService: Sendable {
                 kCGImageSourceCreateThumbnailWithTransform: true
             ]
             cgImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, thumbnailOptions as CFDictionary)
+
+            // When thumbnail is created with transform, pixels are physically rotated.
+            // Reset orientation tags in destination metadata to 1 (normal) to prevent double rotation.
+            if settings.preserveMetadata {
+                destinationProperties[kCGImagePropertyOrientation] = 1 as CFNumber
+                if var tiffDict = destinationProperties[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
+                    tiffDict[kCGImagePropertyTIFFOrientation] = 1 as CFNumber
+                    destinationProperties[kCGImagePropertyTIFFDictionary] = tiffDict
+                }
+            }
         } else {
             cgImage = CGImageSourceCreateImageAtIndex(imageSource, 0, nil)
         }

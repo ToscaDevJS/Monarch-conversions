@@ -1,4 +1,5 @@
 import Foundation
+import ImageIO
 import Testing
 @testable import Monarch_conversions
 
@@ -221,4 +222,107 @@ import Testing
         #expect(result.outputURL.lastPathComponent == "sample_converted-2.jpg")
         #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
     }
+
+    @Test func convertsAndResizesWithExifOrientationNormalizingOrientationTag() async throws {
+        let service = ImageConversionService()
+        let sourceURL = fixtureURL("sample_orientation_6.jpg")
+        let tempDir = temporaryDirectoryURL
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+        defer {
+            try? FileManager.default.removeItem(at: tempDir)
+        }
+
+        let settings = ConversionSettings(
+            targetFormat: .jpg,
+            maxWidth: 100,
+            maxHeight: 100,
+            preserveMetadata: true,
+            outputDirectoryURL: tempDir
+        )
+
+        let result = try await service.convert(sourceURL: sourceURL, settings: settings)
+        #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
+
+        guard let imageSource = CGImageSourceCreateWithURL(result.outputURL as CFURL, nil),
+              let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any] else {
+            Issue.record("Failed to read output image properties")
+            return
+        }
+
+        let rootOrientation = properties[kCGImagePropertyOrientation] as? Int
+        let tiffDict = properties[kCGImagePropertyTIFFDictionary] as? [CFString: Any]
+        let tiffOrientation = tiffDict?[kCGImagePropertyTIFFOrientation] as? Int
+
+        // Because pixels were rotated by WithTransform: true, orientation MUST be normalized to 1 (or omitted)
+        #expect(rootOrientation == 1 || rootOrientation == nil)
+        #expect(tiffOrientation == 1 || tiffOrientation == nil)
+        // Original non-orientation metadata should still be preserved
+        #expect(tiffDict?[kCGImagePropertyTIFFMake] as? String == "Monarch Test Camera")
+    }
+
+    @Test func convertsWithoutResizePreservingOriginalOrientationTag() async throws {
+        let service = ImageConversionService()
+        let sourceURL = fixtureURL("sample_orientation_6.jpg")
+        let tempDir = temporaryDirectoryURL
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+        defer {
+            try? FileManager.default.removeItem(at: tempDir)
+        }
+
+        let settings = ConversionSettings(
+            targetFormat: .jpg,
+            preserveMetadata: true,
+            outputDirectoryURL: tempDir
+        )
+
+        let result = try await service.convert(sourceURL: sourceURL, settings: settings)
+        #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
+
+        guard let imageSource = CGImageSourceCreateWithURL(result.outputURL as CFURL, nil),
+              let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any] else {
+            Issue.record("Failed to read output image properties")
+            return
+        }
+
+        let rootOrientation = properties[kCGImagePropertyOrientation] as? Int
+        let tiffDict = properties[kCGImagePropertyTIFFDictionary] as? [CFString: Any]
+        let tiffOrientation = tiffDict?[kCGImagePropertyTIFFOrientation] as? Int
+
+        // Without resize, pixels are not rotated, so orientation tag 6 MUST be preserved
+        #expect(rootOrientation == 6 || tiffOrientation == 6)
+        #expect(tiffDict?[kCGImagePropertyTIFFMake] as? String == "Monarch Test Camera")
+    }
+
+    @Test func convertsWithPreserveMetadataFalseStrippingExifAndGps() async throws {
+        let service = ImageConversionService()
+        let sourceURL = fixtureURL("sample_orientation_6.jpg")
+        let tempDir = temporaryDirectoryURL
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
+
+        defer {
+            try? FileManager.default.removeItem(at: tempDir)
+        }
+
+        let settings = ConversionSettings(
+            targetFormat: .jpg,
+            preserveMetadata: false,
+            outputDirectoryURL: tempDir
+        )
+
+        let result = try await service.convert(sourceURL: sourceURL, settings: settings)
+        #expect(FileManager.default.fileExists(atPath: result.outputURL.path))
+
+        guard let imageSource = CGImageSourceCreateWithURL(result.outputURL as CFURL, nil),
+              let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any] else {
+            Issue.record("Failed to read output image properties")
+            return
+        }
+
+        #expect(properties[kCGImagePropertyGPSDictionary] == nil)
+        let exifDict = properties[kCGImagePropertyExifDictionary] as? [CFString: Any]
+        #expect(exifDict?[kCGImagePropertyExifUserComment] == nil)
+    }
 }
+

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.26.0
+
+**Highlights**
+
+- **Fix EXIF Orientation Double-Rotation Bug & Metadata Synchronization (Strict TDD):** Fixed critical double rotation issue during image resizing where `CGImageSourceCreateThumbnailAtIndex` with `WithTransform: true` rotates pixel buffers while previously copied metadata retained orientation tags (e.g., orientation 6 / 90° CW). Output properties are now properly normalized to orientation 1 (`.up`) across root and TIFF dictionaries on resize, unrotated raw pixels preserve original tags on standard conversions, and EXIF/GPS metadata is stripped when disabled.
+- **SDD Specification Completeness:** Formalized and verified OpenSpec artifacts under `openspec/changes/fix-exif-orientation-double-rotation/` with 100% test pass rate (105 tests) and zero regressions.
+
+- Normalized `kCGImagePropertyOrientation` and `{TIFF}.Orientation` to 1 when resizing with transform in `ImageConversionService.swift`
+- Added test fixture `sample_orientation_6.jpg` containing EXIF orientation, TIFF make/model, GPS coordinates, and user comment
+- Added comprehensive unit tests in `ImageConversionServiceTests.swift` verifying normalized orientation on resize, orientation retention without resize, and metadata stripping
+- Verified full test suite pass: 100% tests passing with 0 regressions
+
 ## 0.25.0
 
 **Highlights**
