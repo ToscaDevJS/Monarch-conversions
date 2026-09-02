@@ -25,14 +25,14 @@ struct SettingsScene: View {
                                 WorkflowPanelView(settings: userSettings)
                             }
                         }
-                        .padding(.leading, 42)
-                        .frame(maxWidth: 770, alignment: .leading)
+                        .padding(.leading, MonarchUI.Layout.Settings.detailLeadingPadding)
+                        .frame(maxWidth: MonarchUI.Layout.Settings.detailMaxWidth, alignment: .leading)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 30)
             }
-            .padding(28)
+            .padding(MonarchUI.Layout.scenePadding)
             .background(MonarchUI.Color.background)
             
             Spacer(minLength: 0)

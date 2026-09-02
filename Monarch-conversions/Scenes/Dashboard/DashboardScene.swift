@@ -23,7 +23,7 @@ struct DashboardScene: View {
                         selectedRecord = record
                     }
                 }
-                .padding(28)
+                .padding(MonarchUI.Layout.scenePadding)
                 .background(MonarchUI.Color.background)
                 
                 Spacer(minLength: 0)

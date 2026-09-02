@@ -35,7 +35,7 @@ import SwiftUI
     }
 
     @Test func layoutConstantsDefineMinimumWindowDimensions() {
-        #expect(MonarchUI.Layout.minWindowWidth >= 860)
+        #expect(MonarchUI.Layout.minWindowWidth >= 1180)
         #expect(MonarchUI.Layout.minWindowHeight >= 600)
     }
 }

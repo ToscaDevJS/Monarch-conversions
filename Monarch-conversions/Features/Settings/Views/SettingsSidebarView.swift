@@ -69,7 +69,7 @@ struct SettingsSidebarView: View {
             Spacer()
         }
         .padding(.trailing, 28)
-        .frame(width: 230, alignment: .leading)
+        .frame(width: MonarchUI.Layout.Settings.sidebarWidth, alignment: .leading)
         .overlay(
             Rectangle()
                 .fill(MonarchUI.Color.divider)
@@ -90,10 +90,12 @@ private struct SidebarItem: View {
                 Text(title)
                     .font(MonarchUI.Font.sans(size: 14, weight: isSelected ? .medium : .regular))
                     .foregroundStyle(isSelected ? MonarchUI.Color.textPrimary : MonarchUI.Color.textSecondary)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                 Spacer()
             }
             .padding(.horizontal, 12)
-            .frame(height: 38)
+            .frame(minHeight: 38)
             .background(
                 Rectangle()
                     .fill(isSelected ? MonarchUI.Color.sidebarActiveBg : SwiftUI.Color.clear)

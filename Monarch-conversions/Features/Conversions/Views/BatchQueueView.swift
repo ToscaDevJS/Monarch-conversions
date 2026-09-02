@@ -12,6 +12,8 @@ struct BatchQueueView: View {
                     .font(MonarchUI.Font.mono(size: 11, weight: .semibold))
                     .foregroundStyle(MonarchUI.Color.accentViolet)
                     .tracking(0.8)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
                 
                 Spacer()
                 
