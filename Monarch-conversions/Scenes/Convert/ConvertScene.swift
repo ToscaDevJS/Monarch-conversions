@@ -177,7 +177,7 @@ struct ConvertScene: View {
 
                 ConvertHeadingView()
 
-                HStack(alignment: .top, spacing: 24) {
+                HStack(alignment: .top, spacing: MonarchUI.Layout.Convert.columnGap) {
                     // Left Column (Dropzone & Batch Queue)
                     VStack(alignment: .leading, spacing: 20) {
                         BatchDropzoneView(
@@ -205,7 +205,11 @@ struct ConvertScene: View {
                             }
                         )
                     }
-                    .frame(width: 460)
+                    .frame(
+                        minWidth: MonarchUI.Layout.Convert.leftColumnMin,
+                        idealWidth: MonarchUI.Layout.Convert.leftColumnIdeal,
+                        maxWidth: MonarchUI.Layout.Convert.leftColumnMax
+                    )
 
                     // Right Column (Visual Inspector & Output Settings)
                     VStack(alignment: .leading, spacing: 20) {
@@ -230,7 +234,7 @@ struct ConvertScene: View {
                 }
                 .padding(.top, 24)
             }
-            .padding(28)
+            .padding(MonarchUI.Layout.scenePadding)
             .background(MonarchUI.Color.background)
 
             Spacer(minLength: 0)

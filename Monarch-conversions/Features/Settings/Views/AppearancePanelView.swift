@@ -34,12 +34,16 @@ struct AppearancePanelView: View {
                             .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                             .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.accentViolet : MonarchUI.Color.textMuted)
                             .tracking(0.8)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                         Text("appearance.device_preference", tableName: "Settings")
                             .font(MonarchUI.Font.sans(size: 13))
                             .foregroundStyle(settings.appearance == .system ? MonarchUI.Color.textPrimary : MonarchUI.Color.textSecondary)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     .padding(.leading, 8)
-                    .frame(height: 104, alignment: .center)
+                    .frame(minHeight: 104, alignment: .center)
                 }
                 .buttonStyle(.plain)
                 .accessibilityElement(children: .combine)
@@ -88,6 +92,8 @@ private struct DarkAppearanceCard: View {
                     Text("appearance.dark", tableName: "Settings")
                         .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     Spacer()
                     
@@ -95,11 +101,14 @@ private struct DarkAppearanceCard: View {
                         Text("appearance.active", tableName: "Settings")
                             .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.accentViolet)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
             }
             .padding(11)
-            .frame(width: 184, height: 104)
+            .frame(width: 184)
+            .frame(minHeight: 104)
             .background(isSelected ? MonarchUI.Color.cardDarkBg : MonarchUI.Color.cardLightBg)
             .overlay(
                 Rectangle()
@@ -143,6 +152,8 @@ private struct LightAppearanceCard: View {
                     Text("appearance.light", tableName: "Settings")
                         .font(MonarchUI.Font.sans(size: 13, weight: .medium))
                         .foregroundStyle(MonarchUI.Color.textPrimary)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     Spacer()
                     
@@ -150,11 +161,14 @@ private struct LightAppearanceCard: View {
                         Text("appearance.active", tableName: "Settings")
                             .font(MonarchUI.Font.mono(size: 11, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.accentViolet)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
             }
             .padding(11)
-            .frame(width: 184, height: 104)
+            .frame(width: 184)
+            .frame(minHeight: 104)
             .background(MonarchUI.Color.cardLightBg)
             .overlay(
                 Rectangle()

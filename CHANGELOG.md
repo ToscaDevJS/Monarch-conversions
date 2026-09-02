@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.27.0
+
+**Highlights**
+
+- **Responsive Surface Layouts & Honest Window Floor (1180×600):** Eliminated rigid window and surface overflow bugs across the app. Raised declared minimum window dimensions to an honest 1180×600 floor derived from arithmetic requirements across all three live surfaces (`Settings`, `Dashboard`, and `Convert`), removing duplicate root window constraints and preventing content from silently clipping or overflowing.
+- **Shared Table Geometry & Two-Axis Dashboard Scrolling:** Centralized table column dimensions under `MonarchUI.Layout.TableColumn` to ensure table headers and rows agree by construction. Placed table header and rows inside a unified horizontal `ScrollView` with fixed content width (1349pt) and nested vertical scroll, ensuring the `Added` column and right-side metadata remain reachable on narrow viewports without header drift.
+- **Convert Surface Negotiation & Output Settings Reflow:** Replaced rigid 460pt left column with a flexible negotiating column (`minWidth: 380`, `idealWidth: 460`, `maxWidth: 520`). Refactored output settings controls into a reusable `OutputSettingBox` component, leveraging `ViewThatFits` to automatically reflow between a single wide row and a compact two-row layout.
+- **Bilingual & Localization Text-Fitting Hardening:** Added explicit text fitting policies for Spanish expansion across dense controls: two-line wrapping with intrinsic vertical growth in `SettingsSidebarView` and `AppearancePanelView`, explicit single-line truncation in `LanguagePanelView`, table headers, and `BatchQueueView`, and multiline wrapping in `BatchDropzoneView`.
+- **Layout Invariant Regression Test Suite:** Introduced `LayoutInvariantTests.swift` guarding arithmetic invariants across Settings, Dashboard viewport, table column totals, and Convert compact reflow boundaries.
+
+- Centralized shared layout constants in `MonarchUI.Layout` (`minWindowWidth: 1180`, `minWindowHeight: 600`, `scenePadding: 28`, `Settings`, `TableColumn`, `Convert`)
+- Removed redundant `.frame(minWidth:minHeight:)` on `RootView`'s `ZStack`, keeping scene-level window sizing as the single source of truth
+- Wrapped `ConversionsTableView` header and rows in a horizontal `ScrollView` with deterministic 1349pt content width and nested vertical scrolling for rows
+- Refactored `OutputSettingsView` to use `ViewThatFits(in: .horizontal)` and extracted `OutputSettingBox`
+- Added text fitting modifiers (`.lineLimit`, `.truncationMode`, `.fixedSize`) across Settings, Table headers, and Convert dropzone/queue views
+- Added `LayoutInvariantTests.swift` guarding window floors, table scroll requirement, and Convert card geometry from shared constants
+- Stabilized `BatchQueueStatusUITests` with deterministic navigation and window handling; full test suite passing with 0 regressions (103 unit tests, 7 UI tests)
+
 ## 0.26.0
 
 **Highlights**

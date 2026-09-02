@@ -52,9 +52,78 @@ enum MonarchUI {
         }
     }
 
+    /// Shared geometry consumed by more than one view.
+    ///
+    /// Values that only one view cares about stay at their call site; anything two
+    /// places must agree on — a window floor, a column width, a scene inset — lives
+    /// here so the two sides cannot drift.
     enum Layout {
-        static let minWindowWidth: CGFloat = 860
+        /// Derived from the per-surface arithmetic in `Layout.Settings.requiredWidth`
+        /// and its siblings, not from the original design mockup: every surface must
+        /// fit inside this width in English and in Spanish.
+        static let minWindowWidth: CGFloat = 1180
         static let minWindowHeight: CGFloat = 600
+
+        /// The inset every scene applies around its content.
+        static let scenePadding: CGFloat = 28
+
+        /// Widths the Settings surface is built from.
+        enum Settings {
+            static let sidebarWidth: CGFloat = 230
+            static let detailLeadingPadding: CGFloat = 42
+            static let detailMaxWidth: CGFloat = 770
+
+            /// Horizontal room the Settings content needs, excluding `scenePadding`.
+            static var requiredWidth: CGFloat {
+                sidebarWidth + detailLeadingPadding + detailMaxWidth
+            }
+        }
+
+        /// Column geometry and horizontal scroll requirements for the Conversions table.
+        enum TableColumn {
+            static let status: CGFloat = 137
+            static let fileID: CGFloat = 115
+            static let fileName: CGFloat = 274
+            static let dimensions: CGFloat = 235
+            static let output: CGFloat = 274
+            static let project: CGFloat = 170
+            static let addedMinWidth: CGFloat = 120
+            static let horizontalPadding: CGFloat = 12
+
+            /// The six fixed-width columns that cannot shrink.
+            static var fixedTotal: CGFloat {
+                status + fileID + fileName + dimensions + output + project
+            }
+
+            /// Total horizontal content width carried by the horizontal scroll view.
+            static var contentWidth: CGFloat {
+                fixedTotal + addedMinWidth + horizontalPadding * 2
+            }
+        }
+
+        /// Column and card geometry for the Convert surface.
+        enum Convert {
+            static let leftColumnMin: CGFloat = 380
+            static let leftColumnIdeal: CGFloat = 460
+            static let leftColumnMax: CGFloat = 520
+            static let columnGap: CGFloat = 24
+            static let settingBoxSpacing: CGFloat = 10
+            static let formatBoxWidth: CGFloat = 180
+            static let qualityBoxWidth: CGFloat = 180
+            static let dimensionsBoxWidth: CGFloat = 230
+            static let metadataBoxWidth: CGFloat = 170
+            static let outputSettingsHorizontalPadding: CGFloat = 18
+
+            /// Inner width required by the 3-box compact top row (Format, Quality, Metadata + gaps).
+            static var outputSettingsCompactContentWidth: CGFloat {
+                formatBoxWidth + qualityBoxWidth + metadataBoxWidth + settingBoxSpacing * 2
+            }
+
+            /// Horizontal room the compact output settings card needs, including its own padding.
+            static var compactSettingsWidth: CGFloat {
+                outputSettingsCompactContentWidth + outputSettingsHorizontalPadding * 2
+            }
+        }
     }
 }
 

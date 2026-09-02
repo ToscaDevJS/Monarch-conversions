@@ -25,7 +25,8 @@ struct RootView: View {
             .opacity(router.activeTab == .settings ? 1 : 0)
             .allowsHitTesting(router.activeTab == .settings)
         }
-        .frame(minWidth: MonarchUI.Layout.minWindowWidth, minHeight: MonarchUI.Layout.minWindowHeight)
+        // The minimum size is declared once, at the scene in Monarch_conversionsApp,
+        // because that is what .windowResizability(.contentMinSize) reads.
         .preferredColorScheme(userSettings.preferredColorScheme)
         .environment(\.locale, userSettings.language.locale)
         .background {

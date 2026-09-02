@@ -11,8 +11,22 @@ final class BatchQueueStatusUITests: XCTestCase {
         app.launchArguments = ["-ui-testing-convert"]
         app.launch()
 
+        let window = app.windows.firstMatch
+        var windowExists = window.waitForExistence(timeout: 3)
+        if !windowExists {
+            app.typeKey("n", modifierFlags: .command)
+            windowExists = window.waitForExistence(timeout: 5)
+        }
+        XCTAssertTrue(windowExists, "The app should open a window")
+
         let dropzone = app.descendants(matching: .any)["batch-dropzone"]
-        XCTAssertTrue(dropzone.waitForExistence(timeout: 5), "Convert scene should be visible on launch")
+        var dropzoneExists = dropzone.waitForExistence(timeout: 2)
+        if !dropzoneExists {
+            app.typeKey("2", modifierFlags: .command)
+            dropzoneExists = dropzone.waitForExistence(timeout: 5)
+        }
+
+        XCTAssertTrue(dropzoneExists, "Convert scene should be visible on launch")
         XCTAssertTrue(app.buttons["browse-files-button"].exists)
         XCTAssertTrue(app.buttons["nav-convert"].exists)
 

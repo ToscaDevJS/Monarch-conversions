@@ -35,11 +35,15 @@ struct LanguagePanelView: View {
                             .font(MonarchUI.Font.mono(size: 10, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.textMuted)
                             .tracking(0.7)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                         
                         HStack {
                             Text(settings.displayLanguage)
                                 .font(MonarchUI.Font.sans(size: 14))
                                 .foregroundStyle(MonarchUI.Color.textPrimary)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
                             Spacer()
                             Image(systemName: "chevron.down")
                                 .font(.system(size: 10, weight: .bold))
@@ -78,11 +82,15 @@ struct LanguagePanelView: View {
                             .font(MonarchUI.Font.mono(size: 10, weight: .regular))
                             .foregroundStyle(MonarchUI.Color.textMuted)
                             .tracking(0.7)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                         
                         HStack {
                             Text(settings.dateFormat)
                                 .font(MonarchUI.Font.sans(size: 14))
                                 .foregroundStyle(MonarchUI.Color.textPrimary)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
                             Spacer()
                             Image(systemName: "chevron.down")
                                 .font(.system(size: 10, weight: .bold))

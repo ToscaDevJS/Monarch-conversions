@@ -19,150 +19,29 @@ struct OutputSettingsView: View {
                     .foregroundStyle(MonarchUI.Color.textSecondary)
             }
             
-            HStack(spacing: 10) {
-                // Format Box (Selected)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("output.format", tableName: "Conversions")
-                        .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(MonarchUI.Color.accentViolet)
-                        .tracking(0.5)
-                    Menu {
-                        ForEach(ImageFormat.outputEligibleCases, id: \.self) { fmt in
-                            Button(fmt.rawValue) {
-                                settings.targetFormat = fmt
-                            }
-                        }
-                    } label: {
-                        Text(settings.targetFormat.rawValue)
-                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                            .foregroundStyle(MonarchUI.Color.textPrimary)
-                    }
-                    .menuStyle(.borderlessButton)
+            ViewThatFits(in: .horizontal) {
+                // Wide layout: single row
+                HStack(spacing: MonarchUI.Layout.Convert.settingBoxSpacing) {
+                    formatBox
+                    qualityBox
+                    dimensionsBox
+                    metadataBox
+                    destinationBox
                 }
-                .padding(.horizontal, 12)
-                .frame(width: 180, height: 70, alignment: .leading)
-                .background(MonarchUI.Color.accentVioletBg)
-                .overlay(
-                    Rectangle()
-                        .stroke(MonarchUI.Color.accentViolet, lineWidth: 1)
-                )
-                
-                // Quality Box
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("output.quality", tableName: "Conversions")
-                        .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(MonarchUI.Color.textSubtle)
-                        .tracking(0.5)
-                    Menu {
-                        Button("95% (Maximum)") { settings.quality = 0.95 }
-                        Button("82% (High)") { settings.quality = 0.82 }
-                        Button("65% (Medium)") { settings.quality = 0.65 }
-                        Button("45% (Low)") { settings.quality = 0.45 }
-                    } label: {
-                        Text("\(Int(settings.quality * 100))%")
-                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                            .foregroundStyle(MonarchUI.Color.textPrimary)
-                    }
-                    .menuStyle(.borderlessButton)
-                }
-                .padding(.horizontal, 12)
-                .frame(width: 180, height: 70, alignment: .leading)
-                .background(MonarchUI.Color.surface)
-                .overlay(
-                    Rectangle()
-                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
-                )
-                
-                // Dimensions Box
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("output.dimensions", tableName: "Conversions")
-                        .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(MonarchUI.Color.textSubtle)
-                        .tracking(0.5)
-                    Menu {
-                        Button("Keep Original") {
-                            settings.maxWidth = nil
-                            settings.maxHeight = nil
-                        }
-                        Button("Max 2048px") {
-                            settings.maxWidth = 2048
-                            settings.maxHeight = 2048
-                        }
-                        Button("Max 1024px") {
-                            settings.maxWidth = 1024
-                            settings.maxHeight = 1024
-                        }
-                    } label: {
-                        let text = settings.maxWidth != nil ? "Max \(settings.maxWidth!)px" : "Original"
-                        Text(text)
-                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                            .foregroundStyle(MonarchUI.Color.textPrimary)
-                    }
-                    .menuStyle(.borderlessButton)
-                }
-                .padding(.horizontal, 12)
-                .frame(width: 230, height: 70, alignment: .leading)
-                .background(MonarchUI.Color.surface)
-                .overlay(
-                    Rectangle()
-                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
-                )
-                
-                // Metadata Box
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("output.metadata", tableName: "Conversions")
-                        .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(MonarchUI.Color.textSubtle)
-                        .tracking(0.5)
-                    Menu {
-                        Button("Preserve Metadata") { settings.preserveMetadata = true }
-                        Button("Remove EXIF") { settings.preserveMetadata = false }
-                    } label: {
-                        Text(settings.preserveMetadata ? "Preserve" : "Remove EXIF")
-                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                            .foregroundStyle(MonarchUI.Color.textPrimary)
-                    }
-                    .menuStyle(.borderlessButton)
-                }
-                .padding(.horizontal, 12)
-                .frame(width: 170, height: 70, alignment: .leading)
-                .background(MonarchUI.Color.surface)
-                .overlay(
-                    Rectangle()
-                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
-                )
 
-                // Destination Folder Box
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Destination Folder", comment: "Output folder selection title")
-                        .font(MonarchUI.Font.sans(size: 11))
-                        .foregroundStyle(MonarchUI.Color.textSubtle)
-                        .tracking(0.5)
-                    Menu {
-                        Button("Same as Source File") {
-                            settings.outputDirectoryURL = nil
-                        }
-                        Button("Choose Folder...") {
-                            if let selected = DirectoryPickerHelper.pickFolder() {
-                                settings.outputDirectoryURL = selected
-                            }
-                        }
-                    } label: {
-                        let folderLabel = settings.outputDirectoryURL?.lastPathComponent ?? "Same as Source"
-                        Text(folderLabel)
-                            .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                            .foregroundStyle(MonarchUI.Color.textPrimary)
+                // Compact layout: two rows
+                VStack(alignment: .leading, spacing: MonarchUI.Layout.Convert.settingBoxSpacing) {
+                    HStack(spacing: MonarchUI.Layout.Convert.settingBoxSpacing) {
+                        formatBox
+                        qualityBox
+                        metadataBox
                     }
-                    .menuStyle(.borderlessButton)
+
+                    HStack(spacing: MonarchUI.Layout.Convert.settingBoxSpacing) {
+                        dimensionsBox
+                        destinationBox
+                    }
                 }
-                .padding(.horizontal, 12)
-                .frame(height: 70)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(MonarchUI.Color.surface)
-                .overlay(
-                    Rectangle()
-                        .stroke(MonarchUI.Color.fieldBorder, lineWidth: 1)
-                )
             }
             
             HStack {
@@ -200,13 +79,121 @@ struct OutputSettingsView: View {
             }
             .padding(.top, 4)
         }
-        .padding(18)
+        .padding(MonarchUI.Layout.Convert.outputSettingsHorizontalPadding)
         .background(MonarchUI.Color.surface)
         .clipShape(RoundedRectangle(cornerRadius: 2))
         .overlay(
             RoundedRectangle(cornerRadius: 2)
                 .stroke(MonarchUI.Color.surfaceBorder, lineWidth: 1)
         )
+    }
+
+    private var formatBox: some View {
+        OutputSettingBox(
+            title: Text("output.format", tableName: "Conversions"),
+            isSelected: true,
+            width: MonarchUI.Layout.Convert.formatBoxWidth
+        ) {
+            Menu {
+                ForEach(ImageFormat.outputEligibleCases, id: \.self) { fmt in
+                    Button(fmt.rawValue) {
+                        settings.targetFormat = fmt
+                    }
+                }
+            } label: {
+                Text(settings.targetFormat.rawValue)
+                    .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                    .foregroundStyle(MonarchUI.Color.textPrimary)
+            }
+            .menuStyle(.borderlessButton)
+        }
+    }
+
+    private var qualityBox: some View {
+        OutputSettingBox(
+            title: Text("output.quality", tableName: "Conversions"),
+            width: MonarchUI.Layout.Convert.qualityBoxWidth
+        ) {
+            Menu {
+                Button("95% (Maximum)") { settings.quality = 0.95 }
+                Button("82% (High)") { settings.quality = 0.82 }
+                Button("65% (Medium)") { settings.quality = 0.65 }
+                Button("45% (Low)") { settings.quality = 0.45 }
+            } label: {
+                Text("\(Int(settings.quality * 100))%")
+                    .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                    .foregroundStyle(MonarchUI.Color.textPrimary)
+            }
+            .menuStyle(.borderlessButton)
+        }
+    }
+
+    private var dimensionsBox: some View {
+        OutputSettingBox(
+            title: Text("output.dimensions", tableName: "Conversions"),
+            width: MonarchUI.Layout.Convert.dimensionsBoxWidth
+        ) {
+            Menu {
+                Button("Keep Original") {
+                    settings.maxWidth = nil
+                    settings.maxHeight = nil
+                }
+                Button("Max 2048px") {
+                    settings.maxWidth = 2048
+                    settings.maxHeight = 2048
+                }
+                Button("Max 1024px") {
+                    settings.maxWidth = 1024
+                    settings.maxHeight = 1024
+                }
+            } label: {
+                let text = settings.maxWidth != nil ? "Max \(settings.maxWidth!)px" : "Original"
+                Text(text)
+                    .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                    .foregroundStyle(MonarchUI.Color.textPrimary)
+            }
+            .menuStyle(.borderlessButton)
+        }
+    }
+
+    private var metadataBox: some View {
+        OutputSettingBox(
+            title: Text("output.metadata", tableName: "Conversions"),
+            width: MonarchUI.Layout.Convert.metadataBoxWidth
+        ) {
+            Menu {
+                Button("Preserve Metadata") { settings.preserveMetadata = true }
+                Button("Remove EXIF") { settings.preserveMetadata = false }
+            } label: {
+                Text(settings.preserveMetadata ? "Preserve" : "Remove EXIF")
+                    .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                    .foregroundStyle(MonarchUI.Color.textPrimary)
+            }
+            .menuStyle(.borderlessButton)
+        }
+    }
+
+    private var destinationBox: some View {
+        OutputSettingBox(
+            title: Text("Destination Folder", comment: "Output folder selection title")
+        ) {
+            Menu {
+                Button("Same as Source File") {
+                    settings.outputDirectoryURL = nil
+                }
+                Button("Choose Folder...") {
+                    if let selected = DirectoryPickerHelper.pickFolder() {
+                        settings.outputDirectoryURL = selected
+                    }
+                }
+            } label: {
+                let folderLabel = settings.outputDirectoryURL?.lastPathComponent ?? "Same as Source"
+                Text(folderLabel)
+                    .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                    .foregroundStyle(MonarchUI.Color.textPrimary)
+            }
+            .menuStyle(.borderlessButton)
+        }
     }
 }
 

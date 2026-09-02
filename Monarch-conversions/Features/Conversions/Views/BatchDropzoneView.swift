@@ -40,10 +40,14 @@ struct BatchDropzoneView: View {
             Text("dropzone.limit", tableName: "Conversions")
                 .font(MonarchUI.Font.mono(size: 10))
                 .foregroundStyle(MonarchUI.Color.textDim)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 16)
                 .padding(.top, 2)
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 180)
+        .frame(minHeight: 180)
         .background(isTargeted ? MonarchUI.Color.accentVioletBg : MonarchUI.Color.surface)
         .clipShape(RoundedRectangle(cornerRadius: 2))
         .overlay(
