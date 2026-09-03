@@ -18,8 +18,8 @@ struct Monarch_conversionsApp: App {
             SidebarCommands()
             CommandGroup(replacing: .appInfo) {
                 Button("About Monarch") {
-                    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.18.0"
-                    let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "20"
+                    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.28.0"
+                    let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "28"
                     NSApplication.shared.orderFrontStandardAboutPanel(
                         options: [
                             .applicationName: "Monarch",

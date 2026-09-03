@@ -2,11 +2,11 @@ import SwiftUI
 
 struct AboutPanelView: View {
     private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.18.0"
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.28.0"
     }
 
     private var appBuild: String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "20"
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "28"
     }
 
     var body: some View {

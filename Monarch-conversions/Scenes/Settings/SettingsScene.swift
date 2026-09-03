@@ -7,9 +7,11 @@ struct SettingsScene: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            TopNavHeaderView(activeTab: .settings, onSelectTab: onSelectTab)
+                .padding(.horizontal, MonarchUI.Layout.scenePadding)
+                .padding(.top, MonarchUI.Layout.scenePadding)
+
             VStack(spacing: 0) {
-                TopNavHeaderView(activeTab: .settings, onSelectTab: onSelectTab)
-                
                 SettingsHeadingView()
                 
                 HStack(alignment: .top, spacing: 0) {
@@ -32,8 +34,10 @@ struct SettingsScene: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 30)
             }
-            .padding(MonarchUI.Layout.scenePadding)
-            .background(MonarchUI.Color.background)
+            .frame(maxWidth: MonarchUI.Layout.Settings.maxContainerWidth)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.horizontal, MonarchUI.Layout.scenePadding)
+            .padding(.bottom, MonarchUI.Layout.scenePadding)
             
             Spacer(minLength: 0)
             

@@ -175,7 +175,8 @@ struct OutputSettingsView: View {
 
     private var destinationBox: some View {
         OutputSettingBox(
-            title: Text("Destination Folder", comment: "Output folder selection title")
+            title: Text("Destination Folder", comment: "Output folder selection title"),
+            width: MonarchUI.Layout.Convert.destinationBoxMaxWidth
         ) {
             Menu {
                 Button("Same as Source File") {

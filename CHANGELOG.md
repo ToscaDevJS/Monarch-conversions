@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.28.0
+
+**Highlights**
+
+- **Adaptive Viewport Geometry & Scene-Level Vertical Scroll Containment:** Resolved arithmetic deficit in vertical window bounds. Encapsulated `ConvertScene` main content inside a vertical `ScrollView` with `.scrollBounceBehavior(.basedOnSize)` while pinning `TopNavHeaderView` and `BatchStatusFooterView`, guaranteeing that all batch items and the "Convert Batch" action button remain reachable across any window height. Raised `minWindowHeight` to an arithmetic-verified 700pt floor.
+- **Wide-Display Responsive Scaling & Asymmetry Prevention:** Centered `SettingsScene` content within `maxContainerWidth` (1280pt) on wide displays (e.g. 2560×1440), eliminating empty space asymmetry. Bounded `ConvertScene` content to `maxContentWidth` (1440pt) and clamped `destinationBox` to 320pt to prevent unbounded horizontal stretch.
+- **Responsive Active Conversions Table Geometry:** Refactored `ConversionsTableView` using dynamic `GeometryReader` width negotiation (`max(proxy.size.width, contentWidth)`), enabling the table rows and `Added` column to expand responsively across the entire screen on large monitors while preserving smooth horizontal scrolling on narrow viewports (< 1349pt).
+- **Strict TDD & OpenSpec Verification:** Added `ViewportGeometryTests.swift` guarding vertical arithmetic invariants and wide-screen bounds. Fully verified SDD change artifacts under `openspec/changes/adaptive-viewport-and-window-geometry/` with 100% test pass rate (107 unit tests, 7 UI tests, 0 regressions).
+
+- Updated `MonarchUI.Layout` with `minWindowHeight: 700`, `maxContainerWidth: 1280`, `maxContentWidth: 1440`, and `destinationBoxMaxWidth: 320`
+- Wrapped `ConvertScene` in vertical `ScrollView` with persistent top nav and bottom status bar
+- Centered and constrained `SettingsScene` within `Layout.Settings.maxContainerWidth`
+- Clamped destination folder button in `OutputSettingsView` to prevent horizontal blowout
+- Enabled full-width dynamic expansion on `ConversionsTableView` rows with flexible `Added` column
+- Added `ViewportGeometryTests.swift` covering vertical arithmetic sums and wide-display constraints
+- Bumped app marketing version to 0.28.0 (build 28)
+
 ## 0.27.0
 
 **Highlights**

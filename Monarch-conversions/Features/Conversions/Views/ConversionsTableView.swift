@@ -130,133 +130,141 @@ struct ConversionsTableView: View {
             )
             
             // Table Header Columns & Rows
-            ScrollView(.horizontal) {
-                VStack(spacing: 0) {
-                    HStack(spacing: 0) {
-                        Text("table.col_status", tableName: "Conversions")
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .frame(width: MonarchUI.Layout.TableColumn.status, alignment: .leading)
-                        Text("table.col_file_id", tableName: "Conversions")
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .frame(width: MonarchUI.Layout.TableColumn.fileID, alignment: .leading)
-                        Text("table.col_file_name", tableName: "Conversions")
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .padding(.trailing, 16)
-                            .frame(width: MonarchUI.Layout.TableColumn.fileName, alignment: .leading)
-                        Text("table.col_dimensions", tableName: "Conversions")
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .padding(.trailing, 16)
-                            .frame(width: MonarchUI.Layout.TableColumn.dimensions, alignment: .leading)
-                        Text("table.col_output", tableName: "Conversions")
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .padding(.trailing, 16)
-                            .frame(width: MonarchUI.Layout.TableColumn.output, alignment: .leading)
-                        Text("table.col_project", tableName: "Conversions")
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .padding(.trailing, 16)
-                            .frame(width: MonarchUI.Layout.TableColumn.project, alignment: .leading)
-                        Text("table.col_added", tableName: "Conversions")
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .frame(minWidth: MonarchUI.Layout.TableColumn.addedMinWidth, alignment: .leading)
-                    }
-                    .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
-                    .foregroundStyle(MonarchUI.Color.textSubtle)
-                    .padding(.horizontal, MonarchUI.Layout.TableColumn.horizontalPadding)
-                    .frame(height: 44)
-                    .overlay(
-                        Rectangle()
-                            .fill(MonarchUI.Color.divider)
-                            .frame(height: 1),
-                        alignment: .bottom
-                    )
+            GeometryReader { proxy in
+                let tableWidth = max(proxy.size.width, MonarchUI.Layout.TableColumn.contentWidth)
 
-                    // Table Content / Empty States
-                    if records.isEmpty {
-                        VStack(spacing: 16) {
-                            Image(systemName: "photo.on.rectangle.angled")
-                                .font(.system(size: 38))
-                                .foregroundStyle(MonarchUI.Color.textMuted.opacity(0.6))
+                ScrollView(.horizontal, showsIndicators: proxy.size.width < MonarchUI.Layout.TableColumn.contentWidth) {
+                    VStack(spacing: 0) {
+                        HStack(spacing: 0) {
+                            Text("table.col_status", tableName: "Conversions")
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .frame(width: MonarchUI.Layout.TableColumn.status, alignment: .leading)
+                            Text("table.col_file_id", tableName: "Conversions")
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .frame(width: MonarchUI.Layout.TableColumn.fileID, alignment: .leading)
+                            Text("table.col_file_name", tableName: "Conversions")
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .padding(.trailing, 16)
+                                .frame(width: MonarchUI.Layout.TableColumn.fileName, alignment: .leading)
+                            Text("table.col_dimensions", tableName: "Conversions")
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .padding(.trailing, 16)
+                                .frame(width: MonarchUI.Layout.TableColumn.dimensions, alignment: .leading)
+                            Text("table.col_output", tableName: "Conversions")
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .padding(.trailing, 16)
+                                .frame(width: MonarchUI.Layout.TableColumn.output, alignment: .leading)
+                            Text("table.col_project", tableName: "Conversions")
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .padding(.trailing, 16)
+                                .frame(width: MonarchUI.Layout.TableColumn.project, alignment: .leading)
+                            Text("table.col_added", tableName: "Conversions")
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .frame(minWidth: MonarchUI.Layout.TableColumn.addedMinWidth, maxWidth: .infinity, alignment: .leading)
+                        }
+                        .font(MonarchUI.Font.sans(size: 11, weight: .semibold))
+                        .foregroundStyle(MonarchUI.Color.textSubtle)
+                        .padding(.horizontal, MonarchUI.Layout.TableColumn.horizontalPadding)
+                        .frame(width: tableWidth, alignment: .leading)
+                        .frame(height: 44)
+                        .overlay(
+                            Rectangle()
+                                .fill(MonarchUI.Color.divider)
+                                .frame(height: 1),
+                            alignment: .bottom
+                        )
 
-                            VStack(spacing: 4) {
-                                Text("No Conversions Yet")
-                                    .font(MonarchUI.Font.sans(size: 15, weight: .semibold))
-                                    .foregroundStyle(MonarchUI.Color.textPrimary)
+                        // Table Content / Empty States
+                        if records.isEmpty {
+                            VStack(spacing: 16) {
+                                Image(systemName: "photo.on.rectangle.angled")
+                                    .font(.system(size: 38))
+                                    .foregroundStyle(MonarchUI.Color.textMuted.opacity(0.6))
 
-                                Text("Convert images in the Convert tab to track batch history and performance metrics.")
-                                    .font(MonarchUI.Font.sans(size: 13))
-                                    .foregroundStyle(MonarchUI.Color.textMuted)
-                            }
+                                VStack(spacing: 4) {
+                                    Text("No Conversions Yet")
+                                        .font(MonarchUI.Font.sans(size: 15, weight: .semibold))
+                                        .foregroundStyle(MonarchUI.Color.textPrimary)
 
-                            Button {
-                                onSelectTab?(.convert)
-                            } label: {
-                                HStack(spacing: 6) {
-                                    Image(systemName: "plus.circle.fill")
-                                        .font(.system(size: 12))
-                                    Text("Start Converting")
-                                        .font(MonarchUI.Font.sans(size: 13, weight: .medium))
-                                    Text("⌘2")
-                                        .font(MonarchUI.Font.mono(size: 11))
+                                    Text("Convert images in the Convert tab to track batch history and performance metrics.")
+                                        .font(MonarchUI.Font.sans(size: 13))
                                         .foregroundStyle(MonarchUI.Color.textMuted)
                                 }
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 7)
-                                .background(MonarchUI.Color.accentViolet)
-                                .foregroundStyle(SwiftUI.Color.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                            }
-                            .buttonStyle(.plain)
-                            .padding(.top, 4)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.vertical, 48)
-                    } else if filteredRecords.isEmpty {
-                        VStack(spacing: 12) {
-                            Image(systemName: "line.3.horizontal.decrease.circle")
-                                .font(.system(size: 32))
-                                .foregroundStyle(MonarchUI.Color.textMuted)
 
-                            Text("No matching conversion records")
-                                .font(MonarchUI.Font.sans(size: 14, weight: .medium))
-                                .foregroundStyle(MonarchUI.Color.textPrimary)
-
-                            Button("Reset Filters") {
-                                filterState.reset()
+                                Button {
+                                    onSelectTab?(.convert)
+                                } label: {
+                                    HStack(spacing: 6) {
+                                        Image(systemName: "plus.circle.fill")
+                                            .font(.system(size: 12))
+                                        Text("Start Converting")
+                                            .font(MonarchUI.Font.sans(size: 13, weight: .medium))
+                                        Text("⌘2")
+                                            .font(MonarchUI.Font.mono(size: 11))
+                                            .foregroundStyle(MonarchUI.Color.textMuted)
+                                    }
+                                    .padding(.horizontal, 14)
+                                    .padding(.vertical, 7)
+                                    .background(MonarchUI.Color.accentViolet)
+                                    .foregroundStyle(SwiftUI.Color.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                                }
+                                .buttonStyle(.plain)
+                                .padding(.top, 4)
                             }
-                            .font(MonarchUI.Font.sans(size: 12, weight: .medium))
-                            .foregroundStyle(MonarchUI.Color.accentViolet)
-                            .buttonStyle(.plain)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.vertical, 40)
-                    } else {
-                        ScrollView(.vertical) {
-                            VStack(spacing: 0) {
-                                ForEach(Array(filteredRecords.enumerated()), id: \.element.id) { index, record in
-                                    TableRowView(
-                                        record: record,
-                                        isEven: index % 2 == 0,
-                                        onSelect: {
-                                            onSelectRecord?(record)
-                                        },
-                                        onDelete: {
-                                            deleteRecord(record)
-                                        }
-                                    )
+                            .frame(width: tableWidth)
+                            .frame(maxHeight: .infinity)
+                            .padding(.vertical, 48)
+                        } else if filteredRecords.isEmpty {
+                            VStack(spacing: 12) {
+                                Image(systemName: "line.3.horizontal.decrease.circle")
+                                    .font(.system(size: 32))
+                                    .foregroundStyle(MonarchUI.Color.textMuted)
+
+                                Text("No matching conversion records")
+                                    .font(MonarchUI.Font.sans(size: 14, weight: .medium))
+                                    .foregroundStyle(MonarchUI.Color.textPrimary)
+
+                                Button("Reset Filters") {
+                                    filterState.reset()
+                                }
+                                .font(MonarchUI.Font.sans(size: 12, weight: .medium))
+                                .foregroundStyle(MonarchUI.Color.accentViolet)
+                                .buttonStyle(.plain)
+                            }
+                            .frame(width: tableWidth)
+                            .frame(maxHeight: .infinity)
+                            .padding(.vertical, 40)
+                        } else {
+                            ScrollView(.vertical) {
+                                LazyVStack(spacing: 0) {
+                                    ForEach(Array(filteredRecords.enumerated()), id: \.element.id) { index, record in
+                                        TableRowView(
+                                            record: record,
+                                            isEven: index % 2 == 0,
+                                            tableWidth: tableWidth,
+                                            onSelect: {
+                                                onSelectRecord?(record)
+                                            },
+                                            onDelete: {
+                                                deleteRecord(record)
+                                            }
+                                        )
+                                    }
                                 }
                             }
+                            .frame(maxHeight: .infinity)
                         }
-                        .frame(maxHeight: .infinity)
                     }
+                    .frame(width: tableWidth, alignment: .leading)
                 }
-                .frame(minWidth: MonarchUI.Layout.TableColumn.contentWidth, alignment: .leading)
             }
         }
         .padding(.top, 64)
@@ -292,6 +300,7 @@ private struct FilterLabel: View {
 private struct TableRowView: View {
     let record: ConversionRecord
     let isEven: Bool
+    var tableWidth: CGFloat = MonarchUI.Layout.TableColumn.contentWidth
     var onSelect: (() -> Void)? = nil
     var onDelete: (() -> Void)? = nil
     
@@ -395,9 +404,10 @@ private struct TableRowView: View {
                     .font(MonarchUI.Font.sans(size: 13))
                     .foregroundStyle(MonarchUI.Color.textMuted)
                     .lineLimit(1)
-                    .frame(minWidth: MonarchUI.Layout.TableColumn.addedMinWidth, alignment: .leading)
+                    .frame(minWidth: MonarchUI.Layout.TableColumn.addedMinWidth, maxWidth: .infinity, alignment: .leading)
             }
             .padding(.horizontal, MonarchUI.Layout.TableColumn.horizontalPadding)
+            .frame(width: tableWidth, alignment: .leading)
             .frame(height: 50)
             .background(rowBackground)
             .overlay(

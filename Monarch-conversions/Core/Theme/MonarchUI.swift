@@ -62,7 +62,10 @@ enum MonarchUI {
         /// and its siblings, not from the original design mockup: every surface must
         /// fit inside this width in English and in Spanish.
         static let minWindowWidth: CGFloat = 1180
-        static let minWindowHeight: CGFloat = 600
+
+        /// Minimum window height derived to guarantee full UI visibility on 13" MacBooks
+        /// and small displays without clipping critical action controls.
+        static let minWindowHeight: CGFloat = 700
 
         /// The inset every scene applies around its content.
         static let scenePadding: CGFloat = 28
@@ -72,6 +75,7 @@ enum MonarchUI {
             static let sidebarWidth: CGFloat = 230
             static let detailLeadingPadding: CGFloat = 42
             static let detailMaxWidth: CGFloat = 770
+            static let maxContainerWidth: CGFloat = 1280
 
             /// Horizontal room the Settings content needs, excluding `scenePadding`.
             static var requiredWidth: CGFloat {
@@ -106,6 +110,8 @@ enum MonarchUI {
             static let leftColumnMin: CGFloat = 380
             static let leftColumnIdeal: CGFloat = 460
             static let leftColumnMax: CGFloat = 520
+            static let maxContentWidth: CGFloat = 1440
+            static let destinationBoxMaxWidth: CGFloat = 320
             static let columnGap: CGFloat = 24
             static let settingBoxSpacing: CGFloat = 10
             static let formatBoxWidth: CGFloat = 180

@@ -172,72 +172,77 @@ struct ConvertScene: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 0) {
-                TopNavHeaderView(activeTab: .convert, onSelectTab: onSelectTab)
+            TopNavHeaderView(activeTab: .convert, onSelectTab: onSelectTab)
+                .padding(.horizontal, MonarchUI.Layout.scenePadding)
+                .padding(.top, MonarchUI.Layout.scenePadding)
 
-                ConvertHeadingView()
+            ScrollView(.vertical) {
+                VStack(spacing: 0) {
+                    ConvertHeadingView()
 
-                HStack(alignment: .top, spacing: MonarchUI.Layout.Convert.columnGap) {
-                    // Left Column (Dropzone & Batch Queue)
-                    VStack(alignment: .leading, spacing: 20) {
-                        BatchDropzoneView(
-                            onBrowse: {
-                                let urls = ImageFilePicker.pickFiles()
-                                handleImport(urls)
-                            },
-                            onDropFiles: { urls in
-                                handleImport(urls)
-                            }
+                    HStack(alignment: .top, spacing: MonarchUI.Layout.Convert.columnGap) {
+                        // Left Column (Dropzone & Batch Queue)
+                        VStack(alignment: .leading, spacing: 20) {
+                            BatchDropzoneView(
+                                onBrowse: {
+                                    let urls = ImageFilePicker.pickFiles()
+                                    handleImport(urls)
+                                },
+                                onDropFiles: { urls in
+                                    handleImport(urls)
+                                }
+                            )
+
+                            ImportRejectionListView(
+                                rejections: rejections,
+                                onDismiss: {
+                                    rejections.removeAll()
+                                }
+                            )
+
+                            BatchQueueView(
+                                items: $items,
+                                selectedId: $selectedId,
+                                onClearAll: {
+                                    clearQueue()
+                                }
+                            )
+                        }
+                        .frame(
+                            minWidth: MonarchUI.Layout.Convert.leftColumnMin,
+                            idealWidth: MonarchUI.Layout.Convert.leftColumnIdeal,
+                            maxWidth: MonarchUI.Layout.Convert.leftColumnMax
                         )
 
-                        ImportRejectionListView(
-                            rejections: rejections,
-                            onDismiss: {
-                                rejections.removeAll()
-                            }
-                        )
+                        // Right Column (Visual Inspector & Output Settings)
+                        VStack(alignment: .leading, spacing: 20) {
+                            SquooshInspectorView(
+                                fileName: selectedItem?.name ?? "No file selected",
+                                originalSizeText: originalSizeText,
+                                targetFormatText: targetFormatText,
+                                targetSizeText: targetSizeText,
+                                imageURL: selectedItem?.fileURL,
+                                outputImageURL: selectedItem?.outputFileURL
+                            )
 
-                        BatchQueueView(
-                            items: $items,
-                            selectedId: $selectedId,
-                            onClearAll: {
-                                clearQueue()
-                            }
-                        )
+                            OutputSettingsView(
+                                settings: $conversionSettings,
+                                isProcessing: isProcessing,
+                                onAddBatch: {
+                                    processBatchConversion()
+                                }
+                            )
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(
-                        minWidth: MonarchUI.Layout.Convert.leftColumnMin,
-                        idealWidth: MonarchUI.Layout.Convert.leftColumnIdeal,
-                        maxWidth: MonarchUI.Layout.Convert.leftColumnMax
-                    )
-
-                    // Right Column (Visual Inspector & Output Settings)
-                    VStack(alignment: .leading, spacing: 20) {
-                        SquooshInspectorView(
-                            fileName: selectedItem?.name ?? "No file selected",
-                            originalSizeText: originalSizeText,
-                            targetFormatText: targetFormatText,
-                            targetSizeText: targetSizeText,
-                            imageURL: selectedItem?.fileURL,
-                            outputImageURL: selectedItem?.outputFileURL
-                        )
-
-                        OutputSettingsView(
-                            settings: $conversionSettings,
-                            isProcessing: isProcessing,
-                            onAddBatch: {
-                                processBatchConversion()
-                            }
-                        )
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 24)
                 }
-                .padding(.top, 24)
+                .frame(maxWidth: MonarchUI.Layout.Convert.maxContentWidth)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, MonarchUI.Layout.scenePadding)
+                .padding(.bottom, MonarchUI.Layout.scenePadding)
             }
-            .padding(MonarchUI.Layout.scenePadding)
-            .background(MonarchUI.Color.background)
-
-            Spacer(minLength: 0)
+            .scrollBounceBehavior(.basedOnSize)
 
             BatchStatusFooterView(
                 items: items,
